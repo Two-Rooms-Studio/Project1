@@ -41,9 +41,10 @@ public class DungeonBoard : Board {
 			for (int y = 0; y < rows; y++) {
 				float randNum = Random.Range(.0f, 1.0f);
 				GameTile tile = new GameTile((float)x, (float)y, floorSprite);
-				GameObject instance = Instantiate (floorObject, new Vector3 ((float)x + xPadding, (float)y + yPadding, 0.0f), Quaternion.identity, boardHolder);
+				GameObject instance = Instantiate (floorObject, new Vector3 ((float)xPadding, (float)yPadding, 0.0f), Quaternion.identity, boardHolder);
+				Debug.Log("Created object at x: " + (xPadding) + " and y: " + (yPadding));
 				instance.name = "(" + x + "," + y + ")";
-				yPadding += 0.33f;
+				yPadding += 0.24f;
 				if (randNum < chanceToStartAlive) {
 					//set the tile to be a wall tile since it passed random test
 					//at this point its pointless to destroy and reinstantiate a wall object but in the future we may have to do that
@@ -57,7 +58,7 @@ public class DungeonBoard : Board {
 			grid.Add(row);
 			row = new List<GameTile>();
 			yPadding = 0.0f;
-			xPadding += 0.33f;
+			xPadding += 0.16f;
 		}
 		return;
 	}
@@ -251,6 +252,7 @@ public class DungeonBoard : Board {
 
 	private void ChangeInnerWallSprites()
 	{
+		//changes walls the player can not see the outside of to a different sprite
 		CalculateTileNeighbours();
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {

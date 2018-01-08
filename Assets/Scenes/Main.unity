@@ -165,7 +165,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.9
+  orthographic size: 0.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -188,7 +188,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 848704038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.9, y: 5.3, z: -10}
+  m_LocalPosition: {x: 5.95, y: 5.86, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -228,10 +228,10 @@ MonoBehaviour:
   deathLimit: 3
   birthLimit: 4
   numberOfSimulations: 5
-  wallObject: {fileID: 1237280197953892, guid: 7f0c613f0443b1a48a2004733fa323af, type: 2}
-  floorObject: {fileID: 1947221088659858, guid: a289e9e91c89d284683454aee63187fc,
+  wallObject: {fileID: 1944342310348864, guid: 40969798a19dc2d479eaa82e79ef337f, type: 2}
+  floorObject: {fileID: 1810014617875250, guid: 899daa07923ddb849ba90fdc4ae093e9,
     type: 2}
-  innerWall: {fileID: 21300280, guid: cec1fea63dca0f7408a0daadf13ed5b1, type: 3}
+  innerWall: {fileID: 21300462, guid: f1508987d08af7542a245717b9fc27de, type: 3}
 --- !u!4 &1011319284
 Transform:
   m_ObjectHideFlags: 0
