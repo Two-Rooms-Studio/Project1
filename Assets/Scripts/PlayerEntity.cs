@@ -14,6 +14,10 @@ public class PlayerEntity : Entity {
 		playerTile.GetObject().GetComponent<SpriteRenderer>().sprite = playerSprite;
 	}
 
+	public GameTile GetPlayerGameTile(){
+		return playerTile;
+	}
+
 	public bool move(char move)
 	{
 		switch (move) {
@@ -45,7 +49,6 @@ public class PlayerEntity : Entity {
 				Debug.Log("invalid command passed to move function");
 				return false;
 		}
-		return false;
 	}
 
 	private void updateNewPlayerTile(GameTile newPlayerTile)
