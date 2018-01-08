@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f1508987d08af7542a245717b9fc27de
-timeCreated: 1515368778
+timeCreated: 1515387128
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -57,82 +57,82 @@ TextureImporter:
     21300100: oryx_roguelike_16x24_trans_50
     21300102: oryx_roguelike_16x24_trans_51
     21300104: oryx_roguelike_16x24_trans_52
-    21300106: oryx_roguelike_16x24_trans_53
-    21300108: oryx_roguelike_16x24_trans_54
-    21300110: oryx_roguelike_16x24_trans_55
-    21300112: oryx_roguelike_16x24_trans_56
-    21300114: oryx_roguelike_16x24_trans_57
-    21300116: oryx_roguelike_16x24_trans_58
-    21300118: oryx_roguelike_16x24_trans_59
-    21300120: oryx_roguelike_16x24_trans_60
-    21300122: oryx_roguelike_16x24_trans_61
-    21300124: oryx_roguelike_16x24_trans_62
-    21300126: oryx_roguelike_16x24_trans_63
-    21300128: oryx_roguelike_16x24_trans_64
-    21300130: oryx_roguelike_16x24_trans_65
-    21300132: oryx_roguelike_16x24_trans_66
+    21300106: Sword_0
+    21300108: Sword_1
+    21300110: Axe_0
+    21300112: Staff_0
+    21300114: Dagger_0
+    21300116: Staff_Holy
+    21300118: Staff_2
+    21300120: Axe_1
+    21300122: Axe_2
+    21300124: Axe_3
+    21300126: Club_0
+    21300128: Hammer_0
+    21300130: Knife_0
+    21300132: Trident_0
     21300134: oryx_roguelike_16x24_trans_67
-    21300136: oryx_roguelike_16x24_trans_68
-    21300138: oryx_roguelike_16x24_trans_69
-    21300140: oryx_roguelike_16x24_trans_70
-    21300142: oryx_roguelike_16x24_trans_71
-    21300144: oryx_roguelike_16x24_trans_72
-    21300146: oryx_roguelike_16x24_trans_73
-    21300148: oryx_roguelike_16x24_trans_74
-    21300150: oryx_roguelike_16x24_trans_75
-    21300152: oryx_roguelike_16x24_trans_76
-    21300154: oryx_roguelike_16x24_trans_77
-    21300156: oryx_roguelike_16x24_trans_78
-    21300158: oryx_roguelike_16x24_trans_79
-    21300160: oryx_roguelike_16x24_trans_80
-    21300162: oryx_roguelike_16x24_trans_81
+    21300136: Random_0
+    21300138: Staff_4
+    21300140: Bow_0
+    21300142: Crossbow_0
+    21300144: Body_0
+    21300146: Helmet_0
+    21300148: Boots_0
+    21300150: Pants_0
+    21300152: Gloves_0
+    21300154: Shield_0
+    21300156: Belt_0
+    21300158: Belt_1
+    21300160: Choker_0
+    21300162: Choker_1
     21300164: oryx_roguelike_16x24_trans_82
-    21300166: oryx_roguelike_16x24_trans_83
-    21300168: oryx_roguelike_16x24_trans_84
-    21300170: oryx_roguelike_16x24_trans_85
-    21300172: oryx_roguelike_16x24_trans_86
-    21300174: oryx_roguelike_16x24_trans_87
-    21300176: oryx_roguelike_16x24_trans_88
-    21300178: oryx_roguelike_16x24_trans_89
-    21300180: oryx_roguelike_16x24_trans_90
-    21300182: oryx_roguelike_16x24_trans_91
-    21300184: oryx_roguelike_16x24_trans_92
-    21300186: oryx_roguelike_16x24_trans_93
-    21300188: oryx_roguelike_16x24_trans_94
-    21300190: oryx_roguelike_16x24_trans_95
-    21300192: oryx_roguelike_16x24_trans_96
-    21300194: oryx_roguelike_16x24_trans_97
-    21300196: oryx_roguelike_16x24_trans_98
-    21300198: oryx_roguelike_16x24_trans_99
-    21300200: oryx_roguelike_16x24_trans_100
-    21300202: oryx_roguelike_16x24_trans_101
-    21300204: oryx_roguelike_16x24_trans_102
-    21300206: oryx_roguelike_16x24_trans_103
-    21300208: oryx_roguelike_16x24_trans_104
-    21300210: oryx_roguelike_16x24_trans_105
-    21300212: oryx_roguelike_16x24_trans_106
-    21300214: oryx_roguelike_16x24_trans_107
-    21300216: oryx_roguelike_16x24_trans_108
-    21300218: oryx_roguelike_16x24_trans_109
-    21300220: oryx_roguelike_16x24_trans_110
-    21300222: oryx_roguelike_16x24_trans_111
-    21300224: oryx_roguelike_16x24_trans_112
-    21300226: oryx_roguelike_16x24_trans_113
-    21300228: oryx_roguelike_16x24_trans_114
-    21300230: oryx_roguelike_16x24_trans_115
-    21300232: oryx_roguelike_16x24_trans_116
-    21300234: oryx_roguelike_16x24_trans_117
-    21300236: oryx_roguelike_16x24_trans_118
-    21300238: oryx_roguelike_16x24_trans_119
-    21300240: oryx_roguelike_16x24_trans_120
-    21300242: oryx_roguelike_16x24_trans_121
-    21300244: oryx_roguelike_16x24_trans_122
-    21300246: oryx_roguelike_16x24_trans_123
-    21300248: oryx_roguelike_16x24_trans_124
-    21300250: oryx_roguelike_16x24_trans_125
-    21300252: oryx_roguelike_16x24_trans_126
-    21300254: oryx_roguelike_16x24_trans_127
-    21300256: oryx_roguelike_16x24_trans_128
+    21300166: Ring_0
+    21300168: Ring_1
+    21300170: Food_0
+    21300172: Plate_0
+    21300174: Plate_1
+    21300176: Plate_2
+    21300178: Clock_0
+    21300180: Clock_1
+    21300182: Potion_0
+    21300184: Potion_1
+    21300186: Potion_2
+    21300188: Potion_3
+    21300190: Book_0
+    21300192: Key_0
+    21300194: Key_1
+    21300196: Key_2
+    21300198: Paper_0
+    21300200: Paper_1
+    21300202: Symbol_0
+    21300204: Chest_0
+    21300206: Chest_1
+    21300208: Book_1
+    21300210: Bag_0
+    21300212: Orb_0
+    21300214: Orb_1
+    21300216: Statue_0
+    21300218: Random_1
+    21300220: Random_2
+    21300222: Candle_0
+    21300224: Bone_0
+    21300226: Skull_0
+    21300228: Skull_1
+    21300230: Crown_0
+    21300232: Crown_1
+    21300234: Dynamite_0
+    21300236: Torch_0
+    21300238: Molotov_0
+    21300240: Dynamite_1
+    21300242: Gun_0
+    21300244: Shield_1
+    21300246: Sword_4
+    21300248: Random_3
+    21300250: Shovel_0
+    21300252: Loot_0
+    21300254: Random_4
+    21300256: Bell_0
     21300258: oryx_roguelike_16x24_trans_129
     21300260: oryx_roguelike_16x24_trans_130
     21300262: oryx_roguelike_16x24_trans_131
@@ -152,63 +152,63 @@ TextureImporter:
     21300290: oryx_roguelike_16x24_trans_145
     21300292: oryx_roguelike_16x24_trans_146
     21300294: oryx_roguelike_16x24_trans_147
-    21300296: oryx_roguelike_16x24_trans_148
-    21300298: oryx_roguelike_16x24_trans_149
-    21300300: oryx_roguelike_16x24_trans_150
-    21300302: oryx_roguelike_16x24_trans_151
-    21300304: oryx_roguelike_16x24_trans_152
-    21300306: oryx_roguelike_16x24_trans_153
-    21300308: oryx_roguelike_16x24_trans_154
-    21300310: oryx_roguelike_16x24_trans_155
-    21300312: oryx_roguelike_16x24_trans_156
-    21300314: oryx_roguelike_16x24_trans_157
-    21300316: oryx_roguelike_16x24_trans_158
-    21300318: oryx_roguelike_16x24_trans_159
-    21300320: oryx_roguelike_16x24_trans_160
-    21300322: oryx_roguelike_16x24_trans_161
-    21300324: oryx_roguelike_16x24_trans_162
-    21300326: oryx_roguelike_16x24_trans_163
-    21300328: oryx_roguelike_16x24_trans_164
-    21300330: oryx_roguelike_16x24_trans_165
-    21300332: oryx_roguelike_16x24_trans_166
-    21300334: oryx_roguelike_16x24_trans_167
-    21300336: oryx_roguelike_16x24_trans_168
-    21300338: oryx_roguelike_16x24_trans_169
-    21300340: oryx_roguelike_16x24_trans_170
-    21300342: oryx_roguelike_16x24_trans_171
-    21300344: oryx_roguelike_16x24_trans_172
-    21300346: oryx_roguelike_16x24_trans_173
-    21300348: oryx_roguelike_16x24_trans_174
-    21300350: oryx_roguelike_16x24_trans_175
-    21300352: oryx_roguelike_16x24_trans_176
-    21300354: oryx_roguelike_16x24_trans_177
-    21300356: oryx_roguelike_16x24_trans_178
-    21300358: oryx_roguelike_16x24_trans_179
-    21300360: oryx_roguelike_16x24_trans_180
-    21300362: oryx_roguelike_16x24_trans_181
-    21300364: oryx_roguelike_16x24_trans_182
-    21300366: oryx_roguelike_16x24_trans_183
-    21300368: oryx_roguelike_16x24_trans_184
-    21300370: oryx_roguelike_16x24_trans_185
-    21300372: oryx_roguelike_16x24_trans_186
-    21300374: oryx_roguelike_16x24_trans_187
-    21300376: oryx_roguelike_16x24_trans_188
-    21300378: oryx_roguelike_16x24_trans_189
-    21300380: oryx_roguelike_16x24_trans_190
-    21300382: oryx_roguelike_16x24_trans_191
-    21300384: oryx_roguelike_16x24_trans_192
-    21300386: oryx_roguelike_16x24_trans_193
-    21300388: oryx_roguelike_16x24_trans_194
-    21300390: oryx_roguelike_16x24_trans_195
-    21300392: oryx_roguelike_16x24_trans_196
-    21300394: oryx_roguelike_16x24_trans_197
-    21300396: oryx_roguelike_16x24_trans_198
-    21300398: oryx_roguelike_16x24_trans_199
-    21300400: oryx_roguelike_16x24_trans_200
-    21300402: oryx_roguelike_16x24_trans_201
-    21300404: oryx_roguelike_16x24_trans_202
-    21300406: oryx_roguelike_16x24_trans_203
-    21300408: oryx_roguelike_16x24_trans_204
+    21300296: Explosion_0
+    21300298: Explosion_1
+    21300300: Explosion_2
+    21300302: Gas_0
+    21300304: Gas_1
+    21300306: Explosion_3
+    21300308: Explosion_4
+    21300310: Explosion_5
+    21300312: Flame_0
+    21300314: Flame_1
+    21300316: Flame_2
+    21300318: Flame_3
+    21300320: Target_2
+    21300322: Target_1
+    21300324: Target_0
+    21300326: Beam_0
+    21300328: Beam_1
+    21300330: Beam_2
+    21300332: Beam_3
+    21300334: Spark_0
+    21300336: Spark_1
+    21300338: Spark_2
+    21300340: Spark_3
+    21300342: Spark_4
+    21300344: Cross_0
+    21300346: Cross_1
+    21300348: Cross_2
+    21300350: Cross_3
+    21300352: Arrow_0
+    21300354: Arrow_1
+    21300356: Arrow_2
+    21300358: Arrow_3
+    21300360: Rain_0
+    21300362: Rain_1
+    21300364: Snow_0
+    21300366: Snow_1
+    21300368: Snow_2
+    21300370: Snow_3
+    21300372: Dot_0
+    21300374: Cross_4
+    21300376: X_0
+    21300378: Bubble_0
+    21300380: Bubble_1
+    21300382: Aura_0
+    21300384: Beam_4
+    21300386: Shield_2
+    21300388: Beam_5
+    21300390: Random_5
+    21300392: Eyes_0
+    21300394: Eyes_1
+    21300396: Explosion_6
+    21300398: Explosion_7
+    21300400: Aura_1
+    21300402: Lightning_0
+    21300404: Lightning_1
+    21300406: Slice_0
+    21300408: Slice_1
     21300410: oryx_roguelike_16x24_trans_205
     21300412: oryx_roguelike_16x24_trans_206
     21300414: oryx_roguelike_16x24_trans_207
@@ -228,13 +228,13 @@ TextureImporter:
     21300442: oryx_roguelike_16x24_trans_221
     21300444: oryx_roguelike_16x24_trans_222
     21300446: oryx_roguelike_16x24_trans_223
-    21300448: oryx_roguelike_16x24_trans_224
-    21300450: oryx_roguelike_16x24_trans_225
-    21300452: oryx_roguelike_16x24_trans_226
-    21300454: oryx_roguelike_16x24_trans_227
-    21300456: oryx_roguelike_16x24_trans_228
-    21300458: oryx_roguelike_16x24_trans_229
-    21300460: oryx_roguelike_16x24_trans_230
+    21300448: Wall_0
+    21300450: Wall_1
+    21300452: Wall_2
+    21300454: Wall_3
+    21300456: Wall_4
+    21300458: Wall_5
+    21300460: Wall_6
     21300462: oryx_roguelike_16x24_trans_231
     21300464: oryx_roguelike_16x24_trans_232
     21300466: oryx_roguelike_16x24_trans_233
@@ -912,6 +912,7 @@ TextureImporter:
     21301810: oryx_roguelike_16x24_trans_905
     21301812: oryx_roguelike_16x24_trans_906
     21301814: oryx_roguelike_16x24_trans_907
+    21301816: Staff_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -988,749 +989,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_3
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_4
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_5
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_6
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_7
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_8
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_9
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_10
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_11
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_12
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_13
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_14
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_15
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 1160
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_16
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_17
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_18
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_19
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_20
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_21
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_22
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_23
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_24
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_25
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_26
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_27
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_28
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_29
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_30
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_31
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_32
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_33
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 1136
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_34
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_35
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_36
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_37
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_38
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_39
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_40
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_41
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_42
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_43
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_44
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_45
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_46
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_47
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_48
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_49
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_50
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_51
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_52
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 1112
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_53
+      name: Sword_0
       rect:
         serializedVersion: 2
         x: 0
@@ -1744,7 +1003,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_54
+      name: Sword_1
       rect:
         serializedVersion: 2
         x: 16
@@ -1758,7 +1017,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_55
+      name: Axe_0
       rect:
         serializedVersion: 2
         x: 32
@@ -1772,7 +1031,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_56
+      name: Staff_0
       rect:
         serializedVersion: 2
         x: 48
@@ -1786,7 +1045,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_57
+      name: Dagger_0
       rect:
         serializedVersion: 2
         x: 64
@@ -1800,7 +1059,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_58
+      name: Staff_1
       rect:
         serializedVersion: 2
         x: 80
@@ -1814,7 +1073,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_59
+      name: Staff_2
       rect:
         serializedVersion: 2
         x: 96
@@ -1828,7 +1087,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_60
+      name: Axe_1
       rect:
         serializedVersion: 2
         x: 112
@@ -1842,7 +1101,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_61
+      name: Axe_2
       rect:
         serializedVersion: 2
         x: 128
@@ -1856,7 +1115,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_62
+      name: Axe_3
       rect:
         serializedVersion: 2
         x: 144
@@ -1870,7 +1129,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_63
+      name: Club_0
       rect:
         serializedVersion: 2
         x: 160
@@ -1884,7 +1143,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_64
+      name: Hammer_0
       rect:
         serializedVersion: 2
         x: 176
@@ -1898,7 +1157,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_65
+      name: Knife_0
       rect:
         serializedVersion: 2
         x: 192
@@ -1912,7 +1171,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_66
+      name: Trident_0
       rect:
         serializedVersion: 2
         x: 208
@@ -1940,7 +1199,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_68
+      name: Random_0
       rect:
         serializedVersion: 2
         x: 240
@@ -1954,7 +1213,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_69
+      name: Staff_4
       rect:
         serializedVersion: 2
         x: 256
@@ -1968,7 +1227,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_70
+      name: Bow_0
       rect:
         serializedVersion: 2
         x: 272
@@ -1982,7 +1241,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_71
+      name: Crossbow_0
       rect:
         serializedVersion: 2
         x: 288
@@ -1996,7 +1255,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_72
+      name: Body_0
       rect:
         serializedVersion: 2
         x: 0
@@ -2010,7 +1269,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_73
+      name: Helmet_0
       rect:
         serializedVersion: 2
         x: 16
@@ -2024,7 +1283,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_74
+      name: Boots_0
       rect:
         serializedVersion: 2
         x: 32
@@ -2038,7 +1297,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_75
+      name: Pants_0
       rect:
         serializedVersion: 2
         x: 48
@@ -2052,7 +1311,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_76
+      name: Gloves_0
       rect:
         serializedVersion: 2
         x: 64
@@ -2066,7 +1325,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_77
+      name: Shield_0
       rect:
         serializedVersion: 2
         x: 80
@@ -2080,7 +1339,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_78
+      name: Belt_0
       rect:
         serializedVersion: 2
         x: 96
@@ -2094,7 +1353,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_79
+      name: Belt_1
       rect:
         serializedVersion: 2
         x: 112
@@ -2108,7 +1367,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_80
+      name: Choker_0
       rect:
         serializedVersion: 2
         x: 128
@@ -2122,7 +1381,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_81
+      name: Choker_1
       rect:
         serializedVersion: 2
         x: 144
@@ -2150,7 +1409,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_83
+      name: Ring_0
       rect:
         serializedVersion: 2
         x: 176
@@ -2164,7 +1423,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_84
+      name: Ring_1
       rect:
         serializedVersion: 2
         x: 192
@@ -2178,7 +1437,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_85
+      name: Food_0
       rect:
         serializedVersion: 2
         x: 208
@@ -2192,7 +1451,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_86
+      name: Plate_0
       rect:
         serializedVersion: 2
         x: 224
@@ -2206,7 +1465,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_87
+      name: Plate_1
       rect:
         serializedVersion: 2
         x: 240
@@ -2220,7 +1479,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_88
+      name: Plate_2
       rect:
         serializedVersion: 2
         x: 256
@@ -2234,7 +1493,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_89
+      name: Clock_0
       rect:
         serializedVersion: 2
         x: 272
@@ -2248,7 +1507,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_90
+      name: Clock_1
       rect:
         serializedVersion: 2
         x: 288
@@ -2262,7 +1521,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_91
+      name: Potion_0
       rect:
         serializedVersion: 2
         x: 0
@@ -2276,7 +1535,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_92
+      name: Potion_1
       rect:
         serializedVersion: 2
         x: 16
@@ -2290,7 +1549,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_93
+      name: Potion_2
       rect:
         serializedVersion: 2
         x: 32
@@ -2304,7 +1563,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_94
+      name: Potion_3
       rect:
         serializedVersion: 2
         x: 48
@@ -2318,7 +1577,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_95
+      name: Book_0
       rect:
         serializedVersion: 2
         x: 64
@@ -2332,7 +1591,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_96
+      name: Key_0
       rect:
         serializedVersion: 2
         x: 80
@@ -2346,7 +1605,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_97
+      name: Key_1
       rect:
         serializedVersion: 2
         x: 96
@@ -2360,7 +1619,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_98
+      name: Key_2
       rect:
         serializedVersion: 2
         x: 112
@@ -2374,7 +1633,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_99
+      name: Paper_0
       rect:
         serializedVersion: 2
         x: 128
@@ -2388,7 +1647,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_100
+      name: Paper_1
       rect:
         serializedVersion: 2
         x: 144
@@ -2402,7 +1661,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_101
+      name: Symbol_0
       rect:
         serializedVersion: 2
         x: 160
@@ -2416,7 +1675,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_102
+      name: Chest_0
       rect:
         serializedVersion: 2
         x: 176
@@ -2430,7 +1689,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_103
+      name: Chest_1
       rect:
         serializedVersion: 2
         x: 192
@@ -2444,7 +1703,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_104
+      name: Book_1
       rect:
         serializedVersion: 2
         x: 208
@@ -2458,7 +1717,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_105
+      name: Bag_0
       rect:
         serializedVersion: 2
         x: 224
@@ -2472,7 +1731,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_106
+      name: Orb_0
       rect:
         serializedVersion: 2
         x: 240
@@ -2486,7 +1745,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_107
+      name: Orb_1
       rect:
         serializedVersion: 2
         x: 256
@@ -2500,7 +1759,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_108
+      name: Statue_0
       rect:
         serializedVersion: 2
         x: 272
@@ -2514,7 +1773,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_109
+      name: Random_1
       rect:
         serializedVersion: 2
         x: 288
@@ -2528,7 +1787,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_110
+      name: Random_2
       rect:
         serializedVersion: 2
         x: 0
@@ -2542,7 +1801,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_111
+      name: Candle_0
       rect:
         serializedVersion: 2
         x: 16
@@ -2556,7 +1815,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_112
+      name: Bone_0
       rect:
         serializedVersion: 2
         x: 32
@@ -2570,7 +1829,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_113
+      name: Skull_0
       rect:
         serializedVersion: 2
         x: 48
@@ -2584,7 +1843,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_114
+      name: Skull_1
       rect:
         serializedVersion: 2
         x: 64
@@ -2598,7 +1857,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_115
+      name: Crown_0
       rect:
         serializedVersion: 2
         x: 80
@@ -2612,7 +1871,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_116
+      name: Crown_1
       rect:
         serializedVersion: 2
         x: 96
@@ -2626,7 +1885,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_117
+      name: Dynamite_0
       rect:
         serializedVersion: 2
         x: 112
@@ -2640,7 +1899,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_118
+      name: Torch_0
       rect:
         serializedVersion: 2
         x: 128
@@ -2654,7 +1913,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_119
+      name: Molotov_0
       rect:
         serializedVersion: 2
         x: 144
@@ -2668,7 +1927,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_120
+      name: Dynamite_1
       rect:
         serializedVersion: 2
         x: 160
@@ -2682,7 +1941,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_121
+      name: Gun_0
       rect:
         serializedVersion: 2
         x: 176
@@ -2696,7 +1955,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_122
+      name: Shield_1
       rect:
         serializedVersion: 2
         x: 192
@@ -2710,7 +1969,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_123
+      name: Sword_4
       rect:
         serializedVersion: 2
         x: 208
@@ -2724,7 +1983,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_124
+      name: Random_3
       rect:
         serializedVersion: 2
         x: 224
@@ -2738,7 +1997,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_125
+      name: Shovel_0
       rect:
         serializedVersion: 2
         x: 240
@@ -2752,7 +2011,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_126
+      name: Loot_0
       rect:
         serializedVersion: 2
         x: 256
@@ -2766,7 +2025,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_127
+      name: Random_4
       rect:
         serializedVersion: 2
         x: 272
@@ -2780,7 +2039,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_128
+      name: Bell_0
       rect:
         serializedVersion: 2
         x: 288
@@ -2976,91 +2235,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_142
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 992
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_143
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 992
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_144
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 992
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_145
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 992
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_146
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 992
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_147
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 992
-        width: 16
-        height: 24
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_148
+      name: Explosion_0
       rect:
         serializedVersion: 2
         x: 0
@@ -3074,7 +2249,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_149
+      name: Explosion_1
       rect:
         serializedVersion: 2
         x: 16
@@ -3088,7 +2263,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_150
+      name: Explosion_2
       rect:
         serializedVersion: 2
         x: 32
@@ -3102,7 +2277,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_151
+      name: Gas_0
       rect:
         serializedVersion: 2
         x: 48
@@ -3116,7 +2291,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_152
+      name: Gas_1
       rect:
         serializedVersion: 2
         x: 64
@@ -3130,7 +2305,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_153
+      name: Explosion_3
       rect:
         serializedVersion: 2
         x: 80
@@ -3144,7 +2319,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_154
+      name: Explosion_4
       rect:
         serializedVersion: 2
         x: 96
@@ -3158,7 +2333,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_155
+      name: Explosion_5
       rect:
         serializedVersion: 2
         x: 112
@@ -3172,7 +2347,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_156
+      name: Flame_0
       rect:
         serializedVersion: 2
         x: 128
@@ -3186,7 +2361,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_157
+      name: Flame_1
       rect:
         serializedVersion: 2
         x: 144
@@ -3200,7 +2375,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_158
+      name: Flame_2
       rect:
         serializedVersion: 2
         x: 160
@@ -3214,7 +2389,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_159
+      name: Flame_3
       rect:
         serializedVersion: 2
         x: 176
@@ -3228,7 +2403,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_160
+      name: Target_2
       rect:
         serializedVersion: 2
         x: 192
@@ -3242,7 +2417,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_161
+      name: Target_1
       rect:
         serializedVersion: 2
         x: 208
@@ -3256,7 +2431,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_162
+      name: Target_0
       rect:
         serializedVersion: 2
         x: 224
@@ -3270,7 +2445,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_163
+      name: Beam_0
       rect:
         serializedVersion: 2
         x: 240
@@ -3284,7 +2459,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_164
+      name: Beam_1
       rect:
         serializedVersion: 2
         x: 256
@@ -3298,7 +2473,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_165
+      name: Beam_2
       rect:
         serializedVersion: 2
         x: 272
@@ -3312,7 +2487,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_166
+      name: Beam_3
       rect:
         serializedVersion: 2
         x: 288
@@ -3326,7 +2501,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_167
+      name: Spark_0
       rect:
         serializedVersion: 2
         x: 0
@@ -3340,7 +2515,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_168
+      name: Spark_1
       rect:
         serializedVersion: 2
         x: 16
@@ -3354,7 +2529,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_169
+      name: Spark_2
       rect:
         serializedVersion: 2
         x: 32
@@ -3368,7 +2543,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_170
+      name: Spark_3
       rect:
         serializedVersion: 2
         x: 48
@@ -3382,7 +2557,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_171
+      name: Spark_4
       rect:
         serializedVersion: 2
         x: 64
@@ -3396,7 +2571,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_172
+      name: Cross_0
       rect:
         serializedVersion: 2
         x: 80
@@ -3410,7 +2585,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_173
+      name: Cross_1
       rect:
         serializedVersion: 2
         x: 96
@@ -3424,7 +2599,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_174
+      name: Cross_2
       rect:
         serializedVersion: 2
         x: 112
@@ -3438,7 +2613,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_175
+      name: Cross_3
       rect:
         serializedVersion: 2
         x: 128
@@ -3452,7 +2627,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_176
+      name: Arrow_0
       rect:
         serializedVersion: 2
         x: 144
@@ -3466,7 +2641,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_177
+      name: Arrow_1
       rect:
         serializedVersion: 2
         x: 160
@@ -3480,7 +2655,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_178
+      name: Arrow_2
       rect:
         serializedVersion: 2
         x: 176
@@ -3494,7 +2669,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_179
+      name: Arrow_3
       rect:
         serializedVersion: 2
         x: 192
@@ -3508,10 +2683,10 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_180
+      name: Rain_0
       rect:
         serializedVersion: 2
-        x: 208
+        x: 210
         y: 944
         width: 16
         height: 24
@@ -3522,7 +2697,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_181
+      name: Rain_1
       rect:
         serializedVersion: 2
         x: 224
@@ -3536,7 +2711,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_182
+      name: Snow_0
       rect:
         serializedVersion: 2
         x: 240
@@ -3550,7 +2725,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_183
+      name: Snow_1
       rect:
         serializedVersion: 2
         x: 256
@@ -3564,7 +2739,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_184
+      name: Snow_2
       rect:
         serializedVersion: 2
         x: 272
@@ -3578,7 +2753,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_185
+      name: Snow_3
       rect:
         serializedVersion: 2
         x: 288
@@ -3592,7 +2767,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_186
+      name: Dot_0
       rect:
         serializedVersion: 2
         x: 0
@@ -3606,7 +2781,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_187
+      name: Cross_4
       rect:
         serializedVersion: 2
         x: 16
@@ -3620,7 +2795,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_188
+      name: X_0
       rect:
         serializedVersion: 2
         x: 32
@@ -3634,7 +2809,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_189
+      name: Bubble_0
       rect:
         serializedVersion: 2
         x: 48
@@ -3648,7 +2823,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_190
+      name: Bubble_1
       rect:
         serializedVersion: 2
         x: 64
@@ -3662,7 +2837,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_191
+      name: Aura_0
       rect:
         serializedVersion: 2
         x: 80
@@ -3676,7 +2851,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_192
+      name: Beam_4
       rect:
         serializedVersion: 2
         x: 96
@@ -3690,7 +2865,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_193
+      name: Shield_2
       rect:
         serializedVersion: 2
         x: 112
@@ -3704,7 +2879,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_194
+      name: Beam_5
       rect:
         serializedVersion: 2
         x: 128
@@ -3718,7 +2893,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_195
+      name: Random_5
       rect:
         serializedVersion: 2
         x: 144
@@ -3732,7 +2907,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_196
+      name: Eyes_0
       rect:
         serializedVersion: 2
         x: 160
@@ -3746,7 +2921,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_197
+      name: Eyes_1
       rect:
         serializedVersion: 2
         x: 176
@@ -3760,7 +2935,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_198
+      name: Explosion_6
       rect:
         serializedVersion: 2
         x: 192
@@ -3774,7 +2949,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_199
+      name: Explosion_7
       rect:
         serializedVersion: 2
         x: 208
@@ -3788,7 +2963,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_200
+      name: Aura_1
       rect:
         serializedVersion: 2
         x: 224
@@ -3802,7 +2977,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_201
+      name: Lightning_0
       rect:
         serializedVersion: 2
         x: 240
@@ -3816,7 +2991,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_202
+      name: Lightning_1
       rect:
         serializedVersion: 2
         x: 256
@@ -3830,7 +3005,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_203
+      name: Slice_0
       rect:
         serializedVersion: 2
         x: 272
@@ -3844,7 +3019,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_204
+      name: Slice_1
       rect:
         serializedVersion: 2
         x: 288
@@ -4124,7 +3299,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_224
+      name: Wall_0
       rect:
         serializedVersion: 2
         x: 0
@@ -4138,7 +3313,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_225
+      name: Wall_1
       rect:
         serializedVersion: 2
         x: 16
@@ -4152,7 +3327,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_226
+      name: Wall_2
       rect:
         serializedVersion: 2
         x: 32
@@ -4166,7 +3341,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_227
+      name: Wall_3
       rect:
         serializedVersion: 2
         x: 48
@@ -4180,7 +3355,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_228
+      name: Wall_4
       rect:
         serializedVersion: 2
         x: 64
@@ -4194,7 +3369,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_229
+      name: Wall_5
       rect:
         serializedVersion: 2
         x: 80
@@ -4208,7 +3383,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: oryx_roguelike_16x24_trans_230
+      name: Wall_6
       rect:
         serializedVersion: 2
         x: 96
