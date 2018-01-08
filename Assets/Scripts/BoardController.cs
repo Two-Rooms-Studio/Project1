@@ -5,7 +5,6 @@ using UnityEditor;
 
 public class BoardController : MonoBehaviour {
 	[SerializeField]
-	public Camera gameCamera;
 	[Header("Global Settings")]
 	[Tooltip("Number of rows to generate in the maps grid")]
 	public int rows = 5;
@@ -37,26 +36,28 @@ public class BoardController : MonoBehaviour {
 	{
 		SetUpBoard();
 		SpawnPlayer();
+		gameObject.GetComponent<EntityController>().SetPlayer(player);
+		gameObject.GetComponent<EntityController>().enabled = true;
 	}
 
 	void FixedUpdate(){
-		if (Input.GetKeyDown(KeyCode.W)) {
-			if (player.move('n')) {
-				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
-			}
-		} else if (Input.GetKeyDown(KeyCode.S)) {
-			if (player.move('s')) {
-				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
-			}
-		} else if (Input.GetKeyDown(KeyCode.D)) {
-			if (player.move('e')) {
-				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
-			}
-		} else if (Input.GetKeyDown(KeyCode.A)) {
-			if (player.move('w')) {
-				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
-			}
-		}
+//		if (Input.GetKeyDown(KeyCode.W)) {
+//			if (player.move('n')) {
+//				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
+//			}
+//		} else if (Input.GetKeyDown(KeyCode.S)) {
+//			if (player.move('s')) {
+//				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
+//			}
+//		} else if (Input.GetKeyDown(KeyCode.D)) {
+//			if (player.move('e')) {
+//				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
+//			}
+//		} else if (Input.GetKeyDown(KeyCode.A)) {
+//			if (player.move('w')) {
+//				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
+//			}
+//		}
 	}
 
 	void SetUpBoard()
@@ -73,6 +74,5 @@ public class BoardController : MonoBehaviour {
 		} while (map.GetGridTile((int)spawnPoint.x, (int)spawnPoint.y).IsWall());
 		player = ScriptableObject.CreateInstance<PlayerEntity>();
 		player.init(spawnPoint, map, playerSprite);
-		gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
 	}
 }
