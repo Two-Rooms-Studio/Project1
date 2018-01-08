@@ -30,11 +30,24 @@ public class BoardController : MonoBehaviour {
 
 	private DungeonBoard map;
 	private Transform boardHolder;
+	private PlayerEntity player;
 
 	void Awake()
 	{
 		SetUpBoard();
-		//SpawnPlayer();
+		SpawnPlayer();
+	}
+
+	void Update(){
+		if (Input.GetKeyDown(KeyCode.W)) {
+			player.move('n');
+		} else if (Input.GetKeyDown(KeyCode.S)) {
+			player.move('s');
+		} else if (Input.GetKeyDown(KeyCode.D)) {
+			player.move('e');
+		} else if (Input.GetKeyDown(KeyCode.A)) {
+			player.move('w');
+		}
 	}
 
 	void SetUpBoard()
@@ -49,8 +62,7 @@ public class BoardController : MonoBehaviour {
 		do {
 		spawnPoint = new Vector2((int)Random.Range(0, cols-1), (int)Random.Range(0, rows-1));
 		} while (map.GetGridTile((int)spawnPoint.x, (int)spawnPoint.y).IsWall());
-		GameTile player = map.GetGridTile ((int)spawnPoint.x, (int)spawnPoint.y);
-		player.SetIsOccupied(true);
-		player.GetObject ().GetComponent<SpriteRenderer> ().sprite = playerSprite;
+		player = ScriptableObject.CreateInstance<PlayerEntity>();
+		player.init(spawnPoint, map, playerSprite);
 	}
 }

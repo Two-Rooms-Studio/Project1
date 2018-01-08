@@ -42,8 +42,8 @@ public class DungeonBoard : Board {
 				float randNum = Random.Range(.0f, 1.0f);
 				GameTile tile = new GameTile((float)x, (float)y, floorSprite);
 				GameObject instance = Instantiate (floorObject, new Vector3 ((float)xPadding, (float)yPadding, 0.0f), Quaternion.identity, boardHolder);
-				Debug.Log("Created object at x: " + (xPadding) + " and y: " + (yPadding));
 				instance.name = "(" + x + "," + y + ")";
+				tile.SetOriginalSprite(floorSprite);
 				yPadding += 0.24f;
 				if (randNum < chanceToStartAlive) {
 					//set the tile to be a wall tile since it passed random test

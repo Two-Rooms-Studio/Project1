@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public abstract class Entity : MonoBehaviour {
+public abstract class Entity : ScriptableObject {
 	public int health;
 	public int moves;
 

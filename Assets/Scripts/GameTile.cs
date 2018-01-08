@@ -49,6 +49,11 @@ public class GameTile {
 		return tileObject;
 	}
 
+	public Sprite GetOriginalSprite()
+	{
+		return originalSprite;
+	}
+
 	public GameTile GetTileNorth(){
 		return tileNorth;
 	}
@@ -106,5 +111,14 @@ public class GameTile {
 
 	public void SetTileWest(GameTile tile){
 		tileWest = tile;
+	}
+//
+	public bool Open()
+	{
+		//return true if the tile isn't a wall or occupied, in otherwords the player can move onto this tile
+		if (!IsOccupied() && !IsWall()) {
+			return true;
+		}
+		return false;
 	}
 }
