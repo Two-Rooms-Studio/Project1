@@ -5,6 +5,7 @@ using UnityEditor;
 
 public class BoardController : MonoBehaviour {
 	[SerializeField]
+
 	[Header("Global Settings")]
 	[Tooltip("Number of rows to generate in the maps grid")]
 	public int rows = 5;
@@ -12,6 +13,7 @@ public class BoardController : MonoBehaviour {
 	public int cols = 5;
 	[Tooltip("The current sprite of the player character")]
 	public Sprite playerSprite;
+
 	[Header("Dungeon Map Settings")]
 	[Tooltip("Chance for the tile to be a wall during inital generation")]
 	public float chanceToStartAlive = 0.4f;
@@ -26,7 +28,9 @@ public class BoardController : MonoBehaviour {
 	[Tooltip("Object to use for the floor of the dungeon")]
 	public GameObject floorObject;
 	[Tooltip("Sprite to use for walls the player cannon't see the beginning of")]
-	public Sprite innerWall;
+	public Sprite innerWallSprite;
+	[Tooltip("Sprite to use for teleporters that take the player to unconnected caves")]
+	public Sprite teleporterSprite;
 
 	private DungeonBoard map;
 	private Transform boardHolder;
@@ -40,30 +44,10 @@ public class BoardController : MonoBehaviour {
 		gameObject.GetComponent<EntityController>().enabled = true;
 	}
 
-	void FixedUpdate(){
-//		if (Input.GetKeyDown(KeyCode.W)) {
-//			if (player.move('n')) {
-//				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
-//			}
-//		} else if (Input.GetKeyDown(KeyCode.S)) {
-//			if (player.move('s')) {
-//				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
-//			}
-//		} else if (Input.GetKeyDown(KeyCode.D)) {
-//			if (player.move('e')) {
-//				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
-//			}
-//		} else if (Input.GetKeyDown(KeyCode.A)) {
-//			if (player.move('w')) {
-//				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
-//			}
-//		}
-	}
-
 	void SetUpBoard()
 	{
 		map = ScriptableObject.CreateInstance<DungeonBoard>();
-		map.init (rows, cols, floorObject, wallObject, innerWall, chanceToStartAlive, deathLimit, birthLimit, numberOfSimulations);
+		map.init (rows, cols, floorObject, wallObject, innerWallSprite, teleporterSprite, chanceToStartAlive, deathLimit, birthLimit, numberOfSimulations);
 	}
 
 	void SpawnPlayer()
@@ -71,7 +55,7 @@ public class BoardController : MonoBehaviour {
 		Vector2 spawnPoint;
 		do {
 		spawnPoint = new Vector2((int)Random.Range(0, cols-1), (int)Random.Range(0, rows-1));
-		} while (map.GetGridTile((int)spawnPoint.x, (int)spawnPoint.y).IsWall());
+		} while (!map.GetGridTile((int)spawnPoint.x, (int)spawnPoint.y).Open());
 		player = ScriptableObject.CreateInstance<PlayerEntity>();
 		player.init(spawnPoint, map, playerSprite);
 	}

@@ -245,7 +245,8 @@ MonoBehaviour:
   wallObject: {fileID: 1944342310348864, guid: 40969798a19dc2d479eaa82e79ef337f, type: 2}
   floorObject: {fileID: 1810014617875250, guid: 899daa07923ddb849ba90fdc4ae093e9,
     type: 2}
-  innerWall: {fileID: 21300462, guid: f1508987d08af7542a245717b9fc27de, type: 3}
+  innerWallSprite: {fileID: 21300462, guid: f1508987d08af7542a245717b9fc27de, type: 3}
+  teleporterSprite: {fileID: 21300320, guid: f1508987d08af7542a245717b9fc27de, type: 3}
 --- !u!4 &1011319284
 Transform:
   m_ObjectHideFlags: 0

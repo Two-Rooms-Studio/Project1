@@ -33,7 +33,7 @@ public class Board : ScriptableObject{
 	public List<List<GameTile>> GetGrid(){
 		return grid;
 	}
-
+		
 	//protected
 	protected void CalculateTileNeighbours(){
 		//set up the neighbour information for each tile on the map
@@ -59,6 +59,30 @@ public class Board : ScriptableObject{
 				} else {
 					grid[x][y].SetTileWest(grid[x - 1][y]);
 				}
+			}
+		}
+	}
+
+	protected bool HasUnmarkedTiles()
+	{
+		//return true if the board has any tiles that aren't marked that could be marked
+		//for floodfill correction of blocked off rooms
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (!grid[x][y].IsMarked() && !grid[x][y].IsWall()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	protected void SetAllOriginalSprites()
+	{
+		//used once the board is completely to set all the original sprites so we can change them out during movement and other transitions
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				grid[x][y].SetOriginalSprite(grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite);
 			}
 		}
 	}

@@ -8,6 +8,7 @@ public class GameTile {
 	private bool wall = false;
 	private bool destroyed = false;
 	private bool occupied = false;
+	private bool marked = false; //used for floodfilling in order to fixed blocked in map sections
 	private Sprite originalSprite;
 	private GameObject tileObject;
 	private GameTile tileNorth = null;
@@ -32,6 +33,11 @@ public class GameTile {
 	public bool IsOccupied()
 	{
 		return occupied;
+	}
+
+	public bool IsMarked()
+	{
+		return marked;
 	}
 
 	public bool IsDestroyed()
@@ -92,6 +98,11 @@ public class GameTile {
 		occupied = val;
 	}
 
+	public void SetIsMarked(bool val)
+	{
+		marked = val;
+	}
+
 	public void SetOriginalSprite(Sprite p_originalSprite)
 	{
 		originalSprite = p_originalSprite;
@@ -116,7 +127,7 @@ public class GameTile {
 	public bool Open()
 	{
 		//return true if the tile isn't a wall or occupied, in otherwords the player can move onto this tile
-		if (!IsOccupied() && !IsWall()) {
+		if (!IsOccupied() && !IsWall() && !IsDestroyed()) {
 			return true;
 		}
 		return false;

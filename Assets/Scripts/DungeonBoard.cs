@@ -7,10 +7,11 @@ public class DungeonBoard : Board {
 	private int deathLimit = 3;
 	private int birthLimit = 4;
 	private int numberOfSimulations = 5;
-	private Sprite innerWall;
+	private Sprite innerWallSprite;
+	private Sprite teleporterSprite;
 
 	//public
-	public void init (int p_rows, int p_cols, GameObject floorObject, GameObject wallObject, Sprite p_innerWall, float p_chanceToStartAlive, int p_deathLimit, int p_birthLimit, int p_numberofSimulations)
+	public void init (int p_rows, int p_cols, GameObject floorObject, GameObject wallObject, Sprite p_innerWallSprite, Sprite p_teleporterSprite, float p_chanceToStartAlive, int p_deathLimit, int p_birthLimit, int p_numberofSimulations)
 	{
 		//setup the dungeon board
 		base.init (p_rows, p_cols, floorObject, wallObject);
@@ -18,17 +19,19 @@ public class DungeonBoard : Board {
 		deathLimit = p_deathLimit;
 		birthLimit = p_birthLimit;
 		numberOfSimulations = p_numberofSimulations;
-		innerWall = p_innerWall;
+		innerWallSprite = p_innerWallSprite;
+		teleporterSprite = p_teleporterSprite;
 		initMap();
 		for (int i = 0; i < numberOfSimulations; i++) {
 			SimulationStep();
 		}
 		MapCleanUp ();
-		CalculateTileNeighbours();
 		if (!EnsureSpawnPointExsits()) { // we need to make a spawn point one did not generate
 			FixSpawnPoint(floorObject);
 			CalculateTileNeighbours();
 		}
+		SetAllOriginalSprites();
+		CalculateTileNeighbours();
 	}
 
 	//privates
@@ -43,13 +46,11 @@ public class DungeonBoard : Board {
 				GameTile tile = new GameTile((float)x, (float)y, floorSprite);
 				GameObject instance = Instantiate (floorObject, new Vector3 ((float)xPadding, (float)yPadding, 0.0f), Quaternion.identity, boardHolder);
 				instance.name = "(" + x + "," + y + ")";
-				tile.SetOriginalSprite(floorSprite);
 				yPadding += 0.24f;
 				if (randNum < chanceToStartAlive) {
 					//set the tile to be a wall tile since it passed random test
 					//at this point its pointless to destroy and reinstantiate a wall object but in the future we may have to do that
 					tile.SetIsWall(true);
-					tile.SetOriginalSprite(wallSprite);
 					instance.GetComponent<SpriteRenderer>().sprite = wallSprite;
 				}
 				tile.SetObject(instance);
@@ -73,21 +74,17 @@ public class DungeonBoard : Board {
 				if (oldmap[x][y].IsWall()) {
 					if (wallsAroundPoint < deathLimit) {
 						grid[x][y].SetIsWall(false);
-						grid[x][y].SetOriginalSprite(floorSprite);
 						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = floorSprite;
 					} else {
 						grid[x][y].SetIsWall(true);
-						grid[x][y].SetOriginalSprite (wallSprite);
 						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = wallSprite;
 					}
 				} else {
 					if (wallsAroundPoint > birthLimit) {
 						grid[x][y].SetIsWall(true);
-						grid[x][y].SetOriginalSprite (wallSprite);
 						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = wallSprite;
 					} else {
 						grid[x][y].SetIsWall(false);
-						grid[x][y].SetOriginalSprite(floorSprite);
 						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = floorSprite;
 					}
 				}
@@ -126,6 +123,8 @@ public class DungeonBoard : Board {
 		CalculateTileNeighbours();
 		SmoothMapEdges();
 		ChangeInnerWallSprites();
+		CalculateTileNeighbours();
+		EnsureCaveConnection();
 	}
 
 	private void RemoveExtraWalls()
@@ -151,7 +150,6 @@ public class DungeonBoard : Board {
 				int DestroyedCount = countDestroyed (x, y);
 				if (DestroyedCount >= 1 && !(grid[x][y].IsWall())) {
 					grid[x][y].SetIsWall(true);
-					grid[x][y].SetOriginalSprite(wallSprite);
 					grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = wallSprite;
 				}
 			}
@@ -258,14 +256,81 @@ public class DungeonBoard : Board {
 			for (int y = 0; y < rows; y++) {
 				if(grid[x][y].GetTileSouth() != null && grid[x][y].IsWall()) {
 					if ((!grid[x][y].GetTileSouth().IsDestroyed() && grid[x][y].GetTileSouth().IsWall())) {
-						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = innerWall;
+						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = innerWallSprite;
 					}
 				}
 			}
 		}
 	}
-//
 
+	private void EnsureCaveConnection()
+	{
+		//connect all disconnected caves with "teleporters" in order to ensure the player can reach all caves
+		Vector2 randomPoint;
+		do {
+			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
+		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].Open() || grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
+		GameTile randomTile = grid[(int)randomPoint.x][(int)randomPoint.y]; 
+		randomTile.SetIsMarked(true);
+		FloodFill(ref randomTile);
+		if (HasUnmarkedTiles()) {//if we have unreachable caves then we need to make teleporters to access them
+			randomTile.SetIsOccupied(true);
+			randomTile.GetObject().GetComponent<SpriteRenderer>().sprite = teleporterSprite;
+			randomTile.GetObject().GetComponent<SpriteRenderer>().color = Color.cyan;
+			do {
+				do {
+					randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
+				} while (!grid[(int)randomPoint.x][(int)randomPoint.y].Open() || grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
+				randomTile = grid[(int)randomPoint.x][(int)randomPoint.y]; //switch randomTile to the new unmarked tile
+				randomTile.SetIsMarked(true);
+				FloodFill(ref randomTile);
+				randomTile.SetIsOccupied(true);
+				randomTile.GetObject().GetComponent<SpriteRenderer>().sprite = teleporterSprite;
+				randomTile.GetObject().GetComponent<SpriteRenderer>().color = Color.cyan;
+			} while (HasUnmarkedTiles());
+		}
+
+	}
+
+	private void FloodFill(ref GameTile tile)
+	{
+		//starting from the provided tile, mark all connected tiles (meaning stop at walls)
+		//this essentially produces a cut out of a room that is reachable, i.e. no walls blocking off certian parts
+		List<GameTile> validNeighbours = new List<GameTile>();
+		tile.SetIsMarked(true);
+		AddValidNeighbours(ref validNeighbours, tile);
+		List<GameTile> nextValidNeighbours = new List<GameTile>();
+		do {
+			nextValidNeighbours.Clear();
+			for (int x = 0; x < validNeighbours.Count; x++) {
+				validNeighbours[x].SetIsMarked(true);
+				AddValidNeighbours(ref nextValidNeighbours, validNeighbours[x]);
+			}
+			validNeighbours = new List<GameTile>(nextValidNeighbours);
+		} while (nextValidNeighbours.Count != 0);
+		return;
+	}
+
+	private void AddValidNeighbours(ref List<GameTile> list, GameTile tile){
+		tile.SetIsMarked(true);//
+		if(tile.GetTileNorth() != null && !tile.GetTileNorth().IsWall() && !tile.GetTileNorth().IsMarked()){
+			list.Add(tile.GetTileNorth());
+			tile.GetTileNorth().SetIsMarked(true);
+		}
+		if (tile.GetTileSouth() != null && !tile.GetTileSouth().IsWall() && !tile.GetTileSouth().IsMarked()) {
+			list.Add(tile.GetTileSouth());
+			tile.GetTileSouth().SetIsMarked(true);
+		}
+		if (tile.GetTileEast() != null && !tile.GetTileEast().IsWall() && !tile.GetTileEast().IsMarked()) {
+			list.Add(tile.GetTileEast());
+			tile.GetTileEast().SetIsMarked(true);
+		}
+		if (tile.GetTileWest() != null && !tile.GetTileWest().IsWall() && !tile.GetTileWest().IsMarked()) {
+			list.Add(tile.GetTileWest());
+			tile.GetTileWest().SetIsMarked(true);
+		}
+	}
+//
 	private void FixSpawnPoint(GameObject tileObject)
 	{
 		//ran if the generated map has absolutely no place to place a spawn point 
@@ -279,7 +344,6 @@ public class DungeonBoard : Board {
 			grid [(int)randPoint.x][(int)randPoint.y].SetObject (instance);				
 			grid[(int)randPoint.x][(int)randPoint.y].SetIsDestroyed(false);
 		}
-		grid [(int)randPoint.x][(int)randPoint.y].SetOriginalSprite(floorSprite);
 		grid [(int)randPoint.x][(int)randPoint.y].GetObject().GetComponent<SpriteRenderer>().sprite = floorSprite;
 	}
 }
