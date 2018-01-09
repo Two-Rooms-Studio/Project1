@@ -5,13 +5,16 @@ using UnityEngine;
 public class PlayerEntity : Entity {
 	private GameTile playerTile;
 	private Sprite playerSprite;
+	private Color playerColor;
 
-	public void init (Vector2 spawnPoint, Board map, Sprite p_playerSprite)
+	public void init (Vector2 spawnPoint, Board map, Sprite p_playerSprite, Color p_playerColor)
 	{
 		playerSprite = p_playerSprite;
+		playerColor = p_playerColor;
 		playerTile = map.GetGridTile ((int)spawnPoint.x, (int)spawnPoint.y);
 		playerTile.SetIsOccupied(true);
 		playerTile.GetObject().GetComponent<SpriteRenderer>().sprite = playerSprite;
+		playerTile.GetObject().GetComponent<SpriteRenderer>().color = playerColor;
 	}
 
 	public GameTile GetPlayerGameTile(){
@@ -55,7 +58,9 @@ public class PlayerEntity : Entity {
 	{
 		playerTile.SetIsOccupied(false);
 		playerTile.GetObject().GetComponent<SpriteRenderer>().sprite = playerTile.GetOriginalSprite();
+		playerTile.GetObject().GetComponent<SpriteRenderer>().color = playerTile.GetOriginalColor();
 		playerTile = newPlayerTile;
 		playerTile.GetObject().GetComponent<SpriteRenderer>().sprite = playerSprite;
+		playerTile.GetObject().GetComponent<SpriteRenderer>().color = playerColor;
 	}
 }

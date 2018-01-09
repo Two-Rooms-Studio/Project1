@@ -11,8 +11,10 @@ public class BoardController : MonoBehaviour {
 	public int rows = 5;
 	[Tooltip("Number of columns to generate in the maps grid")]
 	public int cols = 5;
-	[Tooltip("The current sprite of the player character")]
+	[Tooltip("The starting sprite of the player character")]
 	public Sprite playerSprite;
+	[Tooltip("The starting color of the sprite of the player character")]
+	public Color playerColor;
 
 	[Header("Dungeon Map Settings")]
 	[Tooltip("Chance for the tile to be a wall during inital generation")]
@@ -57,6 +59,6 @@ public class BoardController : MonoBehaviour {
 		spawnPoint = new Vector2((int)Random.Range(0, cols-1), (int)Random.Range(0, rows-1));
 		} while (!map.GetGridTile((int)spawnPoint.x, (int)spawnPoint.y).Open());
 		player = ScriptableObject.CreateInstance<PlayerEntity>();
-		player.init(spawnPoint, map, playerSprite);
+		player.init(spawnPoint, map, playerSprite, playerColor);
 	}
 }

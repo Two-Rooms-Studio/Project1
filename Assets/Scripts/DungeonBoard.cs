@@ -30,7 +30,7 @@ public class DungeonBoard : Board {
 			FixSpawnPoint(floorObject);
 			CalculateTileNeighbours();
 		}
-		SetAllOriginalSprites();
+		SetAllOriginalSpritesAndColors();
 		CalculateTileNeighbours();
 	}
 
@@ -267,6 +267,7 @@ public class DungeonBoard : Board {
 	{
 		//connect all disconnected caves with "teleporters" in order to ensure the player can reach all caves
 		Vector2 randomPoint;
+		randomPoint = GetRandomOpenUnMarkedPoint();
 		do {
 			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
 		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].Open() || grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
@@ -274,22 +275,36 @@ public class DungeonBoard : Board {
 		randomTile.SetIsMarked(true);
 		FloodFill(ref randomTile);
 		if (HasUnmarkedTiles()) {//if we have unreachable caves then we need to make teleporters to access them
-			randomTile.SetIsOccupied(true);
-			randomTile.GetObject().GetComponent<SpriteRenderer>().sprite = teleporterSprite;
-			randomTile.GetObject().GetComponent<SpriteRenderer>().color = Color.cyan;
 			do {
-				do {
-					randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
-				} while (!grid[(int)randomPoint.x][(int)randomPoint.y].Open() || grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
+				randomPoint = GetRandomOpenUnMarkedPoint();
 				randomTile = grid[(int)randomPoint.x][(int)randomPoint.y]; //switch randomTile to the new unmarked tile
 				randomTile.SetIsMarked(true);
 				FloodFill(ref randomTile);
-				randomTile.SetIsOccupied(true);
-				randomTile.GetObject().GetComponent<SpriteRenderer>().sprite = teleporterSprite;
-				randomTile.GetObject().GetComponent<SpriteRenderer>().color = Color.cyan;
+				PlaceTeleporter(ref randomTile);
+				randomPoint = GetRandomOpenMarkedPoint(); //place a corresponding exit point randomly in an area already flood filled
+				randomTile = grid[(int)randomPoint.x][(int)randomPoint.y];
+				PlaceTeleporter(ref randomTile); 
 			} while (HasUnmarkedTiles());
 		}
 
+	}
+
+	private Vector2 GetRandomOpenUnMarkedPoint()
+	{
+		Vector2 randomPoint;
+		do {
+			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
+		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].Open() || grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
+		return randomPoint;
+	}
+
+	private Vector2 GetRandomOpenMarkedPoint()
+	{
+		Vector2 randomPoint;
+		do {
+			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
+		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].Open() && !grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
+		return randomPoint;
 	}
 
 	private void FloodFill(ref GameTile tile)
@@ -329,6 +344,14 @@ public class DungeonBoard : Board {
 			list.Add(tile.GetTileWest());
 			tile.GetTileWest().SetIsMarked(true);
 		}
+	}
+
+	private void PlaceTeleporter(ref GameTile tile)
+	{
+		tile.SetIsOccupied(true);
+		tile.GetObject().GetComponent<SpriteRenderer>().sprite = teleporterSprite;
+		tile.GetObject().GetComponent<SpriteRenderer>().color = Color.cyan;
+		tile.SetIsWalkAble(true);
 	}
 //
 	private void FixSpawnPoint(GameObject tileObject)

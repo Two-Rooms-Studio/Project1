@@ -9,7 +9,9 @@ public class GameTile {
 	private bool destroyed = false;
 	private bool occupied = false;
 	private bool marked = false; //used for floodfilling in order to fixed blocked in map sections
+	private bool walkAble = false;
 	private Sprite originalSprite;
+	private Color originalColor;
 	private GameObject tileObject;
 	private GameTile tileNorth = null;
 	private GameTile tileSouth = null;
@@ -45,6 +47,11 @@ public class GameTile {
 		return destroyed;
 	}
 
+	public bool IsWalkAble()
+	{
+		return walkAble;
+	}
+
 	public Vector2 GetPosition()
 	{
 		return new Vector2(this.x, this.y);
@@ -58,6 +65,11 @@ public class GameTile {
 	public Sprite GetOriginalSprite()
 	{
 		return originalSprite;
+	}
+
+	public Color GetOriginalColor()
+	{
+		return originalColor;
 	}
 
 	public GameTile GetTileNorth(){
@@ -103,11 +115,21 @@ public class GameTile {
 		marked = val;
 	}
 
+	public void SetIsWalkAble(bool val)
+	{
+		walkAble = val;
+	}
+
 	public void SetOriginalSprite(Sprite p_originalSprite)
 	{
 		originalSprite = p_originalSprite;
 	}
 		
+	public void SetOriginalColor(Color p_originalColor)
+	{
+		originalColor = p_originalColor;
+	}
+
 	public void SetTileNorth(GameTile tile){
 		tileNorth = tile;
 	}
@@ -127,7 +149,7 @@ public class GameTile {
 	public bool Open()
 	{
 		//return true if the tile isn't a wall or occupied, in otherwords the player can move onto this tile
-		if (!IsOccupied() && !IsWall() && !IsDestroyed()) {
+		if ((!IsOccupied() && !IsWall() && !IsDestroyed()) || (IsWalkAble())) {
 			return true;
 		}
 		return false;

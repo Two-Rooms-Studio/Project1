@@ -77,12 +77,13 @@ public class Board : ScriptableObject{
 		return false;
 	}
 
-	protected void SetAllOriginalSprites()
+	protected void SetAllOriginalSpritesAndColors()
 	{
 		//used once the board is completely to set all the original sprites so we can change them out during movement and other transitions
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
 				grid[x][y].SetOriginalSprite(grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite);
+				grid[x][y].SetOriginalColor(grid[x][y].GetObject().GetComponent<SpriteRenderer>().color);
 			}
 		}
 	}
