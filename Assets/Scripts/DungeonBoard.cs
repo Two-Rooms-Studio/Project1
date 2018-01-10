@@ -46,7 +46,7 @@ public class DungeonBoard : Board {
 				GameTile tile = new GameTile((float)x, (float)y, floorSprite);
 				GameObject instance = Instantiate (floorObject, new Vector3 ((float)xPadding, (float)yPadding, 0.0f), Quaternion.identity, boardHolder);
 				instance.name = "(" + x + "," + y + ")";
-				yPadding += 0.24f;
+				yPadding += 0.23809999f; //0.24
 				if (randNum < chanceToStartAlive) {
 					//set the tile to be a wall tile since it passed random test
 					//at this point its pointless to destroy and reinstantiate a wall object but in the future we may have to do that
@@ -121,7 +121,7 @@ public class DungeonBoard : Board {
 		FixEdges();
 		RemoveFloatingWalls();
 		CalculateTileNeighbours();
-		SmoothMapEdges();
+		//SmoothMapEdges();
 		ChangeInnerWallSprites();
 		CalculateTileNeighbours();
 		EnsureCaveConnection();
@@ -129,7 +129,7 @@ public class DungeonBoard : Board {
 
 	private void RemoveExtraWalls()
 	{
-		//remove walls that are completely surrounded by other walls
+		//remove tiles that are completely surrounded by other walls
 		for (int x = 0; x < cols; x++) { 
 			for (int y = 0; y < rows; y++) {
 				int wallCount = countWalls(grid, x, y);
@@ -222,7 +222,7 @@ public class DungeonBoard : Board {
 			for (int x = 0; x < cols; x++) {
 				for (int y = 0; y < rows; y++) {
 					if(!grid[x][y].IsDestroyed() && grid[x][y].IsWall()){ 
-						if (grid[x][y].GetTileNorth() == null || grid[x][y].GetTileNorth().IsWall() || grid[x][y].GetTileNorth ().IsWall()) {
+						if (grid[x][y].GetTileNorth() == null || grid[x][y].GetTileNorth().IsWall() || grid[x][y].GetTileNorth ().IsDestroyed()) {
 							count++;
 						}
 						if (grid[x][y].GetTileEast() == null || grid[x][y].GetTileEast().IsWall() || grid[x][y].GetTileEast().IsDestroyed()) {
