@@ -9,24 +9,25 @@ public class DungeonBoard : Board {
 	private int numberOfSimulations = 5;
 	private Sprite innerWallSprite;
 	private Sprite teleporterSprite;
+	private bool SmoothEdges = false;
 
 	//public
-	public void init (int p_rows, int p_cols, GameObject floorObject, GameObject wallObject, Sprite p_innerWallSprite, Sprite p_teleporterSprite, float p_chanceToStartAlive, int p_deathLimit, int p_birthLimit, int p_numberofSimulations)
+	public void init (DungeonBoardSettings Settings)
 	{
-		//setup the dungeon board
-		base.init (p_rows, p_cols, floorObject, wallObject);
-		chanceToStartAlive = p_chanceToStartAlive;
-		deathLimit = p_deathLimit;
-		birthLimit = p_birthLimit;
-		numberOfSimulations = p_numberofSimulations;
-		innerWallSprite = p_innerWallSprite;
-		teleporterSprite = p_teleporterSprite;
+		base.init(Settings.rows, Settings.cols, Settings.floorObject, Settings.wallObject);
+		chanceToStartAlive = Settings.chanceToStartAlive;
+		deathLimit = Settings.deathLimit;
+		birthLimit = Settings.birthLimit;
+		numberOfSimulations = Settings.numberOfSimulations;
+		innerWallSprite = Settings.innerWallSprite;
+		teleporterSprite = Settings.teleporterSprite;
+		SmoothEdges = Settings.SmoothEdges;
 		initMap();
 		for (int i = 0; i < numberOfSimulations; i++) {
 			SimulationStep();
 		}
-		MapCleanUp ();
-		if (!EnsureSpawnPointExsits()) { // we need to make a spawn point one did not generate
+		MapCleanUp();
+		if (!EnsureSpawnPointExsits()) {
 			FixSpawnPoint(floorObject);
 			CalculateTileNeighbours();
 		}
@@ -121,7 +122,9 @@ public class DungeonBoard : Board {
 		FixEdges();
 		RemoveFloatingWalls();
 		CalculateTileNeighbours();
-		//SmoothMapEdges();
+		if (SmoothEdges) {
+			SmoothMapEdges ();
+		}
 		ChangeInnerWallSprites();
 		CalculateTileNeighbours();
 		EnsureCaveConnection();
