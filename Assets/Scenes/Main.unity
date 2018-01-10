@@ -189,7 +189,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 848704038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.915, y: 5.875, z: -10.5}
+  m_LocalPosition: {x: 3.915, y: 5.875, z: -3}
   m_LocalScale: {x: 0.49985224, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -201,14 +201,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 848704038}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d07fe52abdab7c94e94ebee57fc636fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   followAxisY: 1
-  width: 9
-  height: 12
 --- !u!1 &1011319282
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +246,7 @@ MonoBehaviour:
   wallObject: {fileID: 1111819790175846, guid: e27248a6eddbf4446b5bba9e47938884, type: 2}
   floorObject: {fileID: 1838781976902404, guid: 16e31880e7667f84299d0e5ea4a19936,
     type: 2}
-  innerWallSprite: {fileID: 21300462, guid: f1508987d08af7542a245717b9fc27de, type: 3}
+  innerWallSprite: {fileID: 21300466, guid: f1508987d08af7542a245717b9fc27de, type: 3}
   teleporterSprite: {fileID: 21300320, guid: f1508987d08af7542a245717b9fc27de, type: 3}
 --- !u!4 &1011319284
 Transform:
