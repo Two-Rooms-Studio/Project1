@@ -9,6 +9,9 @@ public class DungeonBoardSettings : ScriptableObject {
 	public int rows = 5;
 	[Tooltip("Number of columns to generate in the maps grid")]
 	public int cols = 5;
+	[Tooltip("Minimum Percentage of Tiles required to be open if we disallow disjointed caves")]
+	[Range(0.0f , 0.5f)]
+	public float minimumPercentageOfOpenTiles = 0.3f;
 	[Tooltip("Chance for the tile to be a wall during inital generation")]
 	public float chanceToStartAlive = 0.4f;
 	[Tooltip("The number of a nonwall tiles needed around a wall to make the wall a nonwall tile")]
@@ -26,7 +29,9 @@ public class DungeonBoardSettings : ScriptableObject {
 	[Tooltip("Sprite to use for teleporters that take the player to unconnected caves")]
 	public Sprite teleporterSprite;
 	[Tooltip("Wheather to smooth map edges (remove walls surrounded by other walls)")]
-	public bool SmoothEdges;
+	public bool runEdgeSmoothing;
+	[Tooltip("Wheather to allow disconnected caves with teleporter connections")]
+	public bool allowDisconnectedCaves;
 
 	#if UNITY_EDITOR
 	public static class DungeonBoardSettingsMenuItem

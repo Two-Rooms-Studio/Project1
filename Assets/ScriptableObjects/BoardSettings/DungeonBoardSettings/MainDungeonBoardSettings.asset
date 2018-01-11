@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rows: 50
   cols: 50
+  minimumPercentageOfOpenTiles: 0.3
   chanceToStartAlive: 0.4
   deathLimit: 3
   birthLimit: 4
@@ -22,4 +23,5 @@ MonoBehaviour:
     type: 2}
   innerWallSprite: {fileID: 21300466, guid: f1508987d08af7542a245717b9fc27de, type: 3}
   teleporterSprite: {fileID: 21300320, guid: f1508987d08af7542a245717b9fc27de, type: 3}
-  SmoothEdges: 0
+  runEdgeSmoothing: 0
+  allowDisconnectedCaves: 1

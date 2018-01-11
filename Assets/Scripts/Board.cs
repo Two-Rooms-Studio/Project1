@@ -63,6 +63,53 @@ public class Board : ScriptableObject{
 		}
 	}
 
+	protected void CalculateTileNeighboursForSingleTile(int x, int y)
+	{
+		if (y + 1 >= rows) {
+			grid[x][y].SetTileNorth (null);
+		} else {
+			grid[x][y].SetTileNorth(grid[x][y + 1]);
+		}
+		if (y - 1 < 0) {
+			grid[x][y].SetTileSouth (null);
+		} else {
+			grid[x][y].SetTileSouth(grid[x][y - 1]);
+		}
+		if (x + 1 >= cols) {
+			grid[x][y].SetTileEast(null);
+		} else {
+			grid[x][y].SetTileEast(grid[x + 1][y]);
+		}
+		if (x - 1 < 0) {
+			grid[x][y].SetTileWest(null);
+		} else {
+			grid[x][y].SetTileWest(grid[x - 1][y]);
+		}
+	}
+
+	protected float CalculatePlayingArea()
+	{
+		int numberOfOpenCells = 0;
+		int totalNumberOfCells = rows * cols;
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (grid[x][y].Open()) {
+					numberOfOpenCells++;
+				}
+			}
+		}
+		return (((float)numberOfOpenCells) / ((float)totalNumberOfCells));
+	}
+
+	protected void UnMarkAllTiles()
+	{
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				grid[x][y].SetIsMarked(false);
+			}
+		}
+	}
+
 	protected bool HasUnmarkedTiles()
 	{
 		//return true if the board has any tiles that aren't marked that could be marked

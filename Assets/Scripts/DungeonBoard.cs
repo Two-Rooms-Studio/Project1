@@ -3,49 +3,48 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DungeonBoard : Board {
+	//setup vars
 	private float chanceToStartAlive = 0.4f;
+	private float minimumPercentageOfOpenTiles = 0.1f;
 	private int deathLimit = 3;
 	private int birthLimit = 4;
 	private int numberOfSimulations = 5;
 	private Sprite innerWallSprite;
 	private Sprite teleporterSprite;
-	private bool SmoothEdges = false;
+	private bool runEdgeSmoothing = false;
+	private bool allowDisconnectedCaves = true;
+
+	//other
+	private Transform container;
 
 	//public
 	public void init (DungeonBoardSettings Settings)
 	{
 		base.init(Settings.rows, Settings.cols, Settings.floorObject, Settings.wallObject);
 		chanceToStartAlive = Settings.chanceToStartAlive;
+		minimumPercentageOfOpenTiles = Settings.minimumPercentageOfOpenTiles;
 		deathLimit = Settings.deathLimit;
 		birthLimit = Settings.birthLimit;
 		numberOfSimulations = Settings.numberOfSimulations;
 		innerWallSprite = Settings.innerWallSprite;
 		teleporterSprite = Settings.teleporterSprite;
-		SmoothEdges = Settings.SmoothEdges;
+		runEdgeSmoothing = Settings.runEdgeSmoothing;
+		allowDisconnectedCaves = Settings.allowDisconnectedCaves;
 		initMap();
-		for (int i = 0; i < numberOfSimulations; i++) {
-			SimulationStep();
-		}
-		MapCleanUp();
-		if (!EnsureSpawnPointExsits()) {
-			FixSpawnPoint(floorObject);
-			CalculateTileNeighbours();
-		}
-		SetAllOriginalSpritesAndColors();
-		CalculateTileNeighbours();
+		MapSimulation();
 	}
 
 	//privates
 	private void initMap()
 	{
 		//init the map grid
-		Transform boardHolder = new GameObject ("DungeonGrid").transform;
+		container = new GameObject ("DungeonGrid").transform;
 		List<GameTile> row = new List<GameTile>();
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
 				float randNum = Random.Range(.0f, 1.0f);
 				GameTile tile = new GameTile((float)x, (float)y, floorSprite);
-				GameObject instance = Instantiate (floorObject, new Vector3 ((float)xPadding, (float)yPadding, 0.0f), Quaternion.identity, boardHolder);
+				GameObject instance = Instantiate (floorObject, new Vector3 ((float)xPadding, (float)yPadding, 0.0f), Quaternion.identity, container);
 				instance.name = "(" + x + "," + y + ")";
 				yPadding += 0.23809999f; //0.24
 				if (randNum < chanceToStartAlive) {
@@ -63,6 +62,19 @@ public class DungeonBoard : Board {
 			xPadding += 0.16f;
 		}
 		return;
+	}
+
+	private void MapSimulation()
+	{
+		for (int i = 0; i < numberOfSimulations; i++) {
+			SimulationStep();
+		}
+		MapCleanUp();
+		if (!EnsureSpawnPointExsits()) {
+			FixSpawnPoint(floorObject);
+		}
+		SetAllOriginalSpritesAndColors();
+		CalculateTileNeighbours();
 	}
 
 	private void SimulationStep()
@@ -118,31 +130,61 @@ public class DungeonBoard : Board {
 	private void MapCleanUp()
 	{
 		//Cleanup various factors left over after generation
-		RemoveExtraWalls();
+		RemoveBlockedOpenTiles();
 		FixEdges();
 		RemoveFloatingWalls();
-		CalculateTileNeighbours();
-		if (SmoothEdges) {
-			SmoothMapEdges ();
+		if (allowDisconnectedCaves) {
+			ConnectDisconnectedCaves();
+			if (runEdgeSmoothing) {
+				SmoothMapEdges ();
+			}
+		} else {
+			RemoveDisconnectedCaves();
+			if (runEdgeSmoothing) {
+				SmoothMapEdges ();
+			}
 		}
 		ChangeInnerWallSprites();
-		CalculateTileNeighbours();
-		EnsureCaveConnection();
 	}
 
-	private void RemoveExtraWalls()
+	private void RemoveBlockedOpenTiles()
 	{
 		//remove tiles that are completely surrounded by other walls
 		for (int x = 0; x < cols; x++) { 
 			for (int y = 0; y < rows; y++) {
-				int wallCount = countWalls(grid, x, y);
-				if (wallCount >= 8) {
+				if (checkForUnreachableOpenTile(x, y)) {
 					grid[x][y].SetIsDestroyed(true);
 					grid[x][y].SetIsWall(true);
 					Destroy(grid[x][y].GetObject());
 				}
 			}
 		}
+	}
+
+	private bool checkForUnreachableOpenTile(int x, int y)
+	//Check for a open tile that is surrounded by walls on the cardnial directions
+	//in otherwords a cave made up by one tile
+	{
+		CalculateTileNeighboursForSingleTile(x, y);
+		int count = 0;
+		if(grid[x][y].Open()){ 
+			if (grid[x][y].GetTileNorth() != null && grid[x][y].GetTileNorth().IsWall()) {
+				count++;
+			}
+			if (grid[x][y].GetTileEast() != null && grid[x][y].GetTileEast().IsWall()) {
+				count++;
+			}
+			if (grid[x][y].GetTileWest() != null && grid[x][y].GetTileWest().IsWall()) {
+				count++;
+			}
+			if (grid[x][y].GetTileSouth() != null && grid[x][y].GetTileSouth().IsWall()) {
+				count++;
+			}
+			if (count == 4) {
+				return true;
+			}
+		}
+		return false;
 	}
 		
 	private void FixEdges()
@@ -217,6 +259,7 @@ public class DungeonBoard : Board {
 	private void SmoothMapEdges()
 	{
 		//Smooth out map edges by removing walls that are surrounded by walls or blank spaces in each of the cardinal directions
+		CalculateTileNeighbours();
 		int count = 0;
 		bool removed = false;
 		do {
@@ -266,7 +309,7 @@ public class DungeonBoard : Board {
 		}
 	}
 
-	private void EnsureCaveConnection()
+	private void ConnectDisconnectedCaves()
 	{
 		//connect all disconnected caves with "teleporters" in order to ensure the player can reach all caves
 		Vector2 randomPoint;
@@ -310,23 +353,27 @@ public class DungeonBoard : Board {
 		return randomPoint;
 	}
 
-	private void FloodFill(ref GameTile tile)
+	private int FloodFill(ref GameTile tile)
 	{
 		//starting from the provided tile, mark all connected tiles (meaning stop at walls)
 		//this essentially produces a cut out of a room that is reachable, i.e. no walls blocking off certian parts
+		//it can also return a int count of the number of tiles in the area cut out
+		CalculateTileNeighbours();
+		int count = 1;
 		List<GameTile> validNeighbours = new List<GameTile>();
 		tile.SetIsMarked(true);
 		AddValidNeighbours(ref validNeighbours, tile);
 		List<GameTile> nextValidNeighbours = new List<GameTile>();
 		do {
 			nextValidNeighbours.Clear();
+			count += validNeighbours.Count;
 			for (int x = 0; x < validNeighbours.Count; x++) {
 				validNeighbours[x].SetIsMarked(true);
 				AddValidNeighbours(ref nextValidNeighbours, validNeighbours[x]);
 			}
 			validNeighbours = new List<GameTile>(nextValidNeighbours);
 		} while (nextValidNeighbours.Count != 0);
-		return;
+		return count;
 	}
 
 	private void AddValidNeighbours(ref List<GameTile> list, GameTile tile){
@@ -355,6 +402,73 @@ public class DungeonBoard : Board {
 		tile.GetObject().GetComponent<SpriteRenderer>().sprite = teleporterSprite;
 		tile.GetObject().GetComponent<SpriteRenderer>().color = Color.cyan;
 		tile.SetIsWalkAble(true);
+	}
+
+	private void RemoveDisconnectedCaves()
+	{
+		//Finds disconnected caves and removes them from the map
+		Vector2 randomPoint;
+		GameTile startingTile;
+		int size = 0, largest_size = 0, largest_index = 0, count = -1;
+		List<GameTile> FloodFillStartLocations = new List<GameTile>();
+		do {
+			randomPoint = GetRandomOpenUnMarkedPoint();
+			startingTile = grid[(int)randomPoint.x][(int)randomPoint.y];
+			startingTile.SetIsMarked(true);
+			size = FloodFill(ref startingTile);
+			count++;
+			if(size > largest_size){
+				largest_size = size;
+				largest_index = count;
+			}
+			FloodFillStartLocations.Add(grid[(int)randomPoint.x][(int)randomPoint.y]);
+		}	while (HasUnmarkedTiles());
+		FloodFillStartLocations.RemoveAt(largest_index);//remove the largest cave system from what we are going to remove
+		UnMarkAllTiles();
+		for (int i = 0; i < FloodFillStartLocations.Count; i++) {
+			startingTile = FloodFillStartLocations[i];
+			startingTile.SetIsMarked(true);
+			FloodFill(ref startingTile);
+		}
+		DeleteAllMarkedTiles();
+		RemoveFloatingWalls();
+		FixEdges();
+		float percentageOfOpenTiles = CalculatePlayingArea();
+		Debug.Log("Percent of Open Tiles: " + (percentageOfOpenTiles * 100));
+		if (percentageOfOpenTiles < minimumPercentageOfOpenTiles) {
+			DeleteEntireMap();
+			initMap();
+			MapSimulation();
+			return;
+		}
+		return;
+	}
+
+	private void DeleteAllMarkedTiles()
+	{
+		//delete all marked tiles, essentially used to remove all caves except for the largest one
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (grid[x][y].IsMarked()) {
+					grid[x][y].SetIsDestroyed(true);
+					grid[x][y].SetIsWall(true);
+					grid[x][y].SetIsMarked(false);
+					Destroy(grid[x][y].GetObject());
+				}
+			}
+		}
+	}
+
+	private void DeleteEntireMap()
+	{
+		//Deletes the entire map in order to generate a new one
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				Destroy(grid[x][y].GetObject());
+			}
+		}
+		grid.Clear();
+		Destroy(container.gameObject);
 	}
 //
 	private void FixSpawnPoint(GameObject tileObject)
