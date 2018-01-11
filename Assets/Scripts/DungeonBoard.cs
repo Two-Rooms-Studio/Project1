@@ -33,6 +33,7 @@ public class DungeonBoard : Board {
 		teleporterSprite = Settings.teleporterSprite;
 		runEdgeSmoothing = Settings.runEdgeSmoothing;
 		allowDisconnectedCaves = Settings.allowDisconnectedCaves;
+		FloodFilledAreas = new List<List<GameTile>>();
 		initMap();
 		MapSimulation();
 	}
@@ -318,7 +319,6 @@ public class DungeonBoard : Board {
 		//connect all disconnected caves with "teleporters" in order to ensure the player can reach all caves
 		Vector2 randomPoint;
 		bool atLeastOneOpen;
-		FloodFilledAreas = new List<List<GameTile>>();
 		int randomIndexX, randomIndexY;
 		randomPoint = GetRandomOpenUnMarkedPoint();
 		do {
