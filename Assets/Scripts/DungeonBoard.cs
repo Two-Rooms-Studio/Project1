@@ -16,6 +16,7 @@ public class DungeonBoard : Board {
 
 	//other
 	private Transform container;
+	private List<List<GameTile>> FloodFilledAreas;
 
 	//public
 	public void init (DungeonBoardSettings Settings)
@@ -316,6 +317,9 @@ public class DungeonBoard : Board {
 	{
 		//connect all disconnected caves with "teleporters" in order to ensure the player can reach all caves
 		Vector2 randomPoint;
+		bool atLeastOneOpen;
+		FloodFilledAreas = new List<List<GameTile>>();
+		int randomIndexX, randomIndexY;
 		randomPoint = GetRandomOpenUnMarkedPoint();
 		do {
 			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
@@ -330,17 +334,30 @@ public class DungeonBoard : Board {
 				randomTile.SetIsMarked(true);
 				FloodFill(ref randomTile);
 				PlaceTeleporter(ref randomTile);
-				randomPoint = GetRandomOpenMarkedPoint(); //place a corresponding exit point randomly in an area already flood filled
-				randomTile.GetObject().AddComponent<TeleporterTile>().exitPointObject = grid[(int)randomPoint.x][(int)randomPoint.y].GetObject();
-				randomTile.GetObject().GetComponent<TeleporterTile>().exitPoint = grid[(int)randomPoint.x][(int)randomPoint.y];
+				atLeastOneOpen = false;
+				do {
+					randomIndexX = (int)(Random.Range(0.0f, (float)FloodFilledAreas.Count - 2)); //place a corresponding exit point randomly in an area already flood filled
+					for(int x = 0; x < FloodFilledAreas[randomIndexX].Count; x++)
+					{
+						if(FloodFilledAreas[randomIndexX][x].Open()){
+							atLeastOneOpen = true;
+						}
+					}
+				} while (!atLeastOneOpen);
+				do {
+					randomIndexY = (int)(Random.Range(0.0f, (float)FloodFilledAreas[randomIndexX].Count - 1));
+				} while (!FloodFilledAreas[randomIndexX][randomIndexY].Open());
+				GameTile previouslyMarkedTileToUseAsExit = FloodFilledAreas[randomIndexX][randomIndexY];
+				randomTile.GetObject().AddComponent<TeleporterTile>().exitPointObject = previouslyMarkedTileToUseAsExit.GetObject();
+				randomTile.GetObject().GetComponent<TeleporterTile>().exitPoint = previouslyMarkedTileToUseAsExit;
 				GameTile previous_tile = randomTile;
-				randomTile = grid[(int)randomPoint.x][(int)randomPoint.y];
+				randomTile = previouslyMarkedTileToUseAsExit;
 				randomTile.GetObject().AddComponent<TeleporterTile>().exitPointObject = previous_tile.GetObject();
 				randomTile.GetObject().GetComponent<TeleporterTile>().exitPoint = previous_tile;
 				PlaceTeleporter(ref randomTile); 
 			} while (HasUnmarkedTiles());
 		}
-
+		FloodFilledAreas.Clear();
 	}
 
 	private Vector2 GetRandomOpenUnMarkedPoint()
@@ -367,9 +384,11 @@ public class DungeonBoard : Board {
 		//this essentially produces a cut out of a room that is reachable, i.e. no walls blocking off certian parts
 		//it can also return a int count of the number of tiles in the area cut out
 		CalculateTileNeighbours();
+		List<GameTile> allMarkedCells = new List<GameTile>();
 		int count = 1;
 		List<GameTile> validNeighbours = new List<GameTile>();
 		tile.SetIsMarked(true);
+		allMarkedCells.Add(tile);
 		AddValidNeighbours(ref validNeighbours, tile);
 		List<GameTile> nextValidNeighbours = new List<GameTile>();
 		do {
@@ -377,10 +396,12 @@ public class DungeonBoard : Board {
 			count += validNeighbours.Count;
 			for (int x = 0; x < validNeighbours.Count; x++) {
 				validNeighbours[x].SetIsMarked(true);
+				allMarkedCells.Add(validNeighbours[x]);
 				AddValidNeighbours(ref nextValidNeighbours, validNeighbours[x]);
 			}
 			validNeighbours = new List<GameTile>(nextValidNeighbours);
 		} while (nextValidNeighbours.Count != 0);
+		FloodFilledAreas.Add(allMarkedCells);
 		return count;
 	}
 
@@ -444,12 +465,14 @@ public class DungeonBoard : Board {
 		float percentageOfOpenTiles = CalculatePlayingArea();
 		Debug.Log("Percent of Open Tiles: " + (percentageOfOpenTiles * 100));
 		if (percentageOfOpenTiles < minimumPercentageOfOpenTiles) {
+			FloodFilledAreas.Clear();
 			DeleteEntireMap();
 			initMap();
 			MapSimulation();
 			return;
 		}
 		return;
+		FloodFilledAreas.Clear();
 	}
 
 	private void DeleteAllMarkedTiles()
