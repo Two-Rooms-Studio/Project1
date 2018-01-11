@@ -22,13 +22,13 @@ public class EntityController : MonoBehaviour {
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.W)) {
+		if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
 			moveNorth = true;
-		} else if (Input.GetKeyDown(KeyCode.S)) {
+		} else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
 			moveSouth = true;
-		} else if (Input.GetKeyDown(KeyCode.D)) {
+		} else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
 			moveEast = true;
-		} else if (Input.GetKeyDown(KeyCode.A)) {
+		} else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
 			moveWest = true;
 		}
 		if (Input.GetKeyDown(KeyCode.Space)) {
