@@ -6,23 +6,19 @@ public class Board : ScriptableObject{
 	protected int rows = 5;
 	protected int cols = 5;
 	protected List<List<GameTile>> grid = new List<List<GameTile>>(); //data structure for our entire map
-	protected Sprite floorSprite;
-	protected Sprite wallSprite;
 	protected float xPadding = 0.0f; //spacing we need to place between each tile in the grid
 	protected float yPadding = 0.0f; //this SHOULD be consistent throughout all boards....
-	protected GameObject floorObject;
-	protected GameObject wallObject;
+	protected GameObject tileObject;
+	protected Sprite wallSprite;
+	protected Sprite floorSprite;
 
 	//public
-	public void init(int p_rows, int p_cols, GameObject p_floorObject, GameObject p_wallObject)
+	public void init(int p_rows, int p_cols, GameObject p_tileObject)
 	{
 		//set up consistent gameboard parameters
 		rows = p_rows;
 		cols = p_cols;
-		floorObject = p_floorObject;
-		wallObject = p_wallObject;
-		floorSprite = floorObject.GetComponent<SpriteRenderer> ().sprite;
-		wallSprite = wallObject.GetComponent<SpriteRenderer> ().sprite;
+		tileObject = p_tileObject;
 	}
 
 	public GameTile GetGridTile(int x, int y)

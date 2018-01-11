@@ -54,13 +54,16 @@ public class PlayerEntity : Entity {
 		}
 	}
 
-	private void updateNewPlayerTile(GameTile newPlayerTile)
+	public void updateNewPlayerTile(GameTile newPlayerTile)
 	{
 		playerTile.SetIsOccupied(false);
+		playerTile.SetIsWalkAble(false);
 		playerTile.GetObject().GetComponent<SpriteRenderer>().sprite = playerTile.GetOriginalSprite();
 		playerTile.GetObject().GetComponent<SpriteRenderer>().color = playerTile.GetOriginalColor();
 		playerTile = newPlayerTile;
 		playerTile.GetObject().GetComponent<SpriteRenderer>().sprite = playerSprite;
 		playerTile.GetObject().GetComponent<SpriteRenderer>().color = playerColor;
+		playerTile.SetIsOccupied(true);
+		playerTile.SetIsWalkAble(true);
 	}
 }

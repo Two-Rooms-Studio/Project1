@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DungeonBoardSettings : ScriptableObject {
-
 	[Header("Dungeon Map Settings")]
 	[Tooltip("Number of rows to generate in the maps grid")]
 	public int rows = 5;
@@ -20,10 +19,12 @@ public class DungeonBoardSettings : ScriptableObject {
 	public int birthLimit = 4;
 	[Tooltip("The number of iterations for calculating if a tile should be a wall or nonwall tile")]
 	public int numberOfSimulations = 5;
-	[Tooltip("Object to use for the wall of the dungeon")]
-	public GameObject wallObject;
+	[Tooltip("Object to use for all tiles of the dungeon")]
+	public GameObject tileObject;
 	[Tooltip("Object to use for the floor of the dungeon")]
-	public GameObject floorObject;
+	public Sprite floorSprite;
+	[Tooltip("Sprite to use for walls in dungeon")]
+	public Sprite wallSprite;
 	[Tooltip("Sprite to use for walls the player cannon't see the beginning of")]
 	public Sprite innerWallSprite;
 	[Tooltip("Sprite to use for teleporters that take the player to unconnected caves")]

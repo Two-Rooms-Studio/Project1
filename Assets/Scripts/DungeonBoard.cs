@@ -20,12 +20,14 @@ public class DungeonBoard : Board {
 	//public
 	public void init (DungeonBoardSettings Settings)
 	{
-		base.init(Settings.rows, Settings.cols, Settings.floorObject, Settings.wallObject);
+		base.init(Settings.rows, Settings.cols, Settings.tileObject);
 		chanceToStartAlive = Settings.chanceToStartAlive;
 		minimumPercentageOfOpenTiles = Settings.minimumPercentageOfOpenTiles;
 		deathLimit = Settings.deathLimit;
 		birthLimit = Settings.birthLimit;
 		numberOfSimulations = Settings.numberOfSimulations;
+		floorSprite = Settings.floorSprite;
+		wallSprite = Settings.wallSprite;
 		innerWallSprite = Settings.innerWallSprite;
 		teleporterSprite = Settings.teleporterSprite;
 		runEdgeSmoothing = Settings.runEdgeSmoothing;
@@ -44,9 +46,10 @@ public class DungeonBoard : Board {
 			for (int y = 0; y < rows; y++) {
 				float randNum = Random.Range(.0f, 1.0f);
 				GameTile tile = new GameTile((float)x, (float)y, floorSprite);
-				GameObject instance = Instantiate (floorObject, new Vector3 ((float)xPadding, (float)yPadding, 0.0f), Quaternion.identity, container);
+				GameObject instance = Instantiate (tileObject, new Vector3 ((float)xPadding, (float)yPadding, 0.0f), Quaternion.identity, container);
 				instance.name = "(" + x + "," + y + ")";
 				yPadding += 0.23809999f; //0.24
+				instance.GetComponent<SpriteRenderer>().sprite = floorSprite;
 				if (randNum < chanceToStartAlive) {
 					//set the tile to be a wall tile since it passed random test
 					//at this point its pointless to destroy and reinstantiate a wall object but in the future we may have to do that
@@ -71,7 +74,7 @@ public class DungeonBoard : Board {
 		}
 		MapCleanUp();
 		if (!EnsureSpawnPointExsits()) {
-			FixSpawnPoint(floorObject);
+			FixSpawnPoint(tileObject);
 		}
 		SetAllOriginalSpritesAndColors();
 		CalculateTileNeighbours();
@@ -328,7 +331,12 @@ public class DungeonBoard : Board {
 				FloodFill(ref randomTile);
 				PlaceTeleporter(ref randomTile);
 				randomPoint = GetRandomOpenMarkedPoint(); //place a corresponding exit point randomly in an area already flood filled
+				randomTile.GetObject().AddComponent<TeleporterTile>().exitPointObject = grid[(int)randomPoint.x][(int)randomPoint.y].GetObject();
+				randomTile.GetObject().GetComponent<TeleporterTile>().exitPoint = grid[(int)randomPoint.x][(int)randomPoint.y];
+				GameTile previous_tile = randomTile;
 				randomTile = grid[(int)randomPoint.x][(int)randomPoint.y];
+				randomTile.GetObject().AddComponent<TeleporterTile>().exitPointObject = previous_tile.GetObject();
+				randomTile.GetObject().GetComponent<TeleporterTile>().exitPoint = previous_tile;
 				PlaceTeleporter(ref randomTile); 
 			} while (HasUnmarkedTiles());
 		}

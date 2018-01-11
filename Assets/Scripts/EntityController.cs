@@ -10,6 +10,7 @@ public class EntityController : MonoBehaviour {
 	bool moveSouth = false;
 	bool moveEast = false;
 	bool moveWest = false;
+	bool action = false;
 
 	void Awake () {
 		gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
@@ -29,6 +30,9 @@ public class EntityController : MonoBehaviour {
 			moveEast = true;
 		} else if (Input.GetKeyDown(KeyCode.A)) {
 			moveWest = true;
+		}
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			action = true;
 		}
 	}
 
@@ -54,6 +58,12 @@ public class EntityController : MonoBehaviour {
 				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
 			}
 			moveWest = false;
+		} else if (action) {
+			if (player.GetPlayerGameTile().GetObject().GetComponent<TeleporterTile>() != null) {
+				player.updateNewPlayerTile(player.GetPlayerGameTile().GetObject().GetComponent<TeleporterTile>().exitPoint);
+				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
+			}
+			action = false;
 		}
 	}
 }
