@@ -16,7 +16,6 @@ public class DungeonBoard : Board {
 
 	//other
 	private Transform container;
-	private List<List<GameTile>> FloodFilledAreas;
 
 	//public
 	public void init (DungeonBoardSettings Settings)
@@ -27,13 +26,12 @@ public class DungeonBoard : Board {
 		deathLimit = Settings.deathLimit;
 		birthLimit = Settings.birthLimit;
 		numberOfSimulations = Settings.numberOfSimulations;
-		floorSprite = Settings.floorSprite;
-		wallSprite = Settings.wallSprite;
 		innerWallSprite = Settings.innerWallSprite;
+		wallSprite = Settings.wallSprite;
+		floorSprite = Settings.floorSprite;
 		teleporterSprite = Settings.teleporterSprite;
 		runEdgeSmoothing = Settings.runEdgeSmoothing;
 		allowDisconnectedCaves = Settings.allowDisconnectedCaves;
-		FloodFilledAreas = new List<List<GameTile>>();
 		initMap();
 		MapSimulation();
 	}
@@ -47,7 +45,7 @@ public class DungeonBoard : Board {
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
 				float randNum = Random.Range(.0f, 1.0f);
-				GameTile tile = new GameTile((float)x, (float)y, floorSprite);
+				GameTile tile = new GameTile(x, y, floorSprite);
 				GameObject instance = Instantiate (tileObject, new Vector3 ((float)xPadding, (float)yPadding, 0.0f), Quaternion.identity, container);
 				instance.name = "(" + x + "," + y + ")";
 				yPadding += 0.23809999f; //0.24
@@ -79,7 +77,7 @@ public class DungeonBoard : Board {
 			FixSpawnPoint(tileObject);
 		}
 		SetAllOriginalSpritesAndColors();
-		CalculateTileNeighbours();
+		CalculateTileNeighbours(); //setup all tiles with neighbour information
 	}
 
 	private void SimulationStep()
@@ -88,7 +86,7 @@ public class DungeonBoard : Board {
 		List<List<GameTile>> oldmap = new List<List<GameTile>>(grid);
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				int wallsAroundPoint = countWalls (oldmap, x, y);
+				int wallsAroundPoint = countWalls (x, y, oldmap);
 				if (oldmap[x][y].IsWall()) {
 					if (wallsAroundPoint < deathLimit) {
 						grid[x][y].SetIsWall(false);
@@ -111,32 +109,12 @@ public class DungeonBoard : Board {
 		return;
 	}
 
-	private int countWalls(List<List<GameTile>> grid, int x, int y)
-	{
-		//count the walls surrounding a given tile
-		int count = 0;
-		for (int i = -1; i < 2; i++) {
-			for (int j = -1; j < 2; j++) {
-				int neighbour_x = x + i;
-				int neighbour_y = y + j;
-				if (!(i == 0 && j == 0)) {
-					if (neighbour_x < 0 || neighbour_y < 0 || neighbour_x >= cols || neighbour_y >= rows) {
-						count += 1;
-					} else if (grid[neighbour_x][neighbour_y].IsWall()) {
-						count += 1;
-					}
-				}
-			}
-		}
-		return count;
-	}
-
 //Map Cleanup functions
 	private void MapCleanUp()
 	{
 		//Cleanup various factors left over after generation
 		RemoveBlockedOpenTiles();
-		FixEdges();
+		FixEdges(wallSprite);
 		RemoveFloatingWalls();
 		if (allowDisconnectedCaves) {
 			ConnectDisconnectedCaves();
@@ -152,161 +130,13 @@ public class DungeonBoard : Board {
 		ChangeInnerWallSprites();
 	}
 
-	private void RemoveBlockedOpenTiles()
-	{
-		//remove tiles that are completely surrounded by other walls
-		for (int x = 0; x < cols; x++) { 
-			for (int y = 0; y < rows; y++) {
-				if (checkForUnreachableOpenTile(x, y)) {
-					grid[x][y].SetIsDestroyed(true);
-					grid[x][y].SetIsWall(true);
-					Destroy(grid[x][y].GetObject());
-				}
-			}
-		}
-	}
-
-	private bool checkForUnreachableOpenTile(int x, int y)
-	//Check for a open tile that is surrounded by walls on the cardnial directions
-	//in otherwords a cave made up by one tile
-	{
-		CalculateTileNeighboursForSingleTile(x, y);
-		int count = 0;
-		if(grid[x][y].Open()){ 
-			if (grid[x][y].GetTileNorth() != null && grid[x][y].GetTileNorth().IsWall()) {
-				count++;
-			}
-			if (grid[x][y].GetTileEast() != null && grid[x][y].GetTileEast().IsWall()) {
-				count++;
-			}
-			if (grid[x][y].GetTileWest() != null && grid[x][y].GetTileWest().IsWall()) {
-				count++;
-			}
-			if (grid[x][y].GetTileSouth() != null && grid[x][y].GetTileSouth().IsWall()) {
-				count++;
-			}
-			if (count == 4) {
-				return true;
-			}
-		}
-		return false;
-	}
-		
-	private void FixEdges()
-	{
-		//Fix edges so that non-wall tiles never touch a destroyed(empty air) tile by changing open tiles to walls
-		for (int x = 0; x < cols; x++) { //turn unblocked edges into walls
-			for (int y = 0; y < rows; y++) {
-				int DestroyedCount = countDestroyed (x, y);
-				if (DestroyedCount >= 1 && !(grid[x][y].IsWall())) {
-					grid[x][y].SetIsWall(true);
-					grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = wallSprite;
-				}
-			}
-		}
-	}
-
-	private int countDestroyed(int x, int y)
-	{
-		//count the number of destroyed(open air) tiles around a given point
-		int count = 0;
-		for (int i = -1; i < 2; i++) {
-			for (int j = -1; j < 2; j++) {
-				int neighbour_x = x + i;
-				int neighbour_y = y + j;
-				if (!(i == 0 && j == 0)) {
-					if (neighbour_x < 0 || neighbour_y < 0 || neighbour_x >= cols || neighbour_y >= rows) {
-						count += 1;
-					} else if (grid[neighbour_x][neighbour_y].IsDestroyed()) {
-						count += 1;
-					}
-				}
-			}
-		}
-		return count;
-	}
-		
-	private void RemoveFloatingWalls()
-	{
-		//Remove walls that are floating (surrounded by only walls or destroyed tiles)
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				int FloatingCount = countFloating (x, y);
-				if (FloatingCount >= 8 && grid[x][y].IsWall()) {
-					grid[x][y].SetIsDestroyed(true);
-					grid[x][y].SetIsWall(true);
-					Destroy(grid[x][y].GetObject());
-				}
-			}
-		}
-	}
-
-	private int countFloating(int x, int y)
-	{
-		//count the number of destroyed or wall tiles around a given point
-		int count = 0;
-		for (int i = -1; i < 2; i++) {
-			for (int j = -1; j < 2; j++) {
-				int neighbour_x = x + i;
-				int neighbour_y = y + j;
-				if (!(i == 0 && j == 0)) {
-					if (neighbour_x < 0 || neighbour_y < 0 || neighbour_x >= cols || neighbour_y >= rows) {
-						count += 1;
-					} else if (grid[neighbour_x][neighbour_y].IsDestroyed() || grid[neighbour_x][neighbour_y].IsWall()) {
-						count += 1;
-					}
-				}
-			}
-		}
-		return count;
-	}
-		
-	private void SmoothMapEdges()
-	{
-		//Smooth out map edges by removing walls that are surrounded by walls or blank spaces in each of the cardinal directions
-		CalculateTileNeighbours();
-		int count = 0;
-		bool removed = false;
-		do {
-			removed = false;
-			count = 0;
-			for (int x = 0; x < cols; x++) {
-				for (int y = 0; y < rows; y++) {
-					if(!grid[x][y].IsDestroyed() && grid[x][y].IsWall()){ 
-						if (grid[x][y].GetTileNorth() == null || grid[x][y].GetTileNorth().IsWall() || grid[x][y].GetTileNorth ().IsDestroyed()) {
-							count++;
-						}
-						if (grid[x][y].GetTileEast() == null || grid[x][y].GetTileEast().IsWall() || grid[x][y].GetTileEast().IsDestroyed()) {
-							count++;
-						}
-						if (grid[x][y].GetTileWest() == null || grid[x][y].GetTileWest ().IsWall() || grid[x][y].GetTileWest().IsDestroyed()) {
-							count++;
-						}
-						if (grid[x][y].GetTileSouth() == null || grid[x][y].GetTileSouth().IsWall() || grid[x][y].GetTileSouth().IsDestroyed()) {
-							count++;
-						}
-						if (count == 4) {
-							removed = true;
-							grid[x][y].SetIsDestroyed(true);
-							grid[x][y].SetIsWall(true);
-							Destroy (grid[x][y].GetObject());
-							CalculateTileNeighbours();
-						}
-						count = 0;
-					}
-				}
-			}
-		} while (removed == true);
-	}
-
 	private void ChangeInnerWallSprites()
 	{
-		//changes walls the player can not see the outside of to a different sprite
-		CalculateTileNeighbours();
+		//changes walls the player can not see the outside of too a different sprite
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				if(grid[x][y].GetTileSouth() != null && grid[x][y].IsWall()) {
-					if ((!grid[x][y].GetTileSouth().IsDestroyed() && grid[x][y].GetTileSouth().IsWall())) {
+				if((y-1) >= 0 && grid[x][y].IsWall()) {
+					if ((!grid[x][y-1].IsDestroyed() && grid[x][y-1].IsWall())) {
 						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = innerWallSprite;
 					}
 				}
@@ -317,6 +147,7 @@ public class DungeonBoard : Board {
 	private void ConnectDisconnectedCaves()
 	{
 		//connect all disconnected caves with "teleporters" in order to ensure the player can reach all caves
+		List<List<GameTile>> FloodFilledAreas = new List<List<GameTile>>();
 		Vector2 randomPoint;
 		bool atLeastOneOpen;
 		int randomIndexX, randomIndexY;
@@ -326,13 +157,13 @@ public class DungeonBoard : Board {
 		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].Open() || grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
 		GameTile randomTile = grid[(int)randomPoint.x][(int)randomPoint.y]; 
 		randomTile.SetIsMarked(true);
-		FloodFill(ref randomTile);
+		FloodFill(ref randomTile, ref FloodFilledAreas);
 		if (HasUnmarkedTiles()) {//if we have unreachable caves then we need to make teleporters to access them
 			do {
 				randomPoint = GetRandomOpenUnMarkedPoint();
 				randomTile = grid[(int)randomPoint.x][(int)randomPoint.y]; //switch randomTile to the new unmarked tile
 				randomTile.SetIsMarked(true);
-				FloodFill(ref randomTile);
+				FloodFill(ref randomTile, ref FloodFilledAreas);
 				PlaceTeleporter(ref randomTile);
 				atLeastOneOpen = false;
 				do {
@@ -378,53 +209,6 @@ public class DungeonBoard : Board {
 		return randomPoint;
 	}
 
-	private int FloodFill(ref GameTile tile)
-	{
-		//starting from the provided tile, mark all connected tiles (meaning stop at walls)
-		//this essentially produces a cut out of a room that is reachable, i.e. no walls blocking off certian parts
-		//it can also return a int count of the number of tiles in the area cut out
-		CalculateTileNeighbours();
-		List<GameTile> allMarkedCells = new List<GameTile>();
-		int count = 1;
-		List<GameTile> validNeighbours = new List<GameTile>();
-		tile.SetIsMarked(true);
-		allMarkedCells.Add(tile);
-		AddValidNeighbours(ref validNeighbours, tile);
-		List<GameTile> nextValidNeighbours = new List<GameTile>();
-		do {
-			nextValidNeighbours.Clear();
-			count += validNeighbours.Count;
-			for (int x = 0; x < validNeighbours.Count; x++) {
-				validNeighbours[x].SetIsMarked(true);
-				allMarkedCells.Add(validNeighbours[x]);
-				AddValidNeighbours(ref nextValidNeighbours, validNeighbours[x]);
-			}
-			validNeighbours = new List<GameTile>(nextValidNeighbours);
-		} while (nextValidNeighbours.Count != 0);
-		FloodFilledAreas.Add(allMarkedCells);
-		return count;
-	}
-
-	private void AddValidNeighbours(ref List<GameTile> list, GameTile tile){
-		tile.SetIsMarked(true);//
-		if(tile.GetTileNorth() != null && !tile.GetTileNorth().IsWall() && !tile.GetTileNorth().IsMarked()){
-			list.Add(tile.GetTileNorth());
-			tile.GetTileNorth().SetIsMarked(true);
-		}
-		if (tile.GetTileSouth() != null && !tile.GetTileSouth().IsWall() && !tile.GetTileSouth().IsMarked()) {
-			list.Add(tile.GetTileSouth());
-			tile.GetTileSouth().SetIsMarked(true);
-		}
-		if (tile.GetTileEast() != null && !tile.GetTileEast().IsWall() && !tile.GetTileEast().IsMarked()) {
-			list.Add(tile.GetTileEast());
-			tile.GetTileEast().SetIsMarked(true);
-		}
-		if (tile.GetTileWest() != null && !tile.GetTileWest().IsWall() && !tile.GetTileWest().IsMarked()) {
-			list.Add(tile.GetTileWest());
-			tile.GetTileWest().SetIsMarked(true);
-		}
-	}
-
 	private void PlaceTeleporter(ref GameTile tile)
 	{
 		tile.SetIsOccupied(true);
@@ -435,6 +219,7 @@ public class DungeonBoard : Board {
 
 	private void RemoveDisconnectedCaves()
 	{
+		List<List<GameTile>> FloodFilledAreas = new List<List<GameTile>>();
 		//Finds disconnected caves and removes them from the map
 		Vector2 randomPoint;
 		GameTile startingTile;
@@ -444,7 +229,7 @@ public class DungeonBoard : Board {
 			randomPoint = GetRandomOpenUnMarkedPoint();
 			startingTile = grid[(int)randomPoint.x][(int)randomPoint.y];
 			startingTile.SetIsMarked(true);
-			size = FloodFill(ref startingTile);
+			size = FloodFill(ref startingTile, ref FloodFilledAreas);
 			count++;
 			if(size > largest_size){
 				largest_size = size;
@@ -457,11 +242,11 @@ public class DungeonBoard : Board {
 		for (int i = 0; i < FloodFillStartLocations.Count; i++) {
 			startingTile = FloodFillStartLocations[i];
 			startingTile.SetIsMarked(true);
-			FloodFill(ref startingTile);
+			FloodFill(ref startingTile, ref FloodFilledAreas);
 		}
 		DeleteAllMarkedTiles();
 		RemoveFloatingWalls();
-		FixEdges();
+		FixEdges(wallSprite);
 		float percentageOfOpenTiles = CalculatePlayingArea();
 		Debug.Log("Percent of Open Tiles: " + (percentageOfOpenTiles * 100));
 		if (percentageOfOpenTiles < minimumPercentageOfOpenTiles) {
@@ -471,23 +256,8 @@ public class DungeonBoard : Board {
 			MapSimulation();
 			return;
 		}
-		return;
 		FloodFilledAreas.Clear();
-	}
-
-	private void DeleteAllMarkedTiles()
-	{
-		//delete all marked tiles, essentially used to remove all caves except for the largest one
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				if (grid[x][y].IsMarked()) {
-					grid[x][y].SetIsDestroyed(true);
-					grid[x][y].SetIsWall(true);
-					grid[x][y].SetIsMarked(false);
-					Destroy(grid[x][y].GetObject());
-				}
-			}
-		}
+		return;
 	}
 
 	private void DeleteEntireMap()
@@ -502,6 +272,7 @@ public class DungeonBoard : Board {
 		Destroy(container.gameObject);
 	}
 //
+
 	private void FixSpawnPoint(GameObject tileObject)
 	{
 		//ran if the generated map has absolutely no place to place a spawn point 

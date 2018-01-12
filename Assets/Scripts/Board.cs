@@ -29,9 +29,49 @@ public class Board : ScriptableObject{
 	public List<List<GameTile>> GetGrid(){
 		return grid;
 	}
-		
+
+	//private
+	private void AddValidNeighbours(ref List<GameTile> list, GameTile tile){
+		//FloodFill helper function, returns a list containing the neighbours
+		//of a tile that should be included in the flood fill
+		tile.SetIsMarked(true);//
+		if((tile.GetY() + 1) < rows && !grid[tile.GetX()][tile.GetY()+1].IsWall() && !grid[tile.GetX()][tile.GetY()+1].IsMarked()){
+			list.Add(grid[tile.GetX()][tile.GetY()+1]);
+			grid[tile.GetX()][tile.GetY()+1].SetIsMarked(true);
+		}
+		if ((tile.GetY() - 1) > 0 && !grid[tile.GetX()][tile.GetY()-1].IsWall() && !grid[tile.GetX()][tile.GetY()-1].IsMarked()) {
+			list.Add(grid[tile.GetX()][tile.GetY()-1]);
+			grid[tile.GetX()][tile.GetY()-1].SetIsMarked(true);
+		}
+		if ((tile.GetX() + 1) < rows && !grid[tile.GetX()+1][tile.GetY()].IsWall() && !grid[tile.GetX()+1][tile.GetY()].IsMarked()) {
+			list.Add(grid[tile.GetX()+1][tile.GetY()]);
+			grid[tile.GetX()+1][tile.GetY()].SetIsMarked(true);
+		}
+		if ((tile.GetX() - 1) > 0 && !grid[tile.GetX()-1][tile.GetY()].IsWall() && !grid[tile.GetX()-1][tile.GetY()].IsMarked()) {
+			list.Add(grid[tile.GetX()-1][tile.GetY()]);
+			grid[tile.GetX()-1][tile.GetY()].SetIsMarked(true);
+		}
+	}
+
 	//protected
-	protected void CalculateTileNeighbours(){
+	protected float CalculatePlayingArea()
+	{
+		//return a percentage representing the number of open tiles remaining
+		//based off of the number of tiles originally created
+		int numberOfOpenCells = 0;
+		int totalNumberOfCells = rows * cols;
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (grid[x][y].Open()) {
+					numberOfOpenCells++;
+				}
+			}
+		}
+		return (((float)numberOfOpenCells) / ((float)totalNumberOfCells));
+	}
+
+	protected void CalculateTileNeighbours()
+	{
 		//set up the neighbour information for each tile on the map
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
@@ -59,51 +99,157 @@ public class Board : ScriptableObject{
 		}
 	}
 
-	protected void CalculateTileNeighboursForSingleTile(int x, int y)
+	protected bool checkForUnreachableOpenTile(int x, int y)
 	{
-		if (y + 1 >= rows) {
-			grid[x][y].SetTileNorth (null);
-		} else {
-			grid[x][y].SetTileNorth(grid[x][y + 1]);
+	//Check for a open tile that is surrounded by walls on the cardnial directions
+	//in otherwords a cave or room made up by one tile
+		int count = 0;
+		if(grid[x][y].Open()){ 
+			if ((y+1) < rows && grid[x][y+1].IsWall()) {
+				count++;
+			}
+			if ((x+1) < cols && grid[x+1][y].IsWall()) {
+				count++;
+			}
+			if ((x-1) >= 0 && grid[x-1][y].IsWall()) {
+				count++;
+			}
+			if ((y-1) >= 0 && grid[x][y-1].IsWall()) {
+				count++;
+			}
+			if (count == 4) {
+				return true;
+			}
 		}
-		if (y - 1 < 0) {
-			grid[x][y].SetTileSouth (null);
-		} else {
-			grid[x][y].SetTileSouth(grid[x][y - 1]);
-		}
-		if (x + 1 >= cols) {
-			grid[x][y].SetTileEast(null);
-		} else {
-			grid[x][y].SetTileEast(grid[x + 1][y]);
-		}
-		if (x - 1 < 0) {
-			grid[x][y].SetTileWest(null);
-		} else {
-			grid[x][y].SetTileWest(grid[x - 1][y]);
-		}
+		return false;
 	}
 
-	protected float CalculatePlayingArea()
+	protected int countDestroyed(int x, int y)
 	{
-		int numberOfOpenCells = 0;
-		int totalNumberOfCells = rows * cols;
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				if (grid[x][y].Open()) {
-					numberOfOpenCells++;
+		//count the number of destroyed(open air) tiles around a given point in all 8 directions
+		int count = 0;
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				int neighbour_x = x + i;
+				int neighbour_y = y + j;
+				if (!(i == 0 && j == 0)) {
+					if (neighbour_x < 0 || neighbour_y < 0 || neighbour_x >= cols || neighbour_y >= rows) {
+						count += 1;
+					} else if (grid[neighbour_x][neighbour_y].IsDestroyed()) {
+						count += 1;
+					}
 				}
 			}
 		}
-		return (((float)numberOfOpenCells) / ((float)totalNumberOfCells));
+		return count;
 	}
 
-	protected void UnMarkAllTiles()
+	protected int countFloating(int x, int y)
 	{
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				grid[x][y].SetIsMarked(false);
+		//count the number of destroyed(open air) tiles or wall tiles around a given point in all 8 directions
+		int count = 0;
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				int neighbour_x = x + i;
+				int neighbour_y = y + j;
+				if (!(i == 0 && j == 0)) {
+					if (neighbour_x < 0 || neighbour_y < 0 || neighbour_x >= cols || neighbour_y >= rows) {
+						count += 1;
+					} else if (grid[neighbour_x][neighbour_y].IsDestroyed() || grid[neighbour_x][neighbour_y].IsWall()) {
+						count += 1;
+					}
+				}
 			}
 		}
+		return count;
+	}
+
+	protected int countWalls(int x, int y, List<List<GameTile>> grid)
+	{
+		//count the walls or blanks surrounding a given tile in all 8 directions
+		int count = 0;
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				int neighbour_x = x + i;
+				int neighbour_y = y + j;
+				if (!(i == 0 && j == 0)) {
+					if (neighbour_x < 0 || neighbour_y < 0 || neighbour_x >= cols || neighbour_y >= rows) {
+						count += 1;
+					} else if (grid[neighbour_x][neighbour_y].IsWall()) {
+						count += 1;
+					}
+				}
+			}
+		}
+		return count;
+	}
+
+	protected void DeleteAllMarkedTiles()
+	{
+		//delete all marked tiles, essentially used to remove all caves except for the largest one
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (grid[x][y].IsMarked()) {
+					grid[x][y].SetIsDestroyed(true);
+					grid[x][y].SetIsWall(true);
+					grid[x][y].SetIsMarked(false);
+					Destroy(grid[x][y].GetObject());
+				}
+			}
+		}
+	}
+
+	protected bool EnsureSpawnPointExsits()
+	{
+		//ensure that there is atleast one non-wall tile to be used for a spawnpoint
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (!grid[x][y].IsWall() && !grid[x][y].IsDestroyed()) {
+					return true; //we have atleast one spawn point
+				}
+			}
+		}
+		return false;
+	}
+
+	protected void FixEdges(Sprite p_wallSprite)
+	{
+		//Fix edges so that non-wall tiles never touch a destroyed(empty air) tile by changing open tiles to walls
+		for (int x = 0; x < cols; x++) { //turn unblocked edges into walls
+			for (int y = 0; y < rows; y++) {
+				int DestroyedCount = countDestroyed (x, y);
+				if (DestroyedCount >= 1 && !(grid[x][y].IsWall())) {
+					grid[x][y].SetIsWall(true);
+					grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = p_wallSprite;
+				}
+			}
+		}
+	}
+
+	protected int FloodFill(ref GameTile tile, ref List<List<GameTile>> FloodFilledAreas)
+	{
+		//starting from the provided tile, mark all connected tiles (meaning stop at walls)
+		//this essentially produces a cut out of a room that is reachable, i.e. no walls blocking off certian parts
+		//it can also return a int count of the number of tiles in the area cut out
+		List<GameTile> allMarkedCells = new List<GameTile>();
+		int count = 1;
+		List<GameTile> validNeighbours = new List<GameTile>();
+		tile.SetIsMarked(true);
+		allMarkedCells.Add(tile);
+		AddValidNeighbours(ref validNeighbours, tile);
+		List<GameTile> nextValidNeighbours = new List<GameTile>();
+		do {
+			nextValidNeighbours.Clear();
+			count += validNeighbours.Count;
+			for (int x = 0; x < validNeighbours.Count; x++) {
+				validNeighbours[x].SetIsMarked(true);
+				allMarkedCells.Add(validNeighbours[x]);
+				AddValidNeighbours(ref nextValidNeighbours, validNeighbours[x]);
+			}
+			validNeighbours = new List<GameTile>(nextValidNeighbours);
+		} while (nextValidNeighbours.Count != 0);
+		FloodFilledAreas.Add(allMarkedCells);
+		return count;
 	}
 
 	protected bool HasUnmarkedTiles()
@@ -120,6 +266,35 @@ public class Board : ScriptableObject{
 		return false;
 	}
 
+	protected void RemoveBlockedOpenTiles()
+	{
+		//remove tiles that are completely surrounded by other walls
+		for (int x = 0; x < cols; x++) { 
+			for (int y = 0; y < rows; y++) {
+				if (checkForUnreachableOpenTile(x, y)) {
+					grid[x][y].SetIsDestroyed(true);
+					grid[x][y].SetIsWall(true);
+					Destroy(grid[x][y].GetObject());
+				}
+			}
+		}
+	}
+
+	protected void RemoveFloatingWalls()
+	{
+		//Remove walls that are floating (surrounded by only walls or destroyed tiles)
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				int FloatingCount = countFloating(x, y);
+				if (FloatingCount >= 8 && grid[x][y].IsWall()) {
+					grid[x][y].SetIsDestroyed(true);
+					grid[x][y].SetIsWall(true);
+					Destroy(grid[x][y].GetObject());
+				}
+			}
+		}
+	}
+
 	protected void SetAllOriginalSpritesAndColors()
 	{
 		//used once the board is completely to set all the original sprites so we can change them out during movement and other transitions
@@ -131,16 +306,56 @@ public class Board : ScriptableObject{
 		}
 	}
 
-	protected bool EnsureSpawnPointExsits()
+	protected void SmoothMapEdges()
 	{
-		//ensure that there is atleast one non-wall tile to be used for a spawnpoint
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				if (!grid[x][y].IsWall() && !grid[x][y].IsDestroyed()) {
-					return true; //we have atleast one spawn point
+		//Smooth out map edges by removing walls that are surrounded by walls or blank spaces in each of the cardinal directions
+		int count = 0;
+		bool removed = false;
+		do {
+			removed = false;
+			count = 0;
+			for (int x = 0; x < cols; x++) {
+				for (int y = 0; y < rows; y++) {
+					if(!grid[x][y].IsDestroyed() && grid[x][y].IsWall()){ 
+						if (((y+1) < rows) && (grid[x][y+1].IsWall() || grid[x][y+1].IsDestroyed())) {
+							count++;
+						} else if ((y+1) >= rows) {
+							count++;
+						}
+						if (((x+1) < cols) && (grid[x+1][y].IsWall() || grid[x+1][y].IsDestroyed())) {
+							count++;
+						} else if ((x+1) >= cols) {
+							count++;
+						}
+						if (((x-1) >= 0) && (grid[x-1][y].IsWall() || grid[x-1][y].IsDestroyed())) {
+							count++;
+						} else if ((x-1) < 0) {
+							count ++;
+						}
+						if (((y-1) >= 0) && (grid[x][y-1].IsWall() || grid[x][y-1].IsDestroyed())) {
+							count++;
+						} else if ((y-1) < 0) {
+							count++;
+						}
+						if (count == 4) {
+							removed = true;
+							grid[x][y].SetIsDestroyed(true);
+							grid[x][y].SetIsWall(true);
+							Destroy (grid[x][y].GetObject());
+						}
+						count = 0;
+					}
 				}
 			}
+		} while (removed == true);
+	}
+
+	protected void UnMarkAllTiles()
+	{
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				grid[x][y].SetIsMarked(false);
+			}
 		}
-		return false;
 	}
 }

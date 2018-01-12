@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameTile {
-	private float x=0.0f;
-	private float y=0.0f;
+	//corresponds to where the tiles are on the grid script-wise, not in unity
+	private int x=0; 
+	private int y=0;
+	//
 	private bool wall = false;
 	private bool destroyed = false;
 	private bool occupied = false;
@@ -19,7 +21,7 @@ public class GameTile {
 	private GameTile tileWest = null;
 
 	//constructor
-	public GameTile(float p_x, float p_y, Sprite sprite)
+	public GameTile(int p_x, int p_y, Sprite sprite)
 	{
 		this.x = p_x;
 		this.y = p_y;
@@ -55,6 +57,16 @@ public class GameTile {
 	public Vector2 GetPosition()
 	{
 		return new Vector2(this.x, this.y);
+	}
+
+	public int GetX()
+	{
+		return x;
+	}
+
+	public int GetY()
+	{
+		return y;
 	}
 
 	public GameObject GetObject()
