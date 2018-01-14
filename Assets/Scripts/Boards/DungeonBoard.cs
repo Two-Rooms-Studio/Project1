@@ -34,6 +34,13 @@ public class DungeonBoard : Board {
 		allowDisconnectedCaves = Settings.allowDisconnectedCaves;
 		initMap();
 		MapSimulation();
+		MapCleanUp();
+		if (!EnsureSpawnPointExsits()) {
+			FixSpawnPoint(tileObject);
+		}
+		SetAllOriginalSpritesAndColors();
+		SetUpEdges(); //setup all tiles with edge information
+		CalculateTileNeighbours(); //setup all tiles with neighbour information
 	}
 
 	//privates
@@ -72,13 +79,6 @@ public class DungeonBoard : Board {
 		for (int i = 0; i < numberOfSimulations; i++) {
 			SimulationStep();
 		}
-		MapCleanUp();
-		if (!EnsureSpawnPointExsits()) {
-			FixSpawnPoint(tileObject);
-		}
-		SetAllOriginalSpritesAndColors();
-		SetUpEdges(); //setup all tiles with edge information
-		CalculateTileNeighbours(); //setup all tiles with neighbour information
 	}
 
 	private void SimulationStep()

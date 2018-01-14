@@ -70,9 +70,7 @@ public class PlayerEntity : Entity {
 		playerTile.SetIsOccupied(true);
 		playerTile.SetIsWalkAble(true);
 		playerTile.SetIsVisible(true);
-		TestSetAllToNotVisible();
 		UpdateVision();
-		TestChangeFloorColor();
 		playerTile.GetObject().GetComponent<SpriteRenderer>().sprite = playerSprite;
 	}
 
@@ -89,18 +87,6 @@ public class PlayerEntity : Entity {
 		}
 	}
 
-	private void TestSetAllToNotVisible()
-	{
-		int rows = map.GetRows();
-		int cols = map.GetCols();
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				map.GetGrid()[x][y].SetIsVisible(false);
-				if(map.GetGrid()[x][y].GetObject() != null) map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.grey;
-			}
-		}
-	}
-
 	private void UpdateVision()
 	{
 		//TODO: Figure out some type of class system or something to isolate this vision code away from the actual playerEntity
@@ -109,6 +95,8 @@ public class PlayerEntity : Entity {
 		int cols = map.GetCols();
 		List<List<Vector2>> results = new List<List<Vector2>>();
 		List<Vector2> result = new List<Vector2>();
+
+		SetAllTilesToNotVisible(); //really should be a better way to do this
 
 		for (int x = 0; x < cols; x++) {
 			//cast lines to all the vertical edges of the map
@@ -137,12 +125,22 @@ public class PlayerEntity : Entity {
 			}
 		}
 		PostProcessing();
+		UpdateTilesToReflectVisiblity();
+	}
+
+	private void SetAllTilesToNotVisible()
+	{
+		int rows = map.GetRows();
+		int cols = map.GetCols();
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				map.GetGrid()[x][y].SetIsVisible(false);
+			}
+		}
 	}
 
 	private void PostProcessing()
 	{
-		//TODO: Iterate through the map once to check for section critera, then apply the appropriate fixes within that iteration instead of building lists
-		//TODO: Method away the null checks for the love of all that is holy
 		int rows = map.GetRows();
 		int cols = map.GetCols();
 		List<GameTile> visibleFloorTiles = new List<GameTile>();
@@ -160,7 +158,30 @@ public class PlayerEntity : Entity {
 		//This is used to fix wall not showing up when logically if we can see the floor we should also be able to see the wall behind it
 		//this is a flaw of the raycasting system used to build the original list of visible tiles for the player
 
+		//new edge fix
 		//EdgeFixes(ref playerVerticalLineTiles, ref playerHorizontalLineTiles);
+		//original edge fix
+		EdgeFixes();
+	}
+
+	private void UpdateTilesToReflectVisiblity()
+	{
+		int rows = map.GetRows();
+		int cols = map.GetCols();
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (map.GetGrid()[x][y].GetObject() != null && !map.GetGrid()[x][y].IsVisible() && !map.GetGrid()[x][y].IsVisted()) {
+					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.black;
+				}
+				if (map.GetGrid()[x][y].GetObject() != null && map.GetGrid()[x][y].IsVisible()) {
+					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = map.GetGrid()[x][y].GetOriginalColor();
+					map.GetGrid()[x][y].SetIsVisited(true);
+				}
+				if (map.GetGrid()[x][y].GetObject() != null && !map.GetGrid()[x][y].IsVisible() && map.GetGrid()[x][y].IsVisted()) {
+					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.grey;
+				}
+			}
+		}
 	}
 
 	private void ApplyTileFixesBySection(ref List<GameTile> visibleTiles, out List<GameTile> playerVerticalLineTiles, out List<GameTile> playerHorizontalLineTiles)
@@ -244,14 +265,14 @@ public class PlayerEntity : Entity {
 		}
 	}
 
-	private void EdgeFixes(ref List<GameTile> playerVerticalLineTiles, ref List<GameTile> playerHorizontalLineTiles)
+	//original edge fix function
+
+	private void EdgeFixes()
 	{
 		List<GameTile> visibleWallTiles = new List<GameTile>();
-		bool InPlayerLineTiles = false;
 		int rows = map.GetRows();
 		int cols = map.GetCols();
 		//Any edge tile connected to a visible wall should be visible, otherwise we'll have weird pop in edge walls e.e
-		//we don't want to apply these fixes to any tile that is currently on the same vertical or horizontal line as the player
 		//gather a list of all visible wall tiles
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
@@ -264,63 +285,113 @@ public class PlayerEntity : Entity {
 			if (visibleWallTiles[x].GetTileNorth() != null) {
 				for (int i = 0; i < Edges.Count; i++) {
 					if (visibleWallTiles[x].GetTileNorth() == Edges[i]) {
-						for (int z = 0; z < playerVerticalLineTiles.Count; z++) {
-							InPlayerLineTiles = false;
-							if (playerVerticalLineTiles[z] == visibleWallTiles[x]) {
-								InPlayerLineTiles = true;
-								break;
-							}
-						}
-						if (!InPlayerLineTiles) visibleWallTiles[x].GetTileNorth().SetIsVisible(true);
+						visibleWallTiles[x].GetTileNorth().SetIsVisible(true);
 					}
 				}
 			}
 			if (visibleWallTiles[x].GetTileSouth() != null) {
 				for (int i = 0; i < Edges.Count; i++) {
 					if (visibleWallTiles[x].GetTileSouth() == Edges[i]) {
-						for (int z = 0; z < playerVerticalLineTiles.Count; z++) {
-							InPlayerLineTiles = false;
-							if (playerVerticalLineTiles[z] == visibleWallTiles[x]) {
-								InPlayerLineTiles = true;
-								break;
-							}
-						}
-						if (!InPlayerLineTiles) visibleWallTiles[x].GetTileSouth().SetIsVisible(true);
+						visibleWallTiles[x].GetTileSouth().SetIsVisible(true);
 					}
 				}
 			}
-
 			if (visibleWallTiles[x].GetTileEast() != null) {
 				for (int i = 0; i < Edges.Count; i++) {
 					if (visibleWallTiles[x].GetTileEast() == Edges[i]) {
-						for (int z = 0; z < playerHorizontalLineTiles.Count; z++) {
-							InPlayerLineTiles = false;
-							if (playerHorizontalLineTiles[z] == visibleWallTiles[x]) {
-								InPlayerLineTiles = true;
-								break;
-							}
-						}
-						if (!InPlayerLineTiles)  visibleWallTiles[x].GetTileEast().SetIsVisible(true);
+						visibleWallTiles[x].GetTileEast().SetIsVisible(true);
 					}
 				}
 			}
 			if (visibleWallTiles[x].GetTileWest() != null) {
-				InPlayerLineTiles = false;
 				for (int i = 0; i < Edges.Count; i++) {
 					if (visibleWallTiles[x].GetTileWest() == Edges[i]) {
-						for (int z = 0; z < playerHorizontalLineTiles.Count; z++) {
-							InPlayerLineTiles = false;
-							if (playerHorizontalLineTiles[z] == visibleWallTiles[x]) {
-								InPlayerLineTiles = true;
-								break;
-							}
-						}
-						if (!InPlayerLineTiles) visibleWallTiles[x].GetTileWest().SetIsVisible(true);
+						visibleWallTiles[x].GetTileWest().SetIsVisible(true);
 					}
 				}
 			}
 		}
 	}
+
+	//new edge fix
+
+//	private void EdgeFixes(ref List<GameTile> playerVerticalLineTiles, ref List<GameTile> playerHorizontalLineTiles)
+//	{
+//		List<GameTile> visibleWallTiles = new List<GameTile>();
+//		bool InPlayerLineTiles = false;
+//		int rows = map.GetRows();
+//		int cols = map.GetCols();
+//		//Any edge tile connected to a visible wall should be visible, otherwise we'll have weird pop in edge walls e.e
+//		//we don't want to apply these fixes to any tile that is currently on the same vertical or horizontal line as the player
+//		//gather a list of all visible wall tiles
+//		for (int x = 0; x < cols; x++) {
+//			for (int y = 0; y < rows; y++) {
+//				if (map.GetGrid()[x][y] != null && map.GetGrid()[x][y].IsVisible() && map.GetGrid()[x][y].IsWall()) {
+//					visibleWallTiles.Add(map.GetGrid()[x][y]);
+//				}
+//			}
+//		}
+//		for(int x = 0; x < visibleWallTiles.Count; x++) {
+//			if (visibleWallTiles[x].GetTileNorth() != null) {
+//				for (int i = 0; i < Edges.Count; i++) {
+//					if (visibleWallTiles[x].GetTileNorth() == Edges[i]) {
+//						for (int z = 0; z < playerVerticalLineTiles.Count; z++) {
+//							InPlayerLineTiles = false;
+//							if (playerVerticalLineTiles[z] == visibleWallTiles[x]) {
+//								InPlayerLineTiles = true;
+//								break;
+//							}
+//						}
+//						if (!InPlayerLineTiles) visibleWallTiles[x].GetTileNorth().SetIsVisible(true);
+//					}
+//				}
+//			}
+//			if (visibleWallTiles[x].GetTileSouth() != null) {
+//				for (int i = 0; i < Edges.Count; i++) {
+//					if (visibleWallTiles[x].GetTileSouth() == Edges[i]) {
+//						for (int z = 0; z < playerVerticalLineTiles.Count; z++) {
+//							InPlayerLineTiles = false;
+//							if (playerVerticalLineTiles[z] == visibleWallTiles[x]) {
+//								InPlayerLineTiles = true;
+//								break;
+//							}
+//						}
+//						if (!InPlayerLineTiles) visibleWallTiles[x].GetTileSouth().SetIsVisible(true);
+//					}
+//				}
+//			}
+//
+//			if (visibleWallTiles[x].GetTileEast() != null) {
+//				for (int i = 0; i < Edges.Count; i++) {
+//					if (visibleWallTiles[x].GetTileEast() == Edges[i]) {
+//						for (int z = 0; z < playerHorizontalLineTiles.Count; z++) {
+//							InPlayerLineTiles = false;
+//							if (playerHorizontalLineTiles[z] == visibleWallTiles[x]) {
+//								InPlayerLineTiles = true;
+//								break;
+//							}
+//						}
+//						if (!InPlayerLineTiles)  visibleWallTiles[x].GetTileEast().SetIsVisible(true);
+//					}
+//				}
+//			}
+//			if (visibleWallTiles[x].GetTileWest() != null) {
+//				InPlayerLineTiles = false;
+//				for (int i = 0; i < Edges.Count; i++) {
+//					if (visibleWallTiles[x].GetTileWest() == Edges[i]) {
+//						for (int z = 0; z < playerHorizontalLineTiles.Count; z++) {
+//							InPlayerLineTiles = false;
+//							if (playerHorizontalLineTiles[z] == visibleWallTiles[x]) {
+//								InPlayerLineTiles = true;
+//								break;
+//							}
+//						}
+//						if (!InPlayerLineTiles) visibleWallTiles[x].GetTileWest().SetIsVisible(true);
+//					}
+//				}
+//			}
+//		}
+//	}
 
 	// Returns the list of points from p0 to p1 
 	private List<Vector2> BresenhamLine(Vector2 p0, Vector2 p1) {
@@ -361,19 +432,4 @@ public class PlayerEntity : Entity {
 		return results;
 	}
 
-	private void TestChangeFloorColor() 
-	{
-		int rows = map.GetRows();
-		int cols = map.GetCols();
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				if (map.GetGrid()[x][y].GetObject() != null && !map.GetGrid()[x][y].IsVisible()) {
-					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.black;
-				}
-				if (map.GetGrid()[x][y].GetObject() != null && map.GetGrid()[x][y].IsVisible()) {
-					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.white;
-				}
-			}
-		}
-	}
 }

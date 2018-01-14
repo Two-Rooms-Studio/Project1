@@ -14,6 +14,7 @@ public class GameTile {
 	private bool walkAble = false;
 	private bool visible = false;
 	private bool edge = false;
+	private bool visited = false;
 
 	private Sprite originalSprite;
 	private Color originalColor;
@@ -66,6 +67,11 @@ public class GameTile {
 	public bool IsEdge()
 	{
 		return edge;
+	}
+
+	public bool IsVisted()
+	{
+		return visited;
 	}
 
 	public Vector2 GetPosition()
@@ -154,6 +160,11 @@ public class GameTile {
 	public void SetIsEdge(bool val)
 	{
 		edge = val;
+	}
+
+	public void SetIsVisited(bool val)
+	{
+		visited = val;
 	}
 
 	public void SetOriginalSprite(Sprite p_originalSprite)

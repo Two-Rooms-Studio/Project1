@@ -1,11 +1,17 @@
 fileFormatVersion: 2
 guid: 638ee26a06a113c4285c46d649175633
-timeCreated: 1515610130
+timeCreated: 1515952221
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - tileObject: {fileID: 1509052536552318, guid: fa5b584f59c630e4f9df77d079ccf58d,
+      type: 2}
+  - floorSprite: {instanceID: 0}
+  - wallSprite: {instanceID: 0}
+  - innerWallSprite: {instanceID: 0}
+  - teleporterSprite: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
