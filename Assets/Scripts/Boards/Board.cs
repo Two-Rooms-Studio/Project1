@@ -323,7 +323,7 @@ public class Board : ScriptableObject{
 			count = 0;
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				if(!grid[x][y].IsDestroyed() && grid[x][y].IsWall()){ 
+				if(grid[x][y].IsWall()){ 
 					if (((y+1) < rows) && (grid[x][y+1].IsWall() || grid[x][y+1].IsDestroyed())) {
 						count++;
 					} else if ((y+1) >= rows) {

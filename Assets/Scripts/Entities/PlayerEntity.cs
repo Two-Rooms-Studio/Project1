@@ -141,20 +141,13 @@ public class PlayerEntity : Entity {
 
 	private void PostProcessing()
 	{
-		//TODO: Label the GameTiles for their sections instead of building list, iterate through the map once to apply lables, then iterate through once more to apply the appropriate fixes by checking their labels
+		//TODO: Iterate through the map once to check for section critera, then apply the appropriate fixes within that iteration instead of building lists
 		//TODO: Method away the null checks for the love of all that is holy
 		int rows = map.GetRows();
 		int cols = map.GetCols();
 		List<GameTile> visibleFloorTiles = new List<GameTile>();
-		List<GameTile> visibleWallTiles = new List<GameTile>();
-		List<GameTile> northEastTiles = new List<GameTile>();
-		List<GameTile> northWestTiles = new List<GameTile>();
-		List<GameTile> southEastTiles = new List<GameTile>();
-		List<GameTile> southWestTiles = new List<GameTile>();
-		List<GameTile> northVerticalTiles = new List<GameTile>();
-		List<GameTile> southVerticalTiles = new List<GameTile>();
-		List<GameTile> eastHorizontalTiles = new List<GameTile>();
-		List<GameTile> westHorizontalTiles = new List<GameTile>();
+		List<GameTile> playerVerticalLineTiles;
+		List<GameTile> playerHorizontalLineTiles;
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
 				if (map.GetGrid()[x][y] != null && map.GetGrid()[x][y].IsVisible() && !map.GetGrid()[x][y].IsWall()) {
@@ -162,172 +155,103 @@ public class PlayerEntity : Entity {
 				}
 			}
 		}
-		//place tiles into seperate sections(NW,NE,SE,SW)
-		SetUpTileSections(ref visibleFloorTiles, ref northEastTiles, ref northWestTiles, ref southEastTiles, ref southWestTiles, ref northVerticalTiles, ref southVerticalTiles, ref eastHorizontalTiles, ref westHorizontalTiles);
-		//Apply needed corrections to tiles that fall to the northeast or northwest of the player
-		NorthSectionFixes(ref northEastTiles, ref northWestTiles);
-		//Apply needed corrections to tiles that fall to the southeast or southwest of the player
-		SouthSectionFixes(ref southEastTiles, ref southWestTiles);
-		//Apply needed corrections to tiles that fall on the same line as the player
-		VerticalLineFixes(ref northVerticalTiles, ref southVerticalTiles);
-		//Apply needed corrections to tiles that fall on the same horizontal line as the player
-		HorizontalLineFixes(ref eastHorizontalTiles, ref westHorizontalTiles);
-		//Apply needed corrections to "edge" walls (walls that only touch empty spaces or other walls)
-		EdgeFixes(ref visibleWallTiles);
+		ApplyTileFixesBySection(ref visibleFloorTiles, out playerVerticalLineTiles, out playerHorizontalLineTiles);
+		//Apply fixes to the player's visible tiles dependent on the area a visible tile falls into in regards to player location
+		//This is used to fix wall not showing up when logically if we can see the floor we should also be able to see the wall behind it
+		//this is a flaw of the raycasting system used to build the original list of visible tiles for the player
+
+		//EdgeFixes(ref playerVerticalLineTiles, ref playerHorizontalLineTiles);
 	}
 
-	private void SetUpTileSections(ref List<GameTile> visibleTiles, ref List<GameTile> northEastTiles, ref List<GameTile> northWestTiles, ref List<GameTile> southEastTiles, ref List<GameTile> southWestTiles, ref List<GameTile> northVerticalTiles, ref List<GameTile> southVerticalTiles, ref List<GameTile> eastHorizontalTiles, ref List<GameTile> westHorizontalTiles)
+	private void ApplyTileFixesBySection(ref List<GameTile> visibleTiles, out List<GameTile> playerVerticalLineTiles, out List<GameTile> playerHorizontalLineTiles)
 	{
+		playerVerticalLineTiles = new List<GameTile>();
+		playerHorizontalLineTiles = new List<GameTile>();
+		//Looks at all current visible floor tiles and applys fixes to the player's vision dependent on which "area" the tiles are around the player
 		for (int x = 0; x < visibleTiles.Count; x++) {
+			bool hasNorthWallTile = (visibleTiles[x].GetTileNorth() != null && visibleTiles[x].GetTileNorth().GetObject() != null && visibleTiles[x].GetTileNorth().IsWall());
+			bool hasSouthWallTile = (visibleTiles[x].GetTileSouth() != null && visibleTiles[x].GetTileSouth().GetObject() != null && visibleTiles[x].GetTileSouth().IsWall());
+			bool hasEastWallTile = (visibleTiles[x].GetTileEast() != null && visibleTiles[x].GetTileEast().GetObject() != null && visibleTiles[x].GetTileEast().IsWall());
+			bool hasWestWallTile = (visibleTiles[x].GetTileWest() != null && visibleTiles[x].GetTileWest().GetObject() != null && visibleTiles[x].GetTileWest().IsWall());
+			GameTile northWallTile = (hasNorthWallTile) ? visibleTiles[x].GetTileNorth() : null;
+			GameTile southWallTile = (hasSouthWallTile) ? visibleTiles[x].GetTileSouth() : null;
+			GameTile eastWallTile = (hasEastWallTile) ? visibleTiles[x].GetTileEast() : null;
+			GameTile westWallTile = (hasWestWallTile) ? visibleTiles[x].GetTileWest() : null;
+
 			if (visibleTiles[x].GetPosition().y == playerTile.GetPosition().y || visibleTiles[x].GetPosition().x == playerTile.GetPosition().x) {
-				//these tiles lie directly on the same vertical or horizontal line the player is currently on, and therefore can belong to multiple tile sections
+
+				//these tiles lie directly on the same vertical or horizontal line the player is currently on
 				if (visibleTiles[x].GetPosition().y == playerTile.GetPosition().y) {
+					playerHorizontalLineTiles.Add(visibleTiles[x]);
 					//on same horizontal line as the player
 					if (visibleTiles[x].GetPosition().x > playerTile.GetPosition().x) {
-						//on same horizontal line but to the east of the player, belongs to eastHorizontalTiles
-						eastHorizontalTiles.Add(visibleTiles[x]);
+						//on same horizontal line but to the east of the player, any visible floor tile in this section should illuminate any wall tiles to the north, west, or south
+						if (hasNorthWallTile) northWallTile.SetIsVisible(true);
+						if (hasWestWallTile) westWallTile.SetIsVisible(true);
+						if (hasSouthWallTile) southWallTile.SetIsVisible(true);
 					} else if (visibleTiles[x].GetPosition().x < playerTile.GetPosition().x) {
-						//on same horizontal line as the player but to the west of the player, belongs to westHorizontalTiles
-						westHorizontalTiles.Add(visibleTiles[x]);
+						//on same horizontal line as the player but to the west of the player, any visible floor tile in this section should illuminate any wall tiles to the north, east, or south
+						if (hasNorthWallTile) northWallTile.SetIsVisible(true);
+						if (hasEastWallTile) eastWallTile.SetIsVisible(true);
+						if (hasSouthWallTile) southWallTile.SetIsVisible(true);
 					}
 				} else {
 					//on same vertical line as the player
+					playerVerticalLineTiles.Add(visibleTiles[x]);
 					if (visibleTiles[x].GetPosition().y > playerTile.GetPosition().y) {
-						//on same vertical line as the player but north of the player, can belongs to northVerticalTiles
-						northVerticalTiles.Add(visibleTiles[x]);
+						//on same vertical line as the player but north of the player, any visible floor tile in this section should illuminate any wall tiles to the south, west, or east
+						if (hasSouthWallTile) southWallTile.SetIsVisible(true);
+						if (hasWestWallTile) westWallTile.SetIsVisible(true);
+						if (hasEastWallTile) eastWallTile.SetIsVisible(true);
 					} else if (visibleTiles[x].GetPosition().y < playerTile.GetPosition().y) {
-						//on same vertical line as the player but south of the player, belongs to southVerticalTiles
-						southVerticalTiles.Add(visibleTiles[x]);
+						//on same vertical line as the player but south of the player, any visible floor tile in this section should illuminate any wall tiles to north, west, or east
+						if (hasNorthWallTile) northWallTile.SetIsVisible(true);
+						if (hasWestWallTile) westWallTile.SetIsVisible(true);
+						if (hasEastWallTile) eastWallTile.SetIsVisible(true);
 					}
 				}
+			
 			} else {
+				
+				//these tiles do not like directly on the same vertical or horizontal line as the player
 				if (visibleTiles[x].GetPosition().y > playerTile.GetPosition().y) {
 					//North sections
 					if (visibleTiles[x].GetPosition().x > playerTile.GetPosition().x) {
 						//north east
-						northEastTiles.Add(visibleTiles[x]);
+						//above the player's horizontal line and to the east of the player;s vertical line, any visible floor tile in this section should illuminate any wall tiles to the north or east
+						if (hasNorthWallTile) northWallTile.SetIsVisible(true);
+						if (hasEastWallTile) eastWallTile.SetIsVisible(true);
 					} else {
 						//north west
-						northWestTiles.Add(visibleTiles[x]);
+						//above the player's horizontal line and to the west of the player's vertical line, any visible floor tile in this section should illuminate any wall tiles to the north or west
+						if (hasNorthWallTile) northWallTile.SetIsVisible(true);
+						if (hasWestWallTile) westWallTile.SetIsVisible(true);
 					}
 				} else {
 					if (visibleTiles[x].GetPosition().x > playerTile.GetPosition().x) {
-						//south east = green
-						southEastTiles.Add(visibleTiles[x]);
+						//south east
+						//below the player's horizontal line and to the east of the player's vertical line, any visible floor tile in this section sould illuminate any wall tiles to the south or east
+						if (hasSouthWallTile) southWallTile.SetIsVisible(true);
+						if (hasEastWallTile) eastWallTile.SetIsVisible(true);
 					} else {
 						//south west
-						southWestTiles.Add(visibleTiles[x]);
+						//below the player's horizontal line and to the west of the player's vertical line, any visible floor tile in this section should illuminate any wall tiles to the south or west 
+						if (hasSouthWallTile) southWallTile.SetIsVisible(true);
+						if (hasWestWallTile) westWallTile.SetIsVisible(true);
 					}
 				}
 			}
 		}
 	}
 
-	private void NorthSectionFixes(ref List<GameTile> northEastTiles, ref List<GameTile> northWestTiles)
+	private void EdgeFixes(ref List<GameTile> playerVerticalLineTiles, ref List<GameTile> playerHorizontalLineTiles)
 	{
-		//Any visible floor in the north east section should also have a visible north wall tile and visible east wall tile:
-		for(int x = 0; x < northEastTiles.Count; x++){
-			if (northEastTiles[x].GetTileNorth() != null && northEastTiles[x].GetTileNorth().GetObject() != null && northEastTiles[x].GetTileNorth().IsWall()) {
-				northEastTiles[x].GetTileNorth().SetIsVisible(true);
-			}
-			if (northEastTiles[x].GetTileEast() != null && northEastTiles[x].GetTileEast().GetObject() != null && northEastTiles[x].GetTileEast().IsWall()) {
-				northEastTiles[x].GetTileEast().SetIsVisible(true);
-			}
-		}
-		//Any visible floor in the north west section should also have a visible north wall tile and visible west wall tile:
-		for(int x = 0; x < northWestTiles.Count; x++){
-			if (northWestTiles[x].GetTileNorth() != null && northWestTiles[x].GetTileNorth().GetObject() != null && northWestTiles[x].GetTileNorth().IsWall()) {
-				northWestTiles[x].GetTileNorth().SetIsVisible(true);
-			}
-			if (northWestTiles[x].GetTileWest() != null && northWestTiles[x].GetTileWest().GetObject() != null && northWestTiles[x].GetTileWest().IsWall()) {
-				northWestTiles[x].GetTileWest().SetIsVisible(true);
-			}
-		}
-	}
-
-	private void SouthSectionFixes(ref List<GameTile> southEastTiles, ref List<GameTile> southWestTiles)
-	{
-		//Any visible floor in the south east section should also have a visible south wall tile and visible east wall tile
-		for(int x = 0; x < southEastTiles.Count; x++){
-			if (southEastTiles[x].GetTileSouth() != null && southEastTiles[x].GetTileSouth().GetObject() != null && southEastTiles[x].GetTileSouth().IsWall()) {
-				southEastTiles[x].GetTileSouth().SetIsVisible(true);
-			}
-			if (southEastTiles[x].GetTileEast() != null && southEastTiles[x].GetTileEast().GetObject() != null && southEastTiles[x].GetTileEast().IsWall()) {
-				southEastTiles[x].GetTileEast().SetIsVisible(true);
-			}
-		}
-		//Any visible floor in the south west section should also have a visible south wall tile and visible west wall tile
-		for(int x = 0; x < southWestTiles.Count; x++){
-			if (southWestTiles[x].GetTileSouth() != null && southWestTiles[x].GetTileSouth().GetObject() != null && southWestTiles[x].GetTileSouth().IsWall()) {
-				southWestTiles[x].GetTileSouth().SetIsVisible(true);
-			}
-			if (southWestTiles[x].GetTileWest() != null && southWestTiles[x].GetTileWest().GetObject() != null && southWestTiles[x].GetTileWest().IsWall()) {
-				southWestTiles[x].GetTileWest().SetIsVisible(true);
-			}
-		}
-	}
-
-	private void VerticalLineFixes(ref List<GameTile> northVerticalTiles, ref List<GameTile> southVerticalTiles)
-	{
-		//Any visible floor north of the player and on the same vertical line should also have a visible south, east, or west wall tile
-		for(int x = 0; x < northVerticalTiles.Count; x++){
-			if (northVerticalTiles[x].GetTileSouth() != null && northVerticalTiles[x].GetTileSouth().GetObject() != null && northVerticalTiles[x].GetTileSouth().IsWall()) {
-				northVerticalTiles[x].GetTileSouth().SetIsVisible(true);
-			}
-			if (northVerticalTiles[x].GetTileWest() != null && northVerticalTiles[x].GetTileWest().GetObject() != null && northVerticalTiles[x].GetTileWest().IsWall()) {
-				northVerticalTiles[x].GetTileWest().SetIsVisible(true);
-			}
-			if (northVerticalTiles[x].GetTileEast() != null && northVerticalTiles[x].GetTileEast().GetObject() != null && northVerticalTiles[x].GetTileEast().IsWall()) {
-				northVerticalTiles[x].GetTileEast().SetIsVisible(true);
-			}
-		}
-		//Any visible floor south of the player and on the same vertical line should also have a visible north, east or west wall tile
-		for(int x = 0; x < southVerticalTiles.Count; x++){
-			if (southVerticalTiles[x].GetTileNorth() != null && southVerticalTiles[x].GetTileNorth().GetObject() != null && southVerticalTiles[x].GetTileNorth().IsWall()) {
-				southVerticalTiles[x].GetTileNorth().SetIsVisible(true);
-			}
-			if (southVerticalTiles[x].GetTileWest() != null && southVerticalTiles[x].GetTileWest().GetObject() != null && southVerticalTiles[x].GetTileWest().IsWall()) {
-				southVerticalTiles[x].GetTileWest().SetIsVisible(true);
-			}
-			if (southVerticalTiles[x].GetTileEast() != null && southVerticalTiles[x].GetTileEast().GetObject() != null && southVerticalTiles[x].GetTileEast().IsWall()) {
-				southVerticalTiles[x].GetTileEast().SetIsVisible(true);
-			}
-		}
-	}
-
-	private void HorizontalLineFixes(ref List<GameTile> eastHorizontalTiles, ref List<GameTile> westHorizontalTiles)
-	{
-		//Any visible floor east of the player and on the same horizontal line should also have a visible north, south, or west wall tile
-		for(int x = 0; x < eastHorizontalTiles.Count; x++){
-			if (eastHorizontalTiles[x].GetTileNorth() != null && eastHorizontalTiles[x].GetTileNorth().GetObject() != null && eastHorizontalTiles[x].GetTileNorth().IsWall()) {
-				eastHorizontalTiles[x].GetTileNorth().SetIsVisible(true);
-			}
-			if (eastHorizontalTiles[x].GetTileWest() != null && eastHorizontalTiles[x].GetTileWest().GetObject() != null && eastHorizontalTiles[x].GetTileWest().IsWall()) {
-				eastHorizontalTiles[x].GetTileWest().SetIsVisible(true);
-			}
-			if (eastHorizontalTiles[x].GetTileSouth() != null && eastHorizontalTiles[x].GetTileSouth().GetObject() != null && eastHorizontalTiles[x].GetTileSouth().IsWall()) {
-				eastHorizontalTiles[x].GetTileSouth().SetIsVisible(true);
-			}
-		}
-		//Any visible floor west of the player and on the same horizontal line should also have a visible north, south, or east wall tile
-		for(int x = 0; x < westHorizontalTiles.Count; x++){
-			if (westHorizontalTiles[x].GetTileNorth() != null && westHorizontalTiles[x].GetTileNorth().GetObject() != null && westHorizontalTiles[x].GetTileNorth().IsWall()) {
-				westHorizontalTiles[x].GetTileNorth().SetIsVisible(true);
-			}
-			if (westHorizontalTiles[x].GetTileEast() != null && westHorizontalTiles[x].GetTileEast().GetObject() != null && westHorizontalTiles[x].GetTileEast().IsWall()) {
-				westHorizontalTiles[x].GetTileEast().SetIsVisible(true);
-			}
-			if (westHorizontalTiles[x].GetTileSouth() != null && westHorizontalTiles[x].GetTileSouth().GetObject() != null && westHorizontalTiles[x].GetTileSouth().IsWall()) {
-				westHorizontalTiles[x].GetTileSouth().SetIsVisible(true);
-			}
-		}
-	}
-
-	private void EdgeFixes(ref List<GameTile> visibleWallTiles)
-	{
+		List<GameTile> visibleWallTiles = new List<GameTile>();
+		bool InPlayerLineTiles = false;
 		int rows = map.GetRows();
 		int cols = map.GetCols();
 		//Any edge tile connected to a visible wall should be visible, otherwise we'll have weird pop in edge walls e.e
+		//we don't want to apply these fixes to any tile that is currently on the same vertical or horizontal line as the player
 		//gather a list of all visible wall tiles
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
@@ -340,28 +264,58 @@ public class PlayerEntity : Entity {
 			if (visibleWallTiles[x].GetTileNorth() != null) {
 				for (int i = 0; i < Edges.Count; i++) {
 					if (visibleWallTiles[x].GetTileNorth() == Edges[i]) {
-						visibleWallTiles[x].GetTileNorth().SetIsVisible(true);
+						for (int z = 0; z < playerVerticalLineTiles.Count; z++) {
+							InPlayerLineTiles = false;
+							if (playerVerticalLineTiles[z] == visibleWallTiles[x]) {
+								InPlayerLineTiles = true;
+								break;
+							}
+						}
+						if (!InPlayerLineTiles) visibleWallTiles[x].GetTileNorth().SetIsVisible(true);
 					}
 				}
 			}
 			if (visibleWallTiles[x].GetTileSouth() != null) {
 				for (int i = 0; i < Edges.Count; i++) {
 					if (visibleWallTiles[x].GetTileSouth() == Edges[i]) {
-						visibleWallTiles[x].GetTileSouth().SetIsVisible(true);
+						for (int z = 0; z < playerVerticalLineTiles.Count; z++) {
+							InPlayerLineTiles = false;
+							if (playerVerticalLineTiles[z] == visibleWallTiles[x]) {
+								InPlayerLineTiles = true;
+								break;
+							}
+						}
+						if (!InPlayerLineTiles) visibleWallTiles[x].GetTileSouth().SetIsVisible(true);
 					}
 				}
 			}
+
 			if (visibleWallTiles[x].GetTileEast() != null) {
 				for (int i = 0; i < Edges.Count; i++) {
 					if (visibleWallTiles[x].GetTileEast() == Edges[i]) {
-						visibleWallTiles[x].GetTileEast().SetIsVisible(true);
+						for (int z = 0; z < playerHorizontalLineTiles.Count; z++) {
+							InPlayerLineTiles = false;
+							if (playerHorizontalLineTiles[z] == visibleWallTiles[x]) {
+								InPlayerLineTiles = true;
+								break;
+							}
+						}
+						if (!InPlayerLineTiles)  visibleWallTiles[x].GetTileEast().SetIsVisible(true);
 					}
 				}
 			}
 			if (visibleWallTiles[x].GetTileWest() != null) {
+				InPlayerLineTiles = false;
 				for (int i = 0; i < Edges.Count; i++) {
 					if (visibleWallTiles[x].GetTileWest() == Edges[i]) {
-						visibleWallTiles[x].GetTileWest().SetIsVisible(true);
+						for (int z = 0; z < playerHorizontalLineTiles.Count; z++) {
+							InPlayerLineTiles = false;
+							if (playerHorizontalLineTiles[z] == visibleWallTiles[x]) {
+								InPlayerLineTiles = true;
+								break;
+							}
+						}
+						if (!InPlayerLineTiles) visibleWallTiles[x].GetTileWest().SetIsVisible(true);
 					}
 				}
 			}
@@ -374,6 +328,7 @@ public class PlayerEntity : Entity {
 	}
 
 	public List<Vector2> BresenhamLine(int x,int y,int x2, int y2) {
+		//TODO: Document, and fully understand it myself.....
 		//source: https://stackoverflow.com/questions/11678693/all-cases-covered-bresenhams-line-algorithm
 		List<Vector2> results = new List<Vector2>();
 		int w = x2 - x ;
@@ -413,7 +368,7 @@ public class PlayerEntity : Entity {
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
 				if (map.GetGrid()[x][y].GetObject() != null && !map.GetGrid()[x][y].IsVisible()) {
-					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.grey;
+					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.black;
 				}
 				if (map.GetGrid()[x][y].GetObject() != null && map.GetGrid()[x][y].IsVisible()) {
 					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.white;
