@@ -12,9 +12,13 @@ public class GameTile {
 	private bool occupied = false;
 	private bool marked = false; //used for floodfilling in order to fixed blocked in map sections
 	private bool walkAble = false;
+	private bool visible = false;
+	private bool edge = false;
+
 	private Sprite originalSprite;
 	private Color originalColor;
 	private GameObject tileObject;
+
 	private GameTile tileNorth = null;
 	private GameTile tileSouth = null;
 	private GameTile tileEast = null;
@@ -52,6 +56,16 @@ public class GameTile {
 	public bool IsWalkAble()
 	{
 		return walkAble;
+	}
+
+	public bool IsVisible()
+	{
+		return visible;
+	}
+
+	public bool IsEdge()
+	{
+		return edge;
 	}
 
 	public Vector2 GetPosition()
@@ -130,6 +144,16 @@ public class GameTile {
 	public void SetIsWalkAble(bool val)
 	{
 		walkAble = val;
+	}
+
+	public void SetIsVisible(bool val)
+	{
+		visible = val;
+	}
+
+	public void SetIsEdge(bool val)
+	{
+		edge = val;
 	}
 
 	public void SetOriginalSprite(Sprite p_originalSprite)

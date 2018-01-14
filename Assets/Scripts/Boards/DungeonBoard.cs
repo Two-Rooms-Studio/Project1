@@ -77,6 +77,7 @@ public class DungeonBoard : Board {
 			FixSpawnPoint(tileObject);
 		}
 		SetAllOriginalSpritesAndColors();
+		SetUpEdges(); //setup all tiles with edge information
 		CalculateTileNeighbours(); //setup all tiles with neighbour information
 	}
 

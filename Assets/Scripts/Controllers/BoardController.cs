@@ -41,6 +41,7 @@ public class BoardController : MonoBehaviour {
 		spawnPoint = new Vector2((int)Random.Range(0, Settings.cols-1), (int)Random.Range(0, Settings.rows-1));
 		} while (!map.GetGridTile((int)spawnPoint.x, (int)spawnPoint.y).Open());
 		player = ScriptableObject.CreateInstance<PlayerEntity>();
-		player.init(spawnPoint, map, playerSprite, playerColor);
+		player.SetMapForEntityUse(map);
+		player.init(spawnPoint, playerSprite, playerColor);
 	}
 }

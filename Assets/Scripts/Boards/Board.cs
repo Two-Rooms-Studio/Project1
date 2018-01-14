@@ -30,6 +30,16 @@ public class Board : ScriptableObject{
 		return grid;
 	}
 
+	public int GetCols()
+	{
+		return cols;
+	}
+
+	public int GetRows()
+	{
+		return rows;
+	}
+
 	//private
 	private void AddValidNeighbours(ref List<GameTile> list, GameTile tile){
 		//FloodFill helper function, returns a list containing the neighbours
@@ -302,6 +312,43 @@ public class Board : ScriptableObject{
 			for (int y = 0; y < rows; y++) {
 				grid[x][y].SetOriginalSprite(grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite);
 				grid[x][y].SetOriginalColor(grid[x][y].GetObject().GetComponent<SpriteRenderer>().color);
+			}
+		}
+	}
+
+	protected void SetUpEdges()
+	{
+		//Mark edges (walls that only touch blanks and other walls never floors) for logic use
+		int count = 0;
+			count = 0;
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if(!grid[x][y].IsDestroyed() && grid[x][y].IsWall()){ 
+					if (((y+1) < rows) && (grid[x][y+1].IsWall() || grid[x][y+1].IsDestroyed())) {
+						count++;
+					} else if ((y+1) >= rows) {
+						count++;
+					}
+					if (((x+1) < cols) && (grid[x+1][y].IsWall() || grid[x+1][y].IsDestroyed())) {
+						count++;
+					} else if ((x+1) >= cols) {
+						count++;
+					}
+					if (((x-1) >= 0) && (grid[x-1][y].IsWall() || grid[x-1][y].IsDestroyed())) {
+						count++;
+					} else if ((x-1) < 0) {
+						count ++;
+					}
+					if (((y-1) >= 0) && (grid[x][y-1].IsWall() || grid[x][y-1].IsDestroyed())) {
+						count++;
+					} else if ((y-1) < 0) {
+						count++;
+					}
+					if (count == 4) {
+						grid[x][y].SetIsEdge(true);
+					}
+					count = 0;
+				}
 			}
 		}
 	}
