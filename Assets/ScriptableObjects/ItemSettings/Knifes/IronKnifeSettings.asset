@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f9d4c6880d9c544e9d2c84e7f43d31a, type: 3}
+  m_Name: IronKnifeSettings
+  m_EditorClassIdentifier: 
+  armor: 0
+  weapon: 1
+  consumable: 0
+  itemSprite: {fileID: 21300130, guid: f1508987d08af7542a245717b9fc27de, type: 3}
+  itemColor: {r: 0.72794116, g: 0.72794116, b: 0.72794116, a: 1}
+  guiSprite: {fileID: 21300130, guid: f1508987d08af7542a245717b9fc27de, type: 3}
+  guiColor: {r: 1, g: 1, b: 1, a: 1}
+  guiText: Iron Knife
+  armorClass: 0
+  minimumDamage: 1
+  maximumDamage: 4
+  elementalDamage: 0
+  damagesHealth: 0
+  minHealthChange: 0
+  maxHalthChange: 0
+  statusEffect: 

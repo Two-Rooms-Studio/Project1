@@ -40,8 +40,10 @@ public class DungeonBoardSettings : ScriptableObject {
 		[UnityEditor.MenuItem("Tools/Create/BoardSettings/DungeonBoardSettings")]
 		public static void CreateAsset()
 		{
-			var ex = ScriptableObject.CreateInstance<DungeonBoardSettings> ();
-			UnityEditor.AssetDatabase.CreateAsset (ex, UnityEditor.AssetDatabase.GenerateUniqueAssetPath ("Assets/ScriptableObjects/BoardSettings/DungeonBoardSettings/BlankDungeonBoardSettings.asset"));
+			string path = UnityEditor.AssetDatabase.GetAssetPath(UnityEditor.Selection.activeObject);
+			string assetPath = path + "/BlankDungeonBoardSettings.asset";
+			DungeonBoardSettings item = ScriptableObject.CreateInstance<DungeonBoardSettings> ();
+			UnityEditor.ProjectWindowUtil.CreateAsset(item, assetPath);
 		}
 	}
 	#endif
