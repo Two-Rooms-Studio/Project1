@@ -6,6 +6,7 @@ public class Board : ScriptableObject{
 	protected int rows = 5;
 	protected int cols = 5;
 	protected List<List<GameTile>> grid = new List<List<GameTile>>(); //data structure for our entire map
+	private List<GameTile> Edges = new List<GameTile>(); //map edges used for player vision logic
 	protected float xPadding = 0.0f; //spacing we need to place between each tile in the grid
 	protected float yPadding = 0.0f; //this SHOULD be consistent throughout all boards....
 	protected GameObject tileObject;
@@ -38,6 +39,11 @@ public class Board : ScriptableObject{
 	public int GetRows()
 	{
 		return rows;
+	}
+
+	public List<GameTile> GetEdges()
+	{
+		return Edges;
 	}
 
 	//private
@@ -346,6 +352,7 @@ public class Board : ScriptableObject{
 					}
 					if (count == 4) {
 						grid[x][y].SetIsEdge(true);
+						Edges.Add(grid[x][y]);
 					}
 					count = 0;
 				}

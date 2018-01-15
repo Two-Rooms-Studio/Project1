@@ -5,7 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class Entity : ScriptableObject {
 	private float health;
-	protected static Board map; 
+	protected static Board map;
+	protected Vision vision = new Vision();
 
 	public virtual bool move(Sprite tileSprite, GameTile begin, GameTile end){
 		return false;
