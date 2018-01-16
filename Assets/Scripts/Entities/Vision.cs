@@ -59,6 +59,7 @@ public class Vision {
 			}
 		}
 
+		//cast lines towards the edge cells of the grid
 		for (int x = 0; x < cols; x++) {
 			//cast lines to all the vertical edges of the map
 			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[x][0].GetPosition());
@@ -74,14 +75,47 @@ public class Vision {
 			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[(cols-1)][y].GetPosition());
 			results.Add(result);
 		}
+		//
 
+		//Walk down each result(ray) setting all tiles to visible and stopping once we have reached a wall
 		for (int x = 0; x < results.Count; x++) {
 			for (int y = 0; y < results[x].Count; y++) {
 				if (map.GetGrid()[(int)((results[x][y]).x)][(int)((results[x][y]).y)].IsWall()) {
 					map.GetGrid()[(int)results[x][y].x][(int)results[x][y].y].SetIsVisible(true);
 					break; // if we hit a wall we can't see anything else on this current line so break.
+				} else if (y+1 < results[x].Count && !(map.GetGrid()[(int)((results[x][y+1]).x)][(int)((results[x][y+1]).y)].IsWall()) && ((results[x][y].x < results[x][y+1].x || results[x][y].x > results[x][y+1].x) && (results[x][y].y < results[x][y+1].y || results[x][y].y > results[x][y+1].y))) { 
+					//since our next tile and current tile are not walls and our x and y are both different at the same time we've assured
+					//that there is some type of slope behavior so we have a chance of diagonal vision here and must correct to block that vision
+					Vector2 currentPos = results[x][y];
+					Vector2 nextPos = results[x][y+1]; 
+					if (currentPos.x < nextPos.x) { //diagonal south of origin
+						if (currentPos.y < nextPos.y) {//diagonal south east of origin
+							if ((map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileEast() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileEast().IsWall()) && (map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileNorth() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileNorth().IsWall())) {
+								map.GetGrid()[(int)currentPos.x][(int)currentPos.y].SetIsVisible(true);
+								break;
+							}
+						} else if (currentPos.y > nextPos.y) { //diagonal south west of origin
+							if ((map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileEast() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileEast().IsWall()) && (map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileSouth() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileSouth().IsWall())) {
+								map.GetGrid()[(int)currentPos.x][(int)currentPos.y].SetIsVisible(true);
+								break;
+							}
+						}
+					} else if (currentPos.x > nextPos.x) {//diagonal north of origin
+						if (currentPos.y < nextPos.y) {//diagonal north east
+							if ((map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileWest() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileWest().IsWall()) && (map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileNorth() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileNorth().IsWall())) {
+								map.GetGrid()[(int)currentPos.x][(int)currentPos.y].SetIsVisible(true);
+								break;
+							}
+						} else if (currentPos.y > nextPos.y) {//diagonal north west of origin
+							if ((map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileWest() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileWest().IsWall()) && (map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileSouth() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileSouth().IsWall())) {
+								map.GetGrid()[(int)currentPos.x][(int)currentPos.y].SetIsVisible(true);
+								break;
+							}
+						}
+					}
 				} else {
 					map.GetGrid()[(int)results[x][y].x][(int)results[x][y].y].SetIsVisible(true); //floor space, set this to be visible
+
 				}
 			}
 		}
