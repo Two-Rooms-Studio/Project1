@@ -7,11 +7,12 @@ public class Board : ScriptableObject{
 	protected int cols = 5;
 	protected List<List<GameTile>> grid = new List<List<GameTile>>(); //data structure for our entire map
 	private List<GameTile> Edges = new List<GameTile>(); //map edges used for player vision logic
-	protected float xPadding = 0.0f; //spacing we need to place between each tile in the grid
-	protected float yPadding = 0.0f; //this SHOULD be consistent throughout all boards....
+	protected float xPadding = 0.16f; //spacing we need to place between each tile in the grid
+	protected float yPadding = 0.24f; //this SHOULD be consistent throughout all boards....
 	protected GameObject tileObject;
 	protected Sprite wallSprite;
 	protected Sprite floorSprite;
+	protected string gridContainerName; //all tiles created by the board will be placed inside a gameobject container that has this name
 
 	//public
 	public void init(int p_rows, int p_cols, GameObject p_tileObject)
@@ -44,6 +45,12 @@ public class Board : ScriptableObject{
 	public List<GameTile> GetEdges()
 	{
 		return Edges;
+	}
+
+	public GameObject GetUnityPosition(GameTile tile)
+	{
+		//returns the vector3 corresponding to the "physical" position of the given tile in the Unity Workspace
+		return GameObject.Find(gridContainerName).transform.Find("(" + tile.GetPosition().x + "," + tile.GetPosition().y + ")").gameObject;
 	}
 
 	//private

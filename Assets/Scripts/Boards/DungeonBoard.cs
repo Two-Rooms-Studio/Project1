@@ -32,6 +32,9 @@ public class DungeonBoard : Board {
 		teleporterSprite = Settings.teleporterSprite;
 		runEdgeSmoothing = Settings.runEdgeSmoothing;
 		allowDisconnectedCaves = Settings.allowDisconnectedCaves;
+		xPadding = 0.16f;
+		yPadding = 0.24f;
+		gridContainerName = "DungeonGrid";
 		initMap();
 		MapSimulation();
 		MapCleanUp();
@@ -47,15 +50,16 @@ public class DungeonBoard : Board {
 	private void initMap()
 	{
 		//init the map grid
-		container = new GameObject ("DungeonGrid").transform;
+		container = new GameObject (gridContainerName).transform;
 		List<GameTile> row = new List<GameTile>();
+		float ySpace = 0.0f, xSpace = 0.0f;
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
 				float randNum = Random.Range(.0f, 1.0f);
 				GameTile tile = new GameTile(x, y, floorSprite);
-				GameObject instance = Instantiate (tileObject, new Vector3 ((float)xPadding, (float)yPadding, 0.0f), Quaternion.identity, container);
+				GameObject instance = Instantiate (tileObject, new Vector3 (xSpace, ySpace, 0.0f), Quaternion.identity, container);
 				instance.name = "(" + x + "," + y + ")";
-				yPadding += 0.23809999f; //0.24
+				ySpace += yPadding;
 				instance.GetComponent<SpriteRenderer>().sprite = floorSprite;
 				if (randNum < chanceToStartAlive) {
 					//set the tile to be a wall tile since it passed random test
@@ -68,8 +72,8 @@ public class DungeonBoard : Board {
 			}
 			grid.Add(row);
 			row = new List<GameTile>();
-			yPadding = 0.0f;
-			xPadding += 0.16f;
+			ySpace = 0.0f;
+			xSpace += xPadding;
 		}
 		return;
 	}
@@ -289,4 +293,6 @@ public class DungeonBoard : Board {
 		}
 		grid [(int)randPoint.x][(int)randPoint.y].GetObject().GetComponent<SpriteRenderer>().sprite = floorSprite;
 	}
+
+
 }
