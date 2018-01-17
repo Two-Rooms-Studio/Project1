@@ -7,3 +7,7 @@ public class TeleporterTile : MonoBehaviour {
 	public GameTile exitPoint;
 	public GameObject exitPointObject;
 }
+
+public class ExitTile : MonoBehaviour {
+
+}

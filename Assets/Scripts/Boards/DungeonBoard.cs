@@ -41,8 +41,10 @@ public class DungeonBoard : Board {
 		if (!EnsureSpawnPointExsits()) {
 			FixSpawnPoint(tileObject);
 		}
+		SpawnExitPoint();
 		SetAllOriginalSpritesAndColors();
 		SetUpEdges(); //setup all tiles with edge information
+		SpawnPlayer();
 		CalculateTileNeighbours(); //setup all tiles with neighbour information
 	}
 

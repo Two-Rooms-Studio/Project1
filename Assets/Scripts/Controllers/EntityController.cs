@@ -5,6 +5,7 @@ using UnityEngine;
 public class EntityController : MonoBehaviour {
 	[Tooltip("The camera that follows the player throughout the map")]
 	public Camera gameCamera;
+	private Board map;
 	private PlayerEntity player;
 	bool moveNorth = false;
 	bool moveSouth = false;
@@ -12,12 +13,15 @@ public class EntityController : MonoBehaviour {
 	bool moveWest = false;
 	bool action = false;
 
-	void Awake () {
+	public void PlayerSetup() {
+		player = ScriptableObject.CreateInstance<PlayerEntity>();
+		player.SetMapForEntityUse(map);
+		player.init(map.GetPlayerSpawnPoint());
 		gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
 	}
 
-	public void SetPlayer(PlayerEntity p_player){
-		player = p_player;
+	public void SetMap(Board p_map){
+		map = p_map;
 	}
 
 	void Update()
@@ -62,6 +66,8 @@ public class EntityController : MonoBehaviour {
 			if (player.GetPlayerGameTile().GetObject().GetComponent<TeleporterTile>() != null) {
 				player.updateNewPlayerTile(player.GetPlayerGameTile().GetObject().GetComponent<TeleporterTile>().exitPoint);
 				gameCamera.GetComponent<CameraFollow>().SetTarget(player.GetPlayerGameTile().GetObject().transform);
+			} else if (player.GetPlayerGameTile().GetObject().GetComponent<ExitTile>() != null) {
+				gameObject.GetComponent<BoardController>().NextLevel();
 			}
 			action = false;
 		}

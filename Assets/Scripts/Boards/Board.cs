@@ -13,6 +13,7 @@ public class Board : ScriptableObject{
 	protected Sprite wallSprite;
 	protected Sprite floorSprite;
 	protected string gridContainerName; //all tiles created by the board will be placed inside a gameobject container that has this name
+	protected GameTile playerSpawnPoint;
 
 	//public
 	public void init(int p_rows, int p_cols, GameObject p_tileObject)
@@ -47,10 +48,14 @@ public class Board : ScriptableObject{
 		return Edges;
 	}
 
-	public GameObject GetUnityPosition(GameTile tile)
+	public GameTile GetPlayerSpawnPoint()
 	{
-		//returns the vector3 corresponding to the "physical" position of the given tile in the Unity Workspace
-		return GameObject.Find(gridContainerName).transform.Find("(" + tile.GetPosition().x + "," + tile.GetPosition().y + ")").gameObject;
+		return playerSpawnPoint;
+	}
+
+	public string GetGridContainerName()
+	{
+		return gridContainerName;
 	}
 
 	//private
@@ -409,6 +414,26 @@ public class Board : ScriptableObject{
 				}
 			}
 		} while (removed == true);
+	}
+
+	protected void SpawnPlayer()
+	{
+		Vector2 spawnPoint;
+		do {
+			spawnPoint = new Vector2((int)Random.Range(0, cols-1), (int)Random.Range(0, rows-1));
+		} while (!grid[(int)spawnPoint.x][(int)spawnPoint.y].Open());
+		playerSpawnPoint = (grid[(int)spawnPoint.x][(int)spawnPoint.y]);
+	}
+
+	protected void SpawnExitPoint()
+	{
+		Vector2 spawnPoint;
+		do {
+			spawnPoint = new Vector2((int)Random.Range(0, cols-1), (int)Random.Range(0, rows-1));
+		} while (!grid[(int)spawnPoint.x][(int)spawnPoint.y].Open());
+		GameObject exitPrefab = Resources.Load("Prefabs/ExitPrefab") as GameObject;
+		grid[(int)spawnPoint.x][(int)spawnPoint.y].GetObject().GetComponent<SpriteRenderer>().sprite = exitPrefab.GetComponent<SpriteRenderer>().sprite;
+		grid[(int)spawnPoint.x][(int)spawnPoint.y].GetObject().AddComponent<ExitTile>();
 	}
 
 	protected void UnMarkAllTiles()

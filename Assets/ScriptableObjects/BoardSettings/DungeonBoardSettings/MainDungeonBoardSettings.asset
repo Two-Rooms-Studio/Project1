@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 638ee26a06a113c4285c46d649175633, type: 3}
   m_Name: MainDungeonBoardSettings
   m_EditorClassIdentifier: 
+  floorLevel: 1
   rows: 50
   cols: 50
   minimumPercentageOfOpenTiles: 0.3

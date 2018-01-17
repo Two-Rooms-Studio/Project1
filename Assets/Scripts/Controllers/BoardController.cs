@@ -22,26 +22,25 @@ public class BoardController : MonoBehaviour {
 	void Awake()
 	{
 		SetUpBoard();
-		SpawnPlayer();
-		gameObject.GetComponent<EntityController>().SetPlayer(player);
-		gameObject.GetComponent<EntityController>().enabled = true;
+		gameObject.GetComponent<EntityController>().SetMap(map);
+		gameObject.GetComponent<EntityController>().PlayerSetup();
 	}
 
 	void SetUpBoard()
 	{
-		
 		map = ScriptableObject.CreateInstance<DungeonBoard>();
 		map.init (Settings);
 	}
 
-	void SpawnPlayer()
+	public void NextLevel()
 	{
-		Vector2 spawnPoint;
-		do {
-		spawnPoint = new Vector2((int)Random.Range(0, Settings.cols-1), (int)Random.Range(0, Settings.rows-1));
-		} while (!map.GetGridTile((int)spawnPoint.x, (int)spawnPoint.y).Open());
-		player = ScriptableObject.CreateInstance<PlayerEntity>();
-		player.SetMapForEntityUse(map);
-		player.init(spawnPoint, playerSprite, playerColor);
+		Destroy(GameObject.Find(map.GetGridContainerName()));
+		Settings.floorLevel += 1;
+		Awake();
+	}
+
+	void OnApplicationQuit()
+	{
+		Settings.floorLevel = 1;
 	}
 }

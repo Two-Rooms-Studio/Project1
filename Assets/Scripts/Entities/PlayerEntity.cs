@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerEntity : Entity {
+	private GameObject playerObject;
 	private GameTile playerTile;
 	private Sprite playerSprite;
 	private Color playerColor;
 
-	public void init (Vector2 spawnPoint, Sprite p_playerSprite, Color p_playerColor)
+	public void init (GameTile spawnPoint)
 	{
-		playerSprite = p_playerSprite;
-		playerColor = p_playerColor;
-		playerTile = map.GetGridTile((int)spawnPoint.x, (int)spawnPoint.y);
-		playerTile.SetIsOccupied(true);
+		playerObject = Resources.Load("Prefabs/PlayerPrefab") as GameObject;
+		playerTile = spawnPoint;
+		playerSprite = playerObject.GetComponent<SpriteRenderer>().sprite;
+		playerColor = playerObject.GetComponent<SpriteRenderer>().color;
 		playerTile.GetObject().GetComponent<SpriteRenderer>().sprite = playerSprite;
 		playerTile.GetObject().GetComponent<SpriteRenderer>().color = playerColor;
-		playerTile.SetIsVisible(true);
 		updateNewPlayerTile(playerTile);
 	}
 
-	public GameTile GetPlayerGameTile(){
+	public GameTile GetPlayerGameTile()
+	{
 		return playerTile;
 	}
 
@@ -59,14 +60,14 @@ public class PlayerEntity : Entity {
 	public void updateNewPlayerTile(GameTile newPlayerTile)
 	{
 		playerTile.SetIsOccupied(false);
-		playerTile.SetIsWalkAble(false);
+		playerTile.SetIsWalkAble(true);
 		playerTile.GetObject().GetComponent<SpriteRenderer>().sprite = playerTile.GetOriginalSprite();
 		playerTile.GetObject().GetComponent<SpriteRenderer>().color = playerTile.GetOriginalColor();
 		playerTile = newPlayerTile;
 		playerTile.GetObject().GetComponent<SpriteRenderer>().sprite = playerSprite;
 		playerTile.GetObject().GetComponent<SpriteRenderer>().color = playerColor;
 		playerTile.SetIsOccupied(true);
-		playerTile.SetIsWalkAble(true);
+		playerTile.SetIsWalkAble(false);
 		playerTile.SetIsVisible(true);
 		vision.UpdateVision(ref playerTile, ref map);
 		vision.PostProcessingForPlayerView(ref playerTile, ref map);
