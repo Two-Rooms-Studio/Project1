@@ -41,10 +41,9 @@ public class DungeonBoard : Board {
 		if (!EnsureSpawnPointExsits()) {
 			FixSpawnPoint(tileObject);
 		}
-		SpawnExitPoint();
 		SetAllOriginalSpritesAndColors();
+		SpawnPlayerAndExitPoint();
 		SetUpEdges(); //setup all tiles with edge information
-		SpawnPlayer();
 		CalculateTileNeighbours(); //setup all tiles with neighbour information
 	}
 
@@ -161,7 +160,7 @@ public class DungeonBoard : Board {
 		randomPoint = GetRandomOpenUnMarkedPoint();
 		do {
 			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
-		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].Open() || grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
+		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].OpenForPlacement() || grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
 		GameTile randomTile = grid[(int)randomPoint.x][(int)randomPoint.y]; 
 		randomTile.SetIsMarked(true);
 		FloodFill(ref randomTile, ref FloodFilledAreas);
@@ -177,14 +176,14 @@ public class DungeonBoard : Board {
 					randomIndexX = (int)(Random.Range(0.0f, (float)FloodFilledAreas.Count - 2)); //place a corresponding exit point randomly in an area already flood filled
 					for(int x = 0; x < FloodFilledAreas[randomIndexX].Count; x++)
 					{
-						if(FloodFilledAreas[randomIndexX][x].Open()){
+						if(FloodFilledAreas[randomIndexX][x].OpenForPlacement()){
 							atLeastOneOpen = true;
 						}
 					}
 				} while (!atLeastOneOpen);
 				do {
 					randomIndexY = (int)(Random.Range(0.0f, (float)FloodFilledAreas[randomIndexX].Count - 1));
-				} while (!FloodFilledAreas[randomIndexX][randomIndexY].Open());
+				} while (!FloodFilledAreas[randomIndexX][randomIndexY].OpenForPlacement());
 				GameTile previouslyMarkedTileToUseAsExit = FloodFilledAreas[randomIndexX][randomIndexY];
 				randomTile.GetObject().AddComponent<TeleporterTile>().exitPointObject = previouslyMarkedTileToUseAsExit.GetObject();
 				randomTile.GetObject().GetComponent<TeleporterTile>().exitPoint = previouslyMarkedTileToUseAsExit;
@@ -203,7 +202,7 @@ public class DungeonBoard : Board {
 		Vector2 randomPoint;
 		do {
 			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
-		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].Open() || grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
+		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].OpenForPlacement() || grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
 		return randomPoint;
 	}
 
@@ -212,7 +211,7 @@ public class DungeonBoard : Board {
 		Vector2 randomPoint;
 		do {
 			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
-		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].Open() && !grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
+		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].OpenForPlacement() && !grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
 		return randomPoint;
 	}
 

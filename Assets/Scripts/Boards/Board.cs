@@ -81,6 +81,16 @@ public class Board : ScriptableObject{
 		}
 	}
 
+	private void SpawnPlayer()
+	{
+		Vector2 spawnPoint;
+		do {
+			spawnPoint = new Vector2((int)Random.Range(0, cols-1), (int)Random.Range(0, rows-1));
+		} while (!grid[(int)spawnPoint.x][(int)spawnPoint.y].OpenForPlacement());
+		playerSpawnPoint = (grid[(int)spawnPoint.x][(int)spawnPoint.y]);
+		grid[(int)spawnPoint.x][(int)spawnPoint.y].SetIsOccupied(true);
+	}
+
 	//protected
 	protected float CalculatePlayingArea()
 	{
@@ -90,7 +100,7 @@ public class Board : ScriptableObject{
 		int totalNumberOfCells = rows * cols;
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				if (grid[x][y].Open()) {
+				if (grid[x][y].OpenForPlacement()) {
 					numberOfOpenCells++;
 				}
 			}
@@ -132,7 +142,7 @@ public class Board : ScriptableObject{
 	//Check for a open tile that is surrounded by walls on the cardnial directions
 	//in otherwords a cave or room made up by one tile
 		int count = 0;
-		if(grid[x][y].Open()){ 
+		if(grid[x][y].OpenForPlacement()){ 
 			if ((y+1) < rows && grid[x][y+1].IsWall()) {
 				count++;
 			}
@@ -416,24 +426,19 @@ public class Board : ScriptableObject{
 		} while (removed == true);
 	}
 
-	protected void SpawnPlayer()
+	protected void SpawnPlayerAndExitPoint()
 	{
+		SpawnPlayer();
 		Vector2 spawnPoint;
 		do {
 			spawnPoint = new Vector2((int)Random.Range(0, cols-1), (int)Random.Range(0, rows-1));
-		} while (!grid[(int)spawnPoint.x][(int)spawnPoint.y].Open());
-		playerSpawnPoint = (grid[(int)spawnPoint.x][(int)spawnPoint.y]);
-	}
-
-	protected void SpawnExitPoint()
-	{
-		Vector2 spawnPoint;
-		do {
-			spawnPoint = new Vector2((int)Random.Range(0, cols-1), (int)Random.Range(0, rows-1));
-		} while (!grid[(int)spawnPoint.x][(int)spawnPoint.y].Open());
+		} while (!grid[(int)spawnPoint.x][(int)spawnPoint.y].OpenForPlacement());
 		GameObject exitPrefab = Resources.Load("Prefabs/ExitPrefab") as GameObject;
 		grid[(int)spawnPoint.x][(int)spawnPoint.y].GetObject().GetComponent<SpriteRenderer>().sprite = exitPrefab.GetComponent<SpriteRenderer>().sprite;
 		grid[(int)spawnPoint.x][(int)spawnPoint.y].GetObject().AddComponent<ExitTile>();
+		grid[(int)spawnPoint.x][(int)spawnPoint.y].SetIsOccupied(true);
+		grid[(int)spawnPoint.x][(int)spawnPoint.y].SetOriginalColor(exitPrefab.GetComponent<SpriteRenderer>().color);
+		grid[(int)spawnPoint.x][(int)spawnPoint.y].SetOriginalSprite(exitPrefab.GetComponent<SpriteRenderer>().sprite);
 	}
 
 	protected void UnMarkAllTiles()

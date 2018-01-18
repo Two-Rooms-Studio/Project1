@@ -28,25 +28,25 @@ public class PlayerEntity : Entity {
 	{
 		switch (move) {
 			case 'n':
-				if (playerTile.GetTileNorth() != null && playerTile.GetTileNorth().Open()) {
+				if (playerTile.GetTileNorth() != null && playerTile.GetTileNorth().IsWalkAble()) {
 					updateNewPlayerTile(playerTile.GetTileNorth());
 					return true;
 				}
 				return false;
 			case 's':
-				if (playerTile.GetTileSouth() != null && playerTile.GetTileSouth().Open()) {
+				if (playerTile.GetTileSouth() != null && playerTile.GetTileSouth().IsWalkAble()) {
 					updateNewPlayerTile(playerTile.GetTileSouth());
 					return true;
 				}
 				return false;
 			case 'e':
-				if (playerTile.GetTileEast() != null && playerTile.GetTileEast().Open()) {
+				if (playerTile.GetTileEast() != null && playerTile.GetTileEast().IsWalkAble()) {
 					updateNewPlayerTile(playerTile.GetTileEast());
 					return true;
 				}
 				return false;
 			case 'w':
-				if (playerTile.GetTileWest() != null && playerTile.GetTileWest().Open()) {
+				if (playerTile.GetTileWest() != null && playerTile.GetTileWest().IsWalkAble()) {
 					updateNewPlayerTile(playerTile.GetTileWest());
 					return true;
 				}

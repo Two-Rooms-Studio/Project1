@@ -11,7 +11,7 @@ public class GameTile {
 	private bool destroyed = false;
 	private bool occupied = false;
 	private bool marked = false; //used for floodfilling in order to fixed blocked in map sections
-	private bool walkAble = false;
+	private bool walkAble = true;
 	private bool visible = false;
 	private bool edge = false;
 	private bool visited = false;
@@ -135,6 +135,13 @@ public class GameTile {
 	public void SetIsWall(bool val)
 	{
 		wall = val;
+		if (val) {
+			SetIsOccupied(true);
+			SetIsWalkAble(false);
+		} else {
+			SetIsOccupied(false);
+			SetIsWalkAble(true);
+		}
 	}
 
 	public void SetIsOccupied(bool val)
@@ -193,10 +200,10 @@ public class GameTile {
 		tileWest = tile;
 	}
 //
-	public bool Open()
+	public bool OpenForPlacement()
 	{
-		//return true if the tile isn't a wall or occupied, in otherwords the player can move onto this tile
-		if ((!IsOccupied() && !IsWall() && !IsDestroyed()) || (IsWalkAble())) {
+		//return true if the tile isn't a wall, occupied, or destoryed we can place an object on it
+		if ((!IsOccupied() && !IsWall() && !IsDestroyed())) {
 			return true;
 		}
 		return false;
