@@ -45,10 +45,9 @@ public class Vision {
 
 	public void UpdateVision(ref GameTile visionOriginTile, ref Board map)
 	{
-		//TODO: Figure out some type of class system or something to isolate this vision code away from the actual playerEntity
-		//TODO: Generalize this code in order to let enemies use everything later on, this goes along with setting the vision code up in its own isolated area
 		int rows = map.GetRows();
 		int cols = map.GetCols();
+		int maxView = 4;
 		List<List<Vector2>> results = new List<List<Vector2>>();
 		List<Vector2> result = new List<Vector2>();
 
@@ -59,15 +58,14 @@ public class Vision {
 			}
 		}
 
-		//cast lines towards the edge cells of the grid
+		//cast lines to set create the original vision field
 		for (int x = 0; x < cols; x++) {
 			//cast lines to all the vertical edges of the map
 			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[x][0].GetPosition());
 			results.Add(result);
-			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[x][(rows-1)].GetPosition());
+			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[x][(rows - 1)].GetPosition());
 			results.Add(result);
 		}
-
 		for (int y = 0; y < rows; y++) {
 			//cast lines to all the horizontal edges of the map
 			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[0][y].GetPosition());
@@ -75,7 +73,6 @@ public class Vision {
 			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[(cols-1)][y].GetPosition());
 			results.Add(result);
 		}
-		//
 
 		//Walk down each result(ray) setting all tiles to visible and stopping once we have reached a wall
 		for (int x = 0; x < results.Count; x++) {
@@ -118,6 +115,55 @@ public class Vision {
 
 				}
 			}
+		}
+		maxView++; // because of edge smoothing the triangle effect we actually need to boost the maxView in order to end up with the originally set max view
+
+		//Limit vision to max view by walking through all visible tiles outside of the range limit and setting them to not visible if they are currently visible
+		map.GetAllTilesInRange(maxView, visionOriginTile);
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (map.GetGrid()[x][y].IsVisible() && !map.GetGrid()[x][y].IsMarked())
+					map.GetGrid()[x][y].SetIsVisible(false);
+			}
+		}
+		//TODO: rewrite smoothing code and functionalize it to clean up this function abit
+		//smooth out the diamond effect by removing the points
+		if (visionOriginTile.GetX() + maxView < cols && map.GetGrid()[visionOriginTile.GetX() + maxView][visionOriginTile.GetY()].IsVisible()) {
+			map.GetGrid()[visionOriginTile.GetX() + maxView][visionOriginTile.GetY()].SetIsVisible(false);
+		}
+		if (visionOriginTile.GetX() - maxView > 0 && map.GetGrid()[visionOriginTile.GetX() - maxView][visionOriginTile.GetY()].IsVisible()) {
+			map.GetGrid()[visionOriginTile.GetX() - maxView][visionOriginTile.GetY()].SetIsVisible(false);
+		}
+		if (visionOriginTile.GetY() + maxView < rows && map.GetGrid()[visionOriginTile.GetX()][visionOriginTile.GetY() + maxView].IsVisible()) {
+			map.GetGrid()[visionOriginTile.GetX()][visionOriginTile.GetY() + maxView].SetIsVisible(false);
+		}
+		if (visionOriginTile.GetY() - maxView > 0 && map.GetGrid()[visionOriginTile.GetX()][visionOriginTile.GetY() - maxView].IsVisible()) {
+			map.GetGrid()[visionOriginTile.GetX()][visionOriginTile.GetY() - maxView].SetIsVisible(false);
+		}
+		//smooth out the diamond effect even more by removing the top row from the top and bottom
+		//top middle
+		if (visionOriginTile.GetY() + (maxView - 1) < rows) {
+			map.GetGrid()[visionOriginTile.GetX()][visionOriginTile.GetY() + (maxView-1)].SetIsVisible(false);
+		}
+		//top left
+		if ((visionOriginTile.GetY() + (maxView - 1) < rows) && ((visionOriginTile.GetX() - 1) > 0)) {
+			map.GetGrid()[visionOriginTile.GetX() - 1][visionOriginTile.GetY() + (maxView - 1)].SetIsVisible(false);
+		}
+		//top right
+		if (visionOriginTile.GetY() + (maxView - 1) < rows && visionOriginTile.GetX() + 1 < cols) {
+			map.GetGrid()[visionOriginTile.GetX() + 1][visionOriginTile.GetY() + (maxView - 1)].SetIsVisible(false);
+		}
+		//bottom middle
+		if (visionOriginTile.GetY() - (maxView - 1) > 0) {
+			map.GetGrid()[visionOriginTile.GetX()][visionOriginTile.GetY() - (maxView-1)].SetIsVisible(false);
+		}
+		//bottom left
+		if (visionOriginTile.GetY() - (maxView - 1) > 0 && visionOriginTile.GetX() - 1 > 0) {
+			map.GetGrid()[visionOriginTile.GetX() - 1][visionOriginTile.GetY() - (maxView - 1)].SetIsVisible(false);
+		}
+		//bottom right
+		if (visionOriginTile.GetY() - (maxView - 1) > 0 && visionOriginTile.GetX() + 1 < cols) {
+			map.GetGrid()[visionOriginTile.GetX() + 1][visionOriginTile.GetY() - (maxView - 1)].SetIsVisible(false);
 		}
 	}
 
@@ -183,28 +229,33 @@ public class Vision {
 				if (visibleTiles[x].GetPosition().y == playerTile.GetPosition().y) {
 					//on same horizontal line as the player
 					if (visibleTiles[x].GetPosition().x > playerTile.GetPosition().x) {
-						//on same horizontal line but to the east of the player, any visible floor tile in this section should illuminate any wall tiles to the north, west, or south
+						//TODO: if we are keeping this where it applies the same effect then remove the two inner if statements for both the horizontal and vertical, and then merge horizontal and vertical into one if check as well
+						//on same horizontal line but to the east of the player, any visible floor tile in this section should illuminate any wall tiles in cardnial directions
 						if (hasNorthWallTile) northWallTile.SetIsVisible(true);
 						if (hasWestWallTile) westWallTile.SetIsVisible(true);
 						if (hasSouthWallTile) southWallTile.SetIsVisible(true);
+						if (hasEastWallTile) eastWallTile.SetIsVisible(true);
 					} else if (visibleTiles[x].GetPosition().x < playerTile.GetPosition().x) {
-						//on same horizontal line as the player but to the west of the player, any visible floor tile in this section should illuminate any wall tiles to the north, east, or south
+						//on same horizontal line as the player but to the west of the player, any visible floor tile in this section should illuminate any wall tiles  in cardnial directions
 						if (hasNorthWallTile) northWallTile.SetIsVisible(true);
 						if (hasEastWallTile) eastWallTile.SetIsVisible(true);
 						if (hasSouthWallTile) southWallTile.SetIsVisible(true);
+						if (hasWestWallTile) westWallTile.SetIsVisible(true);
 					}
 				} else {
 					//on same vertical line as the player
 					if (visibleTiles[x].GetPosition().y > playerTile.GetPosition().y) {
-						//on same vertical line as the player but north of the player, any visible floor tile in this section should illuminate any wall tiles to the south, west, or east
+						//on same vertical line as the player but north of the player, any visible floor tile in this section should illuminate any wall tiles in cardnial directions
 						if (hasSouthWallTile) southWallTile.SetIsVisible(true);
 						if (hasWestWallTile) westWallTile.SetIsVisible(true);
 						if (hasEastWallTile) eastWallTile.SetIsVisible(true);
+						if (hasNorthWallTile) northWallTile.SetIsVisible(true);
 					} else if (visibleTiles[x].GetPosition().y < playerTile.GetPosition().y) {
-						//on same vertical line as the player but south of the player, any visible floor tile in this section should illuminate any wall tiles to north, west, or east
+						//on same vertical line as the player but south of the player, any visible floor tile in this section should illuminate any wall tiles in cardnial directions
 						if (hasNorthWallTile) northWallTile.SetIsVisible(true);
 						if (hasWestWallTile) westWallTile.SetIsVisible(true);
 						if (hasEastWallTile) eastWallTile.SetIsVisible(true);
+						if (hasSouthWallTile) southWallTile.SetIsVisible(true);
 					}
 				}
 

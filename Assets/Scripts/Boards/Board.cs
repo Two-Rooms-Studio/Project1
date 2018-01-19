@@ -58,7 +58,66 @@ public class Board : ScriptableObject{
 		return gridContainerName;
 	}
 
+	public List<GameTile> GetAllTilesInRange(int range, GameTile tile)
+	{
+		//Essentially a modified FloodFill that is only allowed to run a set number of times. This will return all tiles within a certain movement range away for example when handed a 
+		//range of 1 and the player tile, it will return the tiles in the players cardnial directions (tiles that require one move to reach)
+		//This will also mark all tiles within that given range.
+		UnMarkAllTiles();
+		List<GameTile> allMarkedCells = new List<GameTile>();
+		List<GameTile> validNeighbours = new List<GameTile>();
+		allMarkedCells.Add(tile);
+		AddAllNeighbours(ref validNeighbours, tile);
+		List<GameTile> nextValidNeighbours = new List<GameTile>();
+		range--;
+		if (range == 0)
+			return validNeighbours;
+		else if (range < 0)
+			return null; //error
+		do {
+			nextValidNeighbours.Clear();
+			for (int x = 0; x < validNeighbours.Count; x++) {
+				validNeighbours[x].SetIsMarked(true);
+				allMarkedCells.Add(validNeighbours[x]);
+				AddAllNeighbours(ref nextValidNeighbours, validNeighbours[x]);
+			}
+			validNeighbours = new List<GameTile>(nextValidNeighbours);
+			range--;
+		} while (nextValidNeighbours.Count != 0 && range != 0);
+		return allMarkedCells;
+	}
+
+	public void UnMarkAllTiles()
+	{
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				grid[x][y].SetIsMarked(false);
+			}
+		}
+	}
+
 	//private
+	private void AddAllNeighbours(ref List<GameTile> list, GameTile tile){
+		//GetAllTilesInRange helper function, returns a list containing the neighbours surrounding a tile
+		grid[tile.GetX()][tile.GetY()].SetIsMarked(true);
+		if((tile.GetY() + 1) < rows && !grid[tile.GetX()][tile.GetY()+1].IsMarked()){
+			list.Add(grid[tile.GetX()][tile.GetY()+1]);
+			grid[tile.GetX()][tile.GetY()+1].SetIsMarked(true);
+		}
+		if ((tile.GetY() - 1) > 0 && !grid[tile.GetX()][tile.GetY()-1].IsMarked()) {
+			list.Add(grid[tile.GetX()][tile.GetY()-1]);
+			grid[tile.GetX()][tile.GetY()-1].SetIsMarked(true);
+		}
+		if ((tile.GetX() + 1) < rows && !grid[tile.GetX()+1][tile.GetY()].IsMarked()) {
+			list.Add(grid[tile.GetX()+1][tile.GetY()]);
+			grid[tile.GetX()+1][tile.GetY()].SetIsMarked(true);
+		}
+		if ((tile.GetX() - 1) > 0 && !grid[tile.GetX()-1][tile.GetY()].IsMarked()) {
+			list.Add(grid[tile.GetX()-1][tile.GetY()]);
+			grid[tile.GetX()-1][tile.GetY()].SetIsMarked(true);
+		}
+	}
+
 	private void AddValidNeighbours(ref List<GameTile> list, GameTile tile){
 		//FloodFill helper function, returns a list containing the neighbours
 		//of a tile that should be included in the flood fill
@@ -439,14 +498,5 @@ public class Board : ScriptableObject{
 		grid[(int)spawnPoint.x][(int)spawnPoint.y].SetIsOccupied(true);
 		grid[(int)spawnPoint.x][(int)spawnPoint.y].SetOriginalColor(exitPrefab.GetComponent<SpriteRenderer>().color);
 		grid[(int)spawnPoint.x][(int)spawnPoint.y].SetOriginalSprite(exitPrefab.GetComponent<SpriteRenderer>().sprite);
-	}
-
-	protected void UnMarkAllTiles()
-	{
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				grid[x][y].SetIsMarked(false);
-			}
-		}
 	}
 }
