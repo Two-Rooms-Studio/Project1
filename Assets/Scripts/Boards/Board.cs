@@ -296,13 +296,17 @@ public class Board : ScriptableObject{
 		}
 	}
 
-	protected bool EnsureSpawnPointExsits()
+	protected bool EnsureSpawnPointAndExitCanExist()
 	{
-		//ensure that there is atleast one non-wall tile to be used for a spawnpoint
+		//ensure that there is atleast two non-wall tile to be used for a spawnpoint and exit
+		int count = 0;
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				if (!grid[x][y].IsWall() && !grid[x][y].IsDestroyed()) {
-					return true; //we have atleast one spawn point
+				if (grid[x][y].OpenForPlacement()) {
+					count++; //we have atleast one spawn point
+				}
+				if (count >= 2) {
+					return true;
 				}
 			}
 		}

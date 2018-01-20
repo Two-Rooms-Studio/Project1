@@ -6,9 +6,9 @@ public class DungeonBoardSettings : ScriptableObject {
 	[Header("Dungeon Map Settings")]
 	[Tooltip("How deep the player currently is in the dungeon (starts on floor 1)")]
 	public int floorLevel = 1;
-	[Tooltip("Number of rows to generate in the maps grid")]
+	[Tooltip("Number of rows to generate in the maps grid (min for cellular automata generation is 4)")]
 	public int rows = 5;
-	[Tooltip("Number of columns to generate in the maps grid")]
+	[Tooltip("Number of columns to generate in the maps grid (min for cellular automata generation is 4)")]
 	public int cols = 5;
 	[Tooltip("Minimum Percentage of Tiles required to be open if we disallow disjointed caves")]
 	[Range(0.0f , 0.5f)]

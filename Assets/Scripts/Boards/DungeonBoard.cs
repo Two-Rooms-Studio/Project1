@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DungeonBoard : Board {
 	//setup vars
+	private int min_row = 4;
+	private int min_col = 4;
 	private float chanceToStartAlive = 0.4f;
 	private float minimumPercentageOfOpenTiles = 0.1f;
 	private int deathLimit = 3;
@@ -20,6 +22,8 @@ public class DungeonBoard : Board {
 	//public
 	public void init (DungeonBoardSettings Settings)
 	{
+		Settings.rows = (Settings.rows < min_row) ? min_row : Settings.rows;
+		Settings.cols = (Settings.cols < min_col) ? min_col : Settings.cols;
 		base.init(Settings.rows, Settings.cols, Settings.tileObject);
 		chanceToStartAlive = Settings.chanceToStartAlive;
 		minimumPercentageOfOpenTiles = Settings.minimumPercentageOfOpenTiles;
@@ -36,15 +40,28 @@ public class DungeonBoard : Board {
 		yPadding = 0.24f;
 		gridContainerName = "DungeonGrid";
 		initMap();
-		MapSimulation();
-		MapCleanUp();
-		if (!EnsureSpawnPointExsits()) {
-			FixSpawnPoint(tileObject);
+		if (!EnsureSpawnPointAndExitCanExist()) {
+			Debug.Log("Reset map");
+			RespawnMap();
 		}
+		Debug.Log("Pass");
+		MapCleanUp();
 		SetAllOriginalSpritesAndColors();
+		Debug.Log("About to spawn exit");
 		SpawnPlayerAndExitPoint();
+		Debug.Log("Exit spawned");
 		SetUpEdges(); //setup all tiles with edge information
 		CalculateTileNeighbours(); //setup all tiles with neighbour information
+	}
+
+	private void RespawnMap()
+	{
+		DeleteEntireMap();
+		initMap();
+		if(!EnsureSpawnPointAndExitCanExist())
+		{
+			RespawnMap();
+		}
 	}
 
 	//privates
@@ -76,6 +93,7 @@ public class DungeonBoard : Board {
 			ySpace = 0.0f;
 			xSpace += xPadding;
 		}
+		MapSimulation();
 		return;
 	}
 
@@ -259,7 +277,6 @@ public class DungeonBoard : Board {
 			FloodFilledAreas.Clear();
 			DeleteEntireMap();
 			initMap();
-			MapSimulation();
 			return;
 		}
 		FloodFilledAreas.Clear();
@@ -277,23 +294,4 @@ public class DungeonBoard : Board {
 		grid.Clear();
 		Destroy(container.gameObject);
 	}
-//
-
-	private void FixSpawnPoint(GameObject tileObject)
-	{
-		//ran if the generated map has absolutely no place to place a spawn point 
-		//obviously the hope is maps generated in this way will be rejected and regenerated but this prevents crashing for now
-		Transform boardHolder = new GameObject("DungeonGrid").transform;
-		Debug.Log("Had to fix spawn point");
-		Vector2 randPoint = new Vector2((int)Random.Range(0, cols-1), (int)Random.Range(0, rows-1));
-		grid[(int)randPoint.x][(int)randPoint.y].SetIsWall(false);
-		if (grid [(int)randPoint.x][(int)randPoint.y].IsDestroyed()) {
-			GameObject instance = Instantiate (tileObject, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity, boardHolder);
-			grid [(int)randPoint.x][(int)randPoint.y].SetObject (instance);				
-			grid[(int)randPoint.x][(int)randPoint.y].SetIsDestroyed(false);
-		}
-		grid [(int)randPoint.x][(int)randPoint.y].GetObject().GetComponent<SpriteRenderer>().sprite = floorSprite;
-	}
-
-
 }

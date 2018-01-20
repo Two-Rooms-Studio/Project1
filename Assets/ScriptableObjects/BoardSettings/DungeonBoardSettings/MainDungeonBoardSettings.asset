@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: MainDungeonBoardSettings
   m_EditorClassIdentifier: 
   floorLevel: 1
-  rows: 50
-  cols: 50
+  rows: 4
+  cols: 4
   minimumPercentageOfOpenTiles: 0.3
   chanceToStartAlive: 0.4
   deathLimit: 3
