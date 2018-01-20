@@ -54,16 +54,6 @@ public class DungeonBoard : Board {
 		CalculateTileNeighbours(); //setup all tiles with neighbour information
 	}
 
-	private void RespawnMap()
-	{
-		DeleteEntireMap();
-		initMap();
-		if(!EnsureSpawnPointAndExitCanExist())
-		{
-			RespawnMap();
-		}
-	}
-
 	//privates
 	private void initMap()
 	{
@@ -215,6 +205,18 @@ public class DungeonBoard : Board {
 		FloodFilledAreas.Clear();
 	}
 
+	private void DeleteEntireMap()
+	{
+		//Deletes the entire map in order to generate a new one
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				Destroy(grid[x][y].GetObject());
+			}
+		}
+		grid.Clear();
+		Destroy(container.gameObject);
+	}
+
 	private Vector2 GetRandomOpenUnMarkedPoint()
 	{
 		Vector2 randomPoint;
@@ -283,15 +285,14 @@ public class DungeonBoard : Board {
 		return;
 	}
 
-	private void DeleteEntireMap()
+	private void RespawnMap()
 	{
-		//Deletes the entire map in order to generate a new one
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				Destroy(grid[x][y].GetObject());
-			}
+		//Constantly rerolls the map until a valid map is generated
+		DeleteEntireMap();
+		initMap();
+		if(!EnsureSpawnPointAndExitCanExist())
+		{
+			RespawnMap();
 		}
-		grid.Clear();
-		Destroy(container.gameObject);
 	}
 }

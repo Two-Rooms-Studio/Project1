@@ -10,7 +10,7 @@ public class PlayerEntity : Entity {
 
 	public void init (GameTile spawnPoint)
 	{
-		playerObject = Resources.Load("Prefabs/PlayerPrefab") as GameObject;
+		playerObject = Resources.Load("Prefabs/PlayerPrefab") as GameObject; //TODO:use scriptable object settings instead of loading prefabs
 		playerTile = spawnPoint;
 		playerSprite = playerObject.GetComponent<SpriteRenderer>().sprite;
 		playerColor = playerObject.GetComponent<SpriteRenderer>().color;
@@ -69,7 +69,7 @@ public class PlayerEntity : Entity {
 		playerTile.SetIsOccupied(true);
 		playerTile.SetIsWalkAble(false);
 		playerTile.SetIsVisible(true);
-		vision.UpdateVision(ref playerTile, ref map);
+		vision.UpdateVision(ref playerTile, ref map, 5); //TODO:Make max view (5) publicly changeable
 		vision.PostProcessingForPlayerView(ref playerTile, ref map);
 	}
 }

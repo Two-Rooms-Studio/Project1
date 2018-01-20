@@ -4,215 +4,69 @@ using UnityEngine;
 
 public class Vision {
 
-	// Returns the list of points from p0 to p1 
-	private List<Vector2> BresenhamLine(Vector2 p0, Vector2 p1) {
-		return BresenhamLine((int)p0.x, (int)p0.y, (int)p1.x, (int)p1.y);
-	}
-
-	public List<Vector2> BresenhamLine(int x,int y,int x2, int y2) {
-		//TODO: Document, and fully understand it myself.....
-		//source: https://stackoverflow.com/questions/11678693/all-cases-covered-bresenhams-line-algorithm
-		List<Vector2> results = new List<Vector2>();
-		int w = x2 - x ;
-		int h = y2 - y ;
-		int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0 ;
-		if (w<0) dx1 = -1 ; else if (w>0) dx1 = 1 ;
-		if (h<0) dy1 = -1 ; else if (h>0) dy1 = 1 ;
-		if (w<0) dx2 = -1 ; else if (w>0) dx2 = 1 ;
-		int longest = (int)Mathf.Abs(w);
-		int shortest = (int)Mathf.Abs(h);
-		if (!(longest>shortest)) {
-			longest = (int)Mathf.Abs(h);
-			shortest = (int)Mathf.Abs(w);
-			if (h<0) dy2 = -1 ; else if (h>0) dy2 = 1 ;
-			dx2 = 0 ;            
-		}
-		int numerator = longest >> 1 ;
-		for (int i=0;i<=longest;i++) {
-			results.Add(new Vector2((float)x,(float)y));
-			numerator += shortest ;
-			if (!(numerator<longest)) {
-				numerator -= longest ;
-				x += dx1 ;
-				y += dy1 ;
-			} else {
-				x += dx2 ;
-				y += dy2 ;
-			}
-		}
-		return results;
-	}
-
-	public void UpdateVision(ref GameTile visionOriginTile, ref Board map)
+	//publics
+	public void UpdateVision(ref GameTile visionOriginTile, ref Board map, int maxView)
 	{
-		int rows = map.GetRows();
-		int cols = map.GetCols();
-		int maxView = 4;
+		/*
+		 * Called by any given entity to update what they are able to see at the start of their turn 
+		*/
+
 		List<List<Vector2>> results = new List<List<Vector2>>();
 		List<Vector2> result = new List<Vector2>();
 
-		//set all to not visible to start
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				map.GetGrid()[x][y].SetIsVisible(false);
-			}
-		}
-
-		//cast lines to set create the original vision field
-		for (int x = 0; x < cols; x++) {
-			//cast lines to all the vertical edges of the map
-			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[x][0].GetPosition());
-			results.Add(result);
-			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[x][(rows - 1)].GetPosition());
-			results.Add(result);
-		}
-		for (int y = 0; y < rows; y++) {
-			//cast lines to all the horizontal edges of the map
-			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[0][y].GetPosition());
-			results.Add(result);
-			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[(cols-1)][y].GetPosition());
-			results.Add(result);
-		}
-
-		//Walk down each result(ray) setting all tiles to visible and stopping once we have reached a wall
-		for (int x = 0; x < results.Count; x++) {
-			for (int y = 0; y < results[x].Count; y++) {
-				if (map.GetGrid()[(int)((results[x][y]).x)][(int)((results[x][y]).y)].IsWall()) {
-					map.GetGrid()[(int)results[x][y].x][(int)results[x][y].y].SetIsVisible(true);
-					break; // if we hit a wall we can't see anything else on this current line so break.
-				} else if (y+1 < results[x].Count && !(map.GetGrid()[(int)((results[x][y+1]).x)][(int)((results[x][y+1]).y)].IsWall()) && ((results[x][y].x < results[x][y+1].x || results[x][y].x > results[x][y+1].x) && (results[x][y].y < results[x][y+1].y || results[x][y].y > results[x][y+1].y))) { 
-					//since our next tile and current tile are not walls and our x and y are both different at the same time we've assured
-					//that there is some type of slope behavior so we have a chance of diagonal vision here and must correct to block that vision
-					Vector2 currentPos = results[x][y];
-					Vector2 nextPos = results[x][y+1]; 
-					if (currentPos.x < nextPos.x) { //diagonal south of origin
-						if (currentPos.y < nextPos.y) {//diagonal south east of origin
-							if ((map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileEast() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileEast().IsWall()) && (map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileNorth() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileNorth().IsWall())) {
-								map.GetGrid()[(int)currentPos.x][(int)currentPos.y].SetIsVisible(true);
-								break;
-							}
-						} else if (currentPos.y > nextPos.y) { //diagonal south west of origin
-							if ((map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileEast() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileEast().IsWall()) && (map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileSouth() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileSouth().IsWall())) {
-								map.GetGrid()[(int)currentPos.x][(int)currentPos.y].SetIsVisible(true);
-								break;
-							}
-						}
-					} else if (currentPos.x > nextPos.x) {//diagonal north of origin
-						if (currentPos.y < nextPos.y) {//diagonal north east
-							if ((map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileWest() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileWest().IsWall()) && (map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileNorth() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileNorth().IsWall())) {
-								map.GetGrid()[(int)currentPos.x][(int)currentPos.y].SetIsVisible(true);
-								break;
-							}
-						} else if (currentPos.y > nextPos.y) {//diagonal north west of origin
-							if ((map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileWest() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileWest().IsWall()) && (map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileSouth() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileSouth().IsWall())) {
-								map.GetGrid()[(int)currentPos.x][(int)currentPos.y].SetIsVisible(true);
-								break;
-							}
-						}
-					}
-				} else {
-					map.GetGrid()[(int)results[x][y].x][(int)results[x][y].y].SetIsVisible(true); //floor space, set this to be visible
-
-				}
-			}
-		}
-		maxView++; // because of edge smoothing the triangle effect we actually need to boost the maxView in order to end up with the originally set max view
-
-		//Limit vision to max view by walking through all visible tiles outside of the range limit and setting them to not visible if they are currently visible
-		map.GetAllTilesInRange(maxView, visionOriginTile);
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				if (map.GetGrid()[x][y].IsVisible() && !map.GetGrid()[x][y].IsMarked())
-					map.GetGrid()[x][y].SetIsVisible(false);
-			}
-		}
-		//TODO: rewrite smoothing code and functionalize it to clean up this function abit
-		//smooth out the diamond effect by removing the points
-		if (visionOriginTile.GetX() + maxView < cols && map.GetGrid()[visionOriginTile.GetX() + maxView][visionOriginTile.GetY()].IsVisible()) {
-			map.GetGrid()[visionOriginTile.GetX() + maxView][visionOriginTile.GetY()].SetIsVisible(false);
-		}
-		if (visionOriginTile.GetX() - maxView > 0 && map.GetGrid()[visionOriginTile.GetX() - maxView][visionOriginTile.GetY()].IsVisible()) {
-			map.GetGrid()[visionOriginTile.GetX() - maxView][visionOriginTile.GetY()].SetIsVisible(false);
-		}
-		if (visionOriginTile.GetY() + maxView < rows && map.GetGrid()[visionOriginTile.GetX()][visionOriginTile.GetY() + maxView].IsVisible()) {
-			map.GetGrid()[visionOriginTile.GetX()][visionOriginTile.GetY() + maxView].SetIsVisible(false);
-		}
-		if (visionOriginTile.GetY() - maxView > 0 && map.GetGrid()[visionOriginTile.GetX()][visionOriginTile.GetY() - maxView].IsVisible()) {
-			map.GetGrid()[visionOriginTile.GetX()][visionOriginTile.GetY() - maxView].SetIsVisible(false);
-		}
-		//smooth out the diamond effect even more by removing the top row from the top and bottom
-		//top middle
-		if (visionOriginTile.GetY() + (maxView - 1) < rows) {
-			map.GetGrid()[visionOriginTile.GetX()][visionOriginTile.GetY() + (maxView-1)].SetIsVisible(false);
-		}
-		//top left
-		if ((visionOriginTile.GetY() + (maxView - 1) < rows) && ((visionOriginTile.GetX() - 1) > 0)) {
-			map.GetGrid()[visionOriginTile.GetX() - 1][visionOriginTile.GetY() + (maxView - 1)].SetIsVisible(false);
-		}
-		//top right
-		if (visionOriginTile.GetY() + (maxView - 1) < rows && visionOriginTile.GetX() + 1 < cols) {
-			map.GetGrid()[visionOriginTile.GetX() + 1][visionOriginTile.GetY() + (maxView - 1)].SetIsVisible(false);
-		}
-		//bottom middle
-		if (visionOriginTile.GetY() - (maxView - 1) > 0) {
-			map.GetGrid()[visionOriginTile.GetX()][visionOriginTile.GetY() - (maxView-1)].SetIsVisible(false);
-		}
-		//bottom left
-		if (visionOriginTile.GetY() - (maxView - 1) > 0 && visionOriginTile.GetX() - 1 > 0) {
-			map.GetGrid()[visionOriginTile.GetX() - 1][visionOriginTile.GetY() - (maxView - 1)].SetIsVisible(false);
-		}
-		//bottom right
-		if (visionOriginTile.GetY() - (maxView - 1) > 0 && visionOriginTile.GetX() + 1 < cols) {
-			map.GetGrid()[visionOriginTile.GetX() + 1][visionOriginTile.GetY() - (maxView - 1)].SetIsVisible(false);
-		}
+		map.SetAllTilesToNotVisible(); 
+		//to start set all tiles to not visible
+		results = CastVisionRaysToEdges(ref visionOriginTile, ref map); 
+		//return a list containing all of the tiles passed over while casting vision rays to all the edges of the map
+		SetUpVisibility(ref visionOriginTile, ref map, ref results); 
+		//walk down each ray (within results) setting all floor tiles to visible stopping once we have reached a wall
+		maxView++; //because of edge smoothing the triangle effect we actually need to boost the maxView in order to end up with the originally set max view
+		LimitVisibilityToMaxView(ref visionOriginTile, ref map, maxView);
+		//Limit vision to the max (diamond shaped at this point) range possible by walking through all visible tiles outside of the range and setting them to not visible
+		CreateCircularVisibility(ref visionOriginTile, ref map, maxView); 
+		//currently our algorithm for limiting visibility has created a diamond shape vision field, this turns the field into a circular field by trimming off some of the outtermost visible tiles
 	}
-
-	//player only view processing
+		
 	public void PostProcessingForPlayerView(ref GameTile playerTile, ref Board map)
 	{
-		int rows = map.GetRows();
-		int cols = map.GetCols();
+		/*
+		 * The player entity runs UpdateVision once per turn just like every other entity in the game, but these functions apply specific graphical fixes to tweak the player's vision in ways we don't necessarly want applied to other entities.
+		 * Mainly these effects are purely for beauty reasons and won't effect the actual important part of vision (floor tiles) at all therefore applying them to other entities would be wasteful.
+		*/
+
 		List<GameTile> visibleFloorTiles = new List<GameTile>();
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
+
+		//gather a list of all visible floor tiles
+		for (int x = 0; x < map.GetCols(); x++) {
+			for (int y = 0; y < map.GetRows(); y++) {
 				if (map.GetGrid()[x][y] != null && map.GetGrid()[x][y].IsVisible() && !map.GetGrid()[x][y].IsWall()) {
-					visibleFloorTiles.Add(map.GetGrid()[x][y]); //gather a list of all visible floor tiles
+					visibleFloorTiles.Add(map.GetGrid()[x][y]);
 				}
 			}
 		}
+
 		ApplyTileFixesBySection(ref playerTile, ref visibleFloorTiles);
-		//Apply fixes to the player's visible tiles dependent on the area a visible tile falls into in regards to player location
-		//This is used to fix wall not showing up when logically if we can see the floor we should also be able to see the wall behind it
-		//this is a flaw of the raycasting system used to build the original list of visible tiles for the player
+		/*
+		 * Apply fixes to the player's visible tiles dependent on the area a visible tile falls into in regards to player location
+		 * This is used to fix wall not showing up when logically if we can see the floor we should also be able to see the wall behind it
+		 * this is a flaw of the raycasting system used to build the original list of visible tiles for the player
+		*/
 
 		EdgeFixes(ref map);
-		UpdateTilesToReflectVisiblityForPlayer(ref playerTile, ref map);
 		//Apply corrections to edge walls, making them visible if touching regular wall that the player can see.
+		UpdateTilesToReflectVisiblityForPlayer(ref playerTile, ref map);
+		//Sets the colors of tiles based off of the player's visibility, it is what essentially creates the graphical representation of the player's visibility on screen
 	}
+	//
 
-	private void UpdateTilesToReflectVisiblityForPlayer(ref GameTile playerTile, ref Board map)
-	{
-		int rows = map.GetRows();
-		int cols = map.GetCols();
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				if (map.GetGrid()[x][y].GetObject() != null && !map.GetGrid()[x][y].IsVisible() && !map.GetGrid()[x][y].IsVisted()) {
-					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.black;
-				}
-				if (map.GetGrid()[x][y].GetObject() != null && map.GetGrid()[x][y].IsVisible()) {
-					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = map.GetGrid()[x][y].GetOriginalColor();
-					map.GetGrid()[x][y].SetIsVisited(true);
-				}
-				if (map.GetGrid()[x][y].GetObject() != null && !map.GetGrid()[x][y].IsVisible() && map.GetGrid()[x][y].IsVisted()) {
-					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.grey;
-				}
-			}
-		}
-	}
-
+	//privates
 	private void ApplyTileFixesBySection(ref GameTile playerTile, ref List<GameTile> visibleTiles)
 	{
-		//Looks at all current visible floor tiles and applys fixes to the player's vision dependent on which "area" the tiles are around the player
+		//TODO:Cleanup
+		/*
+		 * Looks at all current visible floor tiles and applys fixes to the player's vision dependent on which "area" the tiles are around the player
+		*/
+
 		for (int x = 0; x < visibleTiles.Count; x++) {
 			bool hasNorthWallTile = (visibleTiles[x].GetTileNorth() != null && visibleTiles[x].GetTileNorth().GetObject() != null && visibleTiles[x].GetTileNorth().IsWall());
 			bool hasSouthWallTile = (visibleTiles[x].GetTileSouth() != null && visibleTiles[x].GetTileSouth().GetObject() != null && visibleTiles[x].GetTileSouth().IsWall());
@@ -291,49 +145,252 @@ public class Vision {
 			}
 		}
 	}
+		
+	private List<Vector2> BresenhamLine(Vector2 p0, Vector2 p1) 
+	{
+		/*
+		 * Casts a ray from p0 to p1, and then returns a List of Vector2s which essentially represents all tiles that the ray has passed over before ending
+		*/
+
+		return BresenhamLine((int)p0.x, (int)p0.y, (int)p1.x, (int)p1.y);
+	}
+
+	private List<Vector2> BresenhamLine(int x,int y,int x2, int y2)
+	{
+		//TODO: Document
+		//source: https://stackoverflow.com/questions/11678693/all-cases-covered-bresenhams-line-algorithm
+		/*
+		 * Casts a ray from (x,y) to (x2,y2) and then returns a List of Vector2s which essentially represents all tiles that the ray has passed over before ending
+		*/
+
+		List<Vector2> results = new List<Vector2>();
+
+		int w = x2 - x ;
+		int h = y2 - y ;
+		int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0 ;
+		if (w<0) dx1 = -1 ; else if (w>0) dx1 = 1 ;
+		if (h<0) dy1 = -1 ; else if (h>0) dy1 = 1 ;
+		if (w<0) dx2 = -1 ; else if (w>0) dx2 = 1 ;
+		int longest = (int)Mathf.Abs(w);
+		int shortest = (int)Mathf.Abs(h);
+		if (!(longest>shortest)) {
+			longest = (int)Mathf.Abs(h);
+			shortest = (int)Mathf.Abs(w);
+			if (h<0) dy2 = -1 ; else if (h>0) dy2 = 1 ;
+			dx2 = 0 ;            
+		}
+		int numerator = longest >> 1 ;
+		for (int i=0;i<=longest;i++) {
+			results.Add(new Vector2((float)x,(float)y));
+			numerator += shortest ;
+			if (!(numerator<longest)) {
+				numerator -= longest ;
+				x += dx1 ;
+				y += dy1 ;
+			} else {
+				x += dx2 ;
+				y += dy2 ;
+			}
+		}
+		return results;
+	}
+
+	private List<List<Vector2>> CastVisionRaysToEdges(ref GameTile visionOriginTile, ref Board map)
+	{
+		/*
+		 * Cast lines to all the edges of the given map using Bresenham's Line algorithm to create the initial visibility for an entity
+		*/
+
+		List<Vector2> result = new List<Vector2>();
+		List<List<Vector2>> results = new List<List<Vector2>>();
+
+		//cast lines to all the vertical edges of the map
+		for (int x = 0; x < map.GetCols(); x++) {
+			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[x][0].GetPosition());
+			results.Add(result);
+			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[x][(map.GetRows() - 1)].GetPosition());
+			results.Add(result);
+		}
+		//cast lines to all the horizontal edges of the map
+		for (int y = 0; y < map.GetRows(); y++) {
+			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[0][y].GetPosition());
+			results.Add(result);
+			result = BresenhamLine(visionOriginTile.GetPosition(), map.GetGrid()[(map.GetCols() - 1)][y].GetPosition());
+			results.Add(result);
+		}
+		return results;
+	}
+
+	private void CreateCircularVisibility(ref GameTile visionOriginTile, ref Board map, int maxView)
+	{
+		/* 
+		 * Smooths out the diamond field of vision created by LimitVisibilityToMaxView() in order to give the entity a circular field of vision 
+		*/
+
+		//The X and Y point of the entities current tile
+		int originXPoint = visionOriginTile.GetX();
+		int originYPoint = visionOriginTile.GetY();
+
+		//Each of these corresponds to a point (or edge if you prefer) of the diamond vision field
+		int topPoint = visionOriginTile.GetX() + maxView;
+		int rightPoint = visionOriginTile.GetY() + maxView;
+		int botPoint = visionOriginTile.GetX() - maxView;
+		int leftPoint = visionOriginTile.GetY() - maxView;
+
+		//These bools are true if the corresponding points (or edges if you prefer) of the diamond are actually on the map grid
+		bool hasTopPoint = topPoint < map.GetCols();
+		bool hasBottomPoint = botPoint - maxView > 0; 
+		bool hasRightPoint = rightPoint < map.GetRows(); 
+		bool hasLeftPoint = leftPoint - maxView > 0; 
+
+		//These bools are true if the corresponding points on the second to last top and bottom row of the diamond are actually on the map grid
+		//For example these bools would correspond to points found on:
+		//      *
+		//    * * * <- this row
+		//   * * * *
+		//  * * * * *  
+		//   * * * * 
+		//    * * * <- and this row
+		//      * 
+		bool hasTopLeft = originYPoint + (maxView - 1) < map.GetRows() && originXPoint - 1 > 0;
+		bool hasTopMiddle = originYPoint + (maxView - 1) < map.GetRows();
+		bool hasTopRight = originYPoint + (maxView - 1) < map.GetRows() && originXPoint + 1 < map.GetCols();
+		bool hasBotLeft = originYPoint - (maxView - 1) > 0 && originXPoint - 1 > 0;
+		bool hasBotMid = originYPoint - (maxView - 1) > 0;
+		bool hasBotRight = originYPoint - (maxView - 1) > 0 && originXPoint + 1 < map.GetCols();
+
+		//remove the 4 extreme points (or edges) of the diamond
+		if (hasTopPoint) map.GetGrid()[topPoint][originYPoint].SetIsVisible(false);
+		if (hasBottomPoint) map.GetGrid()[botPoint][originYPoint].SetIsVisible(false);
+		if (hasRightPoint)  map.GetGrid()[originXPoint][rightPoint].SetIsVisible(false);
+		if (hasLeftPoint) map.GetGrid()[originXPoint][leftPoint].SetIsVisible(false);
+
+		//smooth out the diamond effect even more by removing the second to last top and bottom row
+		if (hasTopMiddle) map.GetGrid()[originXPoint][originYPoint + (maxView - 1)].SetIsVisible(false);
+		if (hasTopLeft) map.GetGrid()[originXPoint - 1][originYPoint + (maxView - 1)].SetIsVisible(false);
+		if (hasTopRight) map.GetGrid()[originXPoint + 1][originYPoint + (maxView - 1)].SetIsVisible(false);
+		if (hasBotMid) map.GetGrid()[originXPoint][originYPoint - (maxView-1)].SetIsVisible(false);
+		if (hasBotLeft) map.GetGrid()[originXPoint - 1][originYPoint - (maxView - 1)].SetIsVisible(false);
+		if (hasBotRight) map.GetGrid()[originXPoint + 1][originYPoint - (maxView - 1)].SetIsVisible(false);
+	}
 
 	private void EdgeFixes(ref Board map)
 	{
-		List<GameTile> Edges = map.GetEdges();
+		/* 
+		 * Turns visibility on for any edge wall connected a currently visible wall in order to prevent the player seeing sudden "pop-in" walls
+		*/
+
 		List<GameTile> visibleWallTiles = new List<GameTile>();
-		int rows = map.GetRows();
-		int cols = map.GetCols();
-		//Any edge tile connected to a visible wall should be visible, otherwise we'll have weird pop in edge walls e.e
+
 		//gather a list of all visible wall tiles
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
+		for (int x = 0; x < map.GetCols(); x++) {
+			for (int y = 0; y < map.GetRows(); y++) {
 				if (map.GetGrid()[x][y] != null && map.GetGrid()[x][y].IsVisible() && map.GetGrid()[x][y].IsWall()) {
 					visibleWallTiles.Add(map.GetGrid()[x][y]);
 				}
 			}
 		}
+
+		//walk through visible wall tiles and set edge walls connected to those visible walls to also be visible
 		for(int x = 0; x < visibleWallTiles.Count; x++) {
-			if (visibleWallTiles[x].GetTileNorth() != null) {
-				for (int i = 0; i < Edges.Count; i++) {
-					if (visibleWallTiles[x].GetTileNorth() == Edges[i]) {
-						visibleWallTiles[x].GetTileNorth().SetIsVisible(true);
+			if (visibleWallTiles[x].GetTileNorth() != null && visibleWallTiles[x].GetTileNorth().IsEdge()) {
+					visibleWallTiles[x].GetTileNorth().SetIsVisible(true);
+			}
+			if (visibleWallTiles[x].GetTileSouth() != null && visibleWallTiles[x].GetTileSouth().IsEdge()) {
+				visibleWallTiles[x].GetTileSouth().SetIsVisible(true);
+			}
+			if (visibleWallTiles[x].GetTileEast() != null && visibleWallTiles[x].GetTileEast().IsEdge()) {
+				visibleWallTiles[x].GetTileEast().SetIsVisible(true);
+			}
+			if (visibleWallTiles[x].GetTileWest() != null && visibleWallTiles[x].GetTileWest().IsEdge()) {
+				visibleWallTiles[x].GetTileWest().SetIsVisible(true);
+			}
+		}
+	}
+		
+	private void LimitVisibilityToMaxView(ref GameTile visionOriginTile, ref Board map, int maxView)
+	{
+		/*
+		 * Limit vision to max view by walking through all visible tiles outside of the range limit and setting them to not visible if they are currently visible
+		*/
+
+		map.GetAllTilesInRange(ref visionOriginTile, maxView); 
+		//grab all tiles within a particular range and mark them, the range corresponds to how many moves it would take the player entity to reach that tile, so a range of 1 would return the tiles in each of the cardnial directions
+		for (int x = 0; x < map.GetCols(); x++) {
+			for (int y = 0; y < map.GetRows(); y++) {
+				if (map.GetGrid()[x][y].IsVisible() && !map.GetGrid()[x][y].IsMarked())
+					map.GetGrid()[x][y].SetIsVisible(false);
+			}
+		}
+	}
+
+	private void SetUpVisibility(ref GameTile visionOriginTile, ref Board map, ref List<List<Vector2>> results)
+	{
+		//TODO:Clean this up even further
+		/*
+		 * Sets the initial visibility of the entity by walking down each ray within results, setting all floor tiles to visible and stopping once we have reached a wall
+		*/
+
+		for (int x = 0; x < results.Count; x++) {
+			for (int y = 0; y < results[x].Count; y++) {
+				if (map.GetGrid()[(int)((results[x][y]).x)][(int)((results[x][y]).y)].IsWall()) {
+					map.GetGrid()[(int)results[x][y].x][(int)results[x][y].y].SetIsVisible(true);
+					break; // if we hit a wall we can't see anything else on this current line so break.
+				} else if (y+1 < results[x].Count && !(map.GetGrid()[(int)((results[x][y+1]).x)][(int)((results[x][y+1]).y)].IsWall()) && ((results[x][y].x < results[x][y+1].x || results[x][y].x > results[x][y+1].x) && (results[x][y].y < results[x][y+1].y || results[x][y].y > results[x][y+1].y))) { 
+					//since our next tile and current tile are not walls and our x and y are both different at the same time we've assured
+					//that there is some type of slope behavior so we have a chance of diagonal vision here and must correct to block that vision
+					Vector2 currentPos = results[x][y];
+					Vector2 nextPos = results[x][y+1]; 
+					if (currentPos.x < nextPos.x) { //diagonal south of origin
+						if (currentPos.y < nextPos.y) {//diagonal south east of origin
+							if ((map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileEast() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileEast().IsWall()) && (map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileNorth() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileNorth().IsWall())) {
+								map.GetGrid()[(int)currentPos.x][(int)currentPos.y].SetIsVisible(true);
+								break;
+							}
+						} else if (currentPos.y > nextPos.y) { //diagonal south west of origin
+							if ((map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileEast() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileEast().IsWall()) && (map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileSouth() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileSouth().IsWall())) {
+								map.GetGrid()[(int)currentPos.x][(int)currentPos.y].SetIsVisible(true);
+								break;
+							}
+						}
+					} else if (currentPos.x > nextPos.x) {//diagonal north of origin
+						if (currentPos.y < nextPos.y) {//diagonal north east
+							if ((map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileWest() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileWest().IsWall()) && (map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileNorth() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileNorth().IsWall())) {
+								map.GetGrid()[(int)currentPos.x][(int)currentPos.y].SetIsVisible(true);
+								break;
+							}
+						} else if (currentPos.y > nextPos.y) {//diagonal north west of origin
+							if ((map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileWest() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileWest().IsWall()) && (map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileSouth() == null || map.GetGrid()[(int)currentPos.x][(int)currentPos.y].GetTileSouth().IsWall())) {
+								map.GetGrid()[(int)currentPos.x][(int)currentPos.y].SetIsVisible(true);
+								break;
+							}
+						}
 					}
+				} else {
+					map.GetGrid()[(int)results[x][y].x][(int)results[x][y].y].SetIsVisible(true); //floor space, set this to be visible
+
 				}
 			}
-			if (visibleWallTiles[x].GetTileSouth() != null) {
-				for (int i = 0; i < Edges.Count; i++) {
-					if (visibleWallTiles[x].GetTileSouth() == Edges[i]) {
-						visibleWallTiles[x].GetTileSouth().SetIsVisible(true);
-					}
+		}
+	}
+
+	private void UpdateTilesToReflectVisiblityForPlayer(ref GameTile playerTile, ref Board map)
+	{
+		/* 
+		 * Set the colors of floor and wall tiles based off of the player's current visibility, this essentially creates the graphical representation of the player's visibility on screen
+		*/
+
+		for (int x = 0; x < map.GetCols(); x++) {
+			for (int y = 0; y < map.GetRows(); y++) {
+				if (map.GetGrid()[x][y].GetObject() != null && !map.GetGrid()[x][y].IsVisible() && !map.GetGrid()[x][y].IsVisted()) {
+					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.black;
 				}
-			}
-			if (visibleWallTiles[x].GetTileEast() != null) {
-				for (int i = 0; i < Edges.Count; i++) {
-					if (visibleWallTiles[x].GetTileEast() == Edges[i]) {
-						visibleWallTiles[x].GetTileEast().SetIsVisible(true);
-					}
+				if (map.GetGrid()[x][y].GetObject() != null && map.GetGrid()[x][y].IsVisible()) {
+					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = map.GetGrid()[x][y].GetOriginalColor();
+					map.GetGrid()[x][y].SetIsVisited(true);
 				}
-			}
-			if (visibleWallTiles[x].GetTileWest() != null) {
-				for (int i = 0; i < Edges.Count; i++) {
-					if (visibleWallTiles[x].GetTileWest() == Edges[i]) {
-						visibleWallTiles[x].GetTileWest().SetIsVisible(true);
-					}
+				if (map.GetGrid()[x][y].GetObject() != null && !map.GetGrid()[x][y].IsVisible() && map.GetGrid()[x][y].IsVisted()) {
+					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.grey;
 				}
 			}
 		}

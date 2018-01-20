@@ -58,7 +58,7 @@ public class Board : ScriptableObject{
 		return gridContainerName;
 	}
 
-	public List<GameTile> GetAllTilesInRange(int range, GameTile tile)
+	public List<GameTile> GetAllTilesInRange(ref GameTile tile, int range)
 	{
 		//Essentially a modified FloodFill that is only allowed to run a set number of times. This will return all tiles within a certain movement range away for example when handed a 
 		//range of 1 and the player tile, it will return the tiles in the players cardnial directions (tiles that require one move to reach)
@@ -85,6 +85,16 @@ public class Board : ScriptableObject{
 			range--;
 		} while (nextValidNeighbours.Count != 0 && range != 0);
 		return allMarkedCells;
+	}
+
+	public void  SetAllTilesToNotVisible()
+	{
+		//set all tiles on the grid to not visible
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				grid[x][y].SetIsVisible(false);
+			}
+		}
 	}
 
 	public void UnMarkAllTiles()
