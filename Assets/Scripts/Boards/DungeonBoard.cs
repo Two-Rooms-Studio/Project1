@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class DungeonBoard : Board {
 	//setup vars
-	private int min_row = 4;
-	private int min_col = 4;
+	private int minNumberOfRows = 4;
+	private int minNumberOfCols = 4;
 	private float chanceToStartAlive = 0.4f;
-	private float minimumPercentageOfOpenTiles = 0.1f;
 	private int deathLimit = 3;
 	private int birthLimit = 4;
 	private int numberOfSimulations = 5;
+	private int numberOfMapsGenerated = 0; //keep track of how many times we try to generate a map with minimumPercentageOfOpenTiles
+	private int maxMapsToGenerate = 10; // if we can't generate a map with minimumPercentageOfOpenTiles before reaching this number, then just generate a any map
+	private float minimumPercentageOfOpenTiles = 0.1f;
 	private Sprite innerWallSprite;
 	private Sprite teleporterSprite;
 	private bool runEdgeSmoothing = false;
@@ -22,8 +24,9 @@ public class DungeonBoard : Board {
 	//public
 	public void init (DungeonBoardSettings Settings)
 	{
-		Settings.rows = (Settings.rows < min_row) ? min_row : Settings.rows;
-		Settings.cols = (Settings.cols < min_col) ? min_col : Settings.cols;
+		Settings.rows = (Settings.rows < minNumberOfRows) ? minNumberOfRows : Settings.rows;
+		Settings.cols = (Settings.cols < minNumberOfCols) ? minNumberOfCols : Settings.cols;
+		Settings.minimumPercentageOfOpenTiles = (Settings.rows == minNumberOfRows && Settings.cols == minNumberOfCols) ? 0.25f : Settings.minimumPercentageOfOpenTiles;
 		base.init(Settings.rows, Settings.cols, Settings.tileObject);
 		chanceToStartAlive = Settings.chanceToStartAlive;
 		minimumPercentageOfOpenTiles = Settings.minimumPercentageOfOpenTiles;
@@ -41,15 +44,11 @@ public class DungeonBoard : Board {
 		gridContainerName = "DungeonGrid";
 		initMap();
 		if (!EnsureSpawnPointAndExitCanExist()) {
-			Debug.Log("Reset map");
 			RespawnMap();
 		}
-		Debug.Log("Pass");
 		MapCleanUp();
 		SetAllOriginalSpritesAndColors();
-		Debug.Log("About to spawn exit");
 		SpawnPlayerAndExitPoint();
-		Debug.Log("Exit spawned");
 		SetUpEdges(); //setup all tiles with edge information
 		CalculateTileNeighbours(); //setup all tiles with neighbour information
 	}
@@ -136,12 +135,55 @@ public class DungeonBoard : Board {
 				SmoothMapEdges ();
 			}
 		} else {
+			Debug.Log("not allowing disconnected caves");
 			RemoveDisconnectedCaves();
+			CheckForMinimumMapSize();
 			if (runEdgeSmoothing) {
 				SmoothMapEdges ();
 			}
 		}
 		ChangeInnerWallSprites();
+	}
+
+	private void CheckForMinimumMapSize()
+	{
+		//TODO: Finish debugging this for maps with skewed rows to col ratio without disconnected caves
+		float percentageOfOpenTiles = CalculatePlayingArea();
+		Debug.Log("Percentage of open tiles is: " + percentageOfOpenTiles);
+		Debug.Log("minimum percentage of open tiles is: " + minimumPercentageOfOpenTiles);
+		if (percentageOfOpenTiles < minimumPercentageOfOpenTiles) {
+			if (numberOfMapsGenerated < maxMapsToGenerate) {
+				Debug.Log("Regenerating Map");
+				numberOfMapsGenerated++; 
+				// if this reaches MaxMapsToGenerate then we have tried to generate too many maps with the minimumPercentageOfOpenTiles,
+				//at this point to prevent a crash we need to ignore minimumPercentageOfOpenTiles
+				DeleteEntireMap();
+				initMap();
+				if (!EnsureSpawnPointAndExitCanExist()) {
+					RespawnMap();
+				}
+				//rerun the already called MapCleanUp functions
+				RemoveBlockedOpenTiles();
+				FixEdges(wallSprite);
+				RemoveFloatingWalls();
+				RemoveDisconnectedCaves();
+				return;
+			} else {
+				Debug.Log("Tried to generate too many maps, just generate a map without a minimum");
+				minimumPercentageOfOpenTiles = 0.0f;
+				DeleteEntireMap();
+				initMap();
+				if (!EnsureSpawnPointAndExitCanExist()) {
+					RespawnMap();
+				}
+				//rerun the already called MapCleanUp functions
+				RemoveBlockedOpenTiles();
+				FixEdges(wallSprite);
+				RemoveFloatingWalls();
+				RemoveDisconnectedCaves();
+				return;
+			}
+		}
 	}
 
 	private void ChangeInnerWallSprites()
@@ -170,7 +212,6 @@ public class DungeonBoard : Board {
 			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
 		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].OpenForPlacement() || grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
 		GameTile randomTile = grid[(int)randomPoint.x][(int)randomPoint.y]; 
-		randomTile.SetIsMarked(true);
 		FloodFill(ref randomTile, ref FloodFilledAreas);
 		if (HasUnmarkedTiles()) {//if we have unreachable caves then we need to make teleporters to access them
 			do {
@@ -273,16 +314,7 @@ public class DungeonBoard : Board {
 		DeleteAllMarkedTiles();
 		RemoveFloatingWalls();
 		FixEdges(wallSprite);
-		float percentageOfOpenTiles = CalculatePlayingArea();
-		Debug.Log("Percent of Open Tiles: " + (percentageOfOpenTiles * 100));
-		if (percentageOfOpenTiles < minimumPercentageOfOpenTiles) {
-			FloodFilledAreas.Clear();
-			DeleteEntireMap();
-			initMap();
-			return;
-		}
 		FloodFilledAreas.Clear();
-		return;
 	}
 
 	private void RespawnMap()

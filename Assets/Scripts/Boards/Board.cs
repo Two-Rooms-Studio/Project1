@@ -66,7 +66,7 @@ public class Board : ScriptableObject{
 		UnMarkAllTiles();
 		List<GameTile> allMarkedCells = new List<GameTile>();
 		List<GameTile> validNeighbours = new List<GameTile>();
-		allMarkedCells.Add(tile);
+		allMarkedCells.Add(grid[tile.GetX()][tile.GetY()]);
 		AddAllNeighbours(ref validNeighbours, tile);
 		List<GameTile> nextValidNeighbours = new List<GameTile>();
 		range--;
@@ -118,7 +118,7 @@ public class Board : ScriptableObject{
 			list.Add(grid[tile.GetX()][tile.GetY()-1]);
 			grid[tile.GetX()][tile.GetY()-1].SetIsMarked(true);
 		}
-		if ((tile.GetX() + 1) < rows && !grid[tile.GetX()+1][tile.GetY()].IsMarked()) {
+		if ((tile.GetX() + 1) < cols && !grid[tile.GetX()+1][tile.GetY()].IsMarked()) {
 			list.Add(grid[tile.GetX()+1][tile.GetY()]);
 			grid[tile.GetX()+1][tile.GetY()].SetIsMarked(true);
 		}
@@ -131,7 +131,7 @@ public class Board : ScriptableObject{
 	private void AddValidNeighbours(ref List<GameTile> list, GameTile tile){
 		//FloodFill helper function, returns a list containing the neighbours
 		//of a tile that should be included in the flood fill
-		tile.SetIsMarked(true);//
+		grid[tile.GetX()][tile.GetY()].SetIsMarked(true);
 		if((tile.GetY() + 1) < rows && !grid[tile.GetX()][tile.GetY()+1].IsWall() && !grid[tile.GetX()][tile.GetY()+1].IsMarked()){
 			list.Add(grid[tile.GetX()][tile.GetY()+1]);
 			grid[tile.GetX()][tile.GetY()+1].SetIsMarked(true);
@@ -140,7 +140,7 @@ public class Board : ScriptableObject{
 			list.Add(grid[tile.GetX()][tile.GetY()-1]);
 			grid[tile.GetX()][tile.GetY()-1].SetIsMarked(true);
 		}
-		if ((tile.GetX() + 1) < rows && !grid[tile.GetX()+1][tile.GetY()].IsWall() && !grid[tile.GetX()+1][tile.GetY()].IsMarked()) {
+		if ((tile.GetX() + 1) < cols && !grid[tile.GetX()+1][tile.GetY()].IsWall() && !grid[tile.GetX()+1][tile.GetY()].IsMarked()) {
 			list.Add(grid[tile.GetX()+1][tile.GetY()]);
 			grid[tile.GetX()+1][tile.GetY()].SetIsMarked(true);
 		}
@@ -174,6 +174,7 @@ public class Board : ScriptableObject{
 				}
 			}
 		}
+		Debug.Log("Total open cells: " + numberOfOpenCells + " total number of cells: " + totalNumberOfCells);
 		return (((float)numberOfOpenCells) / ((float)totalNumberOfCells));
 	}
 
@@ -208,7 +209,7 @@ public class Board : ScriptableObject{
 
 	protected bool checkForUnreachableOpenTile(int x, int y)
 	{
-	//Check for a open tile that is surrounded by walls on the cardnial directions
+	//1 for a open tile that is surrounded by walls on the cardnial directions
 	//in otherwords a cave or room made up by one tile
 		int count = 0;
 		if(grid[x][y].OpenForPlacement()){ 
@@ -343,11 +344,11 @@ public class Board : ScriptableObject{
 		//this essentially produces a cut out of a room that is reachable, i.e. no walls blocking off certian parts
 		//it can also return a int count of the number of tiles in the area cut out
 		List<GameTile> allMarkedCells = new List<GameTile>();
-		int count = 1;
 		List<GameTile> validNeighbours = new List<GameTile>();
-		tile.SetIsMarked(true);
-		allMarkedCells.Add(tile);
-		AddValidNeighbours(ref validNeighbours, tile);
+		int count = 1;
+		grid[tile.GetX()][tile.GetY()].SetIsMarked(true);
+		allMarkedCells.Add(grid[tile.GetX()][tile.GetY()]);
+		AddValidNeighbours(ref validNeighbours,tile);
 		List<GameTile> nextValidNeighbours = new List<GameTile>();
 		do {
 			nextValidNeighbours.Clear();

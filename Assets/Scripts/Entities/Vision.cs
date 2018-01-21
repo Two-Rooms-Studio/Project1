@@ -12,7 +12,6 @@ public class Vision {
 		*/
 
 		List<List<Vector2>> results = new List<List<Vector2>>();
-		List<Vector2> result = new List<Vector2>();
 
 		map.SetAllTilesToNotVisible(); 
 		//to start set all tiles to not visible

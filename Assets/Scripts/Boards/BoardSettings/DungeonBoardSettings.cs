@@ -10,9 +10,6 @@ public class DungeonBoardSettings : ScriptableObject {
 	public int rows = 5;
 	[Tooltip("Number of columns to generate in the maps grid (min for cellular automata generation is 4)")]
 	public int cols = 5;
-	[Tooltip("Minimum Percentage of Tiles required to be open if we disallow disjointed caves")]
-	[Range(0.0f , 0.5f)]
-	public float minimumPercentageOfOpenTiles = 0.3f;
 	[Tooltip("Chance for the tile to be a wall during inital generation")]
 	public float chanceToStartAlive = 0.4f;
 	[Tooltip("The number of a nonwall tiles needed around a wall to make the wall a nonwall tile")]
@@ -35,6 +32,9 @@ public class DungeonBoardSettings : ScriptableObject {
 	public bool runEdgeSmoothing;
 	[Tooltip("Wheather to allow disconnected caves with teleporter connections")]
 	public bool allowDisconnectedCaves;
+	[Tooltip("Minimum Percentage of Tiles required to be open if we disallow disjointed caves")]
+	[Range(0.0f , 0.5f)]
+	public float minimumPercentageOfOpenTiles = 0.3f;
 
 	#if UNITY_EDITOR
 	public static class DungeonBoardSettingsMenuItem
