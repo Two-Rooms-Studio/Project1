@@ -11,7 +11,7 @@ public class DungeonBoard : Board {
 	private int birthLimit = 4;
 	private int numberOfSimulations = 5;
 	private int numberOfMapsGenerated = 0; //keep track of how many times we try to generate a map with minimumPercentageOfOpenTiles
-	private int maxMapsToGenerate = 10; // if we can't generate a map with minimumPercentageOfOpenTiles before reaching this number, then just generate a any map
+	private int maxMapsToGenerate = 5; // if we can't generate a map with minimumPercentageOfOpenTiles before reaching this number, then just generate a any map
 	private float minimumPercentageOfOpenTiles = 0.1f;
 	private Sprite innerWallSprite;
 	private Sprite teleporterSprite;
@@ -24,9 +24,12 @@ public class DungeonBoard : Board {
 	//public
 	public void init (DungeonBoardSettings Settings)
 	{
+		//if the settings call for rows or cols under the minimum amount then scale the value up to the minimum
 		Settings.rows = (Settings.rows < minNumberOfRows) ? minNumberOfRows : Settings.rows;
 		Settings.cols = (Settings.cols < minNumberOfCols) ? minNumberOfCols : Settings.cols;
 		Settings.minimumPercentageOfOpenTiles = (Settings.rows == minNumberOfRows && Settings.cols == minNumberOfCols) ? 0.25f : Settings.minimumPercentageOfOpenTiles;
+
+		//Configure based off of setting values
 		base.init(Settings.rows, Settings.cols, Settings.tileObject);
 		chanceToStartAlive = Settings.chanceToStartAlive;
 		minimumPercentageOfOpenTiles = Settings.minimumPercentageOfOpenTiles;
@@ -39,9 +42,10 @@ public class DungeonBoard : Board {
 		teleporterSprite = Settings.teleporterSprite;
 		runEdgeSmoothing = Settings.runEdgeSmoothing;
 		allowDisconnectedCaves = Settings.allowDisconnectedCaves;
-		xPadding = 0.16f;
-		yPadding = 0.24f;
+		xPadding = Settings.xPadding;
+		yPadding = Settings.yPadding;
 		gridContainerName = "DungeonGrid";
+
 		initMap();
 		if (!EnsureSpawnPointAndExitCanExist()) {
 			RespawnMap();
@@ -135,7 +139,6 @@ public class DungeonBoard : Board {
 				SmoothMapEdges ();
 			}
 		} else {
-			Debug.Log("not allowing disconnected caves");
 			RemoveDisconnectedCaves();
 			CheckForMinimumMapSize();
 			if (runEdgeSmoothing) {
@@ -149,12 +152,9 @@ public class DungeonBoard : Board {
 	{
 		//TODO: Finish debugging this for maps with skewed rows to col ratio without disconnected caves
 		float percentageOfOpenTiles = CalculatePlayingArea();
-		Debug.Log("Percentage of open tiles is: " + percentageOfOpenTiles);
-		Debug.Log("minimum percentage of open tiles is: " + minimumPercentageOfOpenTiles);
 		if (percentageOfOpenTiles < minimumPercentageOfOpenTiles) {
 			if (numberOfMapsGenerated < maxMapsToGenerate) {
-				Debug.Log("Regenerating Map");
-				numberOfMapsGenerated++; 
+				numberOfMapsGenerated++;
 				// if this reaches MaxMapsToGenerate then we have tried to generate too many maps with the minimumPercentageOfOpenTiles,
 				//at this point to prevent a crash we need to ignore minimumPercentageOfOpenTiles
 				DeleteEntireMap();
@@ -167,10 +167,12 @@ public class DungeonBoard : Board {
 				FixEdges(wallSprite);
 				RemoveFloatingWalls();
 				RemoveDisconnectedCaves();
+				CheckForMinimumMapSize();
 				return;
 			} else {
-				Debug.Log("Tried to generate too many maps, just generate a map without a minimum");
+				Debug.Log("Map generation failed too many times based off of minimum percentage of open tiles allowed, therefore a map was generated without a minimum number of open tiles, consider the settings your using!");
 				minimumPercentageOfOpenTiles = 0.0f;
+				numberOfMapsGenerated = 0;
 				DeleteEntireMap();
 				initMap();
 				if (!EnsureSpawnPointAndExitCanExist()) {

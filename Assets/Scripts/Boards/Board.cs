@@ -174,7 +174,6 @@ public class Board : ScriptableObject{
 				}
 			}
 		}
-		Debug.Log("Total open cells: " + numberOfOpenCells + " total number of cells: " + totalNumberOfCells);
 		return (((float)numberOfOpenCells) / ((float)totalNumberOfCells));
 	}
 
