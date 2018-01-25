@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 17a0df5158812d74b9ad4ff84aba3b7e
-timeCreated: 1516120490
+timeCreated: 1516236630
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -58,22 +58,22 @@ TextureImporter:
     21300102: Roguelike_Template_51
     21300104: Roguelike_Template_52
     21300106: Sword_0
-    21300108: Sword_1
+    21300108: GreatSword_0
     21300110: Axe_0
     21300112: Staff_0
     21300114: Dagger_0
     21300116: Staff_1
-    21300118: Staff_2
+    21300118: Spear_0
     21300120: Axe_1
-    21300122: Axe_2
-    21300124: Axe_3
+    21300122: GreatAxe_0
+    21300124: Axe_2
     21300126: Axe_4
     21300128: Hammer_0
     21300130: Knife_0
     21300132: Trident_0
-    21300134: Axe_5
+    21300134: Axe_3
     21300136: Random_Item_0
-    21300138: Staff_3
+    21300138: Staff_2
     21300140: Bow_0
     21300142: Crossbow_0
     21300144: Body_0
@@ -395,48 +395,48 @@ TextureImporter:
     21300776: Wall_Spiderweb_1
     21300778: Wall_Spiderweb_2
     21300780: Wall_Spiderweb_3
-    21300782: Roguelike_Template_391
-    21300784: Roguelike_Template_392
-    21300786: Roguelike_Template_393
-    21300788: Roguelike_Template_394
-    21300790: Roguelike_Template_395
-    21300792: Roguelike_Template_396
-    21300794: Roguelike_Template_397
-    21300796: Roguelike_Template_398
-    21300798: Roguelike_Template_399
-    21300800: Roguelike_Template_400
-    21300802: Roguelike_Template_401
-    21300804: Roguelike_Template_402
-    21300806: Roguelike_Template_403
-    21300808: Roguelike_Template_404
-    21300810: Roguelike_Template_405
-    21300812: Roguelike_Template_406
-    21300814: Roguelike_Template_407
-    21300816: Roguelike_Template_408
-    21300818: Roguelike_Template_409
-    21300820: Roguelike_Template_410
-    21300822: Roguelike_Template_411
-    21300824: Roguelike_Template_412
-    21300826: Roguelike_Template_413
-    21300828: Roguelike_Template_414
-    21300830: Roguelike_Template_415
-    21300832: Roguelike_Template_416
-    21300834: Roguelike_Template_417
-    21300836: Roguelike_Template_418
-    21300838: Roguelike_Template_419
-    21300840: Roguelike_Template_420
-    21300842: Roguelike_Template_421
-    21300844: Roguelike_Template_422
-    21300846: Roguelike_Template_423
-    21300848: Roguelike_Template_424
-    21300850: Roguelike_Template_425
-    21300852: Roguelike_Template_426
-    21300854: Roguelike_Template_427
-    21300856: Roguelike_Template_428
-    21300858: Roguelike_Template_429
-    21300860: Roguelike_Template_430
-    21300862: Roguelike_Template_431
-    21300864: Roguelike_Template_432
+    21300782: Symbol_9
+    21300784: Symbol_10
+    21300786: Stalacmite_0
+    21300788: Stalactite_0
+    21300790: Grass_0
+    21300792: Grass_1
+    21300794: Flower_0
+    21300796: Tree_0
+    21300798: Tree_1
+    21300800: Tree_2
+    21300802: Tree_3
+    21300804: Plant_0
+    21300806: Plant_1
+    21300808: Flower_1
+    21300810: Bush_0
+    21300812: Mushroom_0
+    21300814: Stones_8
+    21300816: Stones_9
+    21300818: Stones_10
+    21300820: Stones_11
+    21300822: Butterfly_0
+    21300824: Butterfly_1
+    21300826: Pillory_0
+    21300828: Puddle_0
+    21300830: Symbol_11
+    21300832: Symbol_12
+    21300834: Symbol_13
+    21300836: Symbol_14
+    21300838: Symbol_15
+    21300840: Symbol_16
+    21300842: Symbol_17
+    21300844: Symbol_18
+    21300846: Switch_0
+    21300848: Switch_1
+    21300850: Symbol_19
+    21300852: Symbol_20
+    21300854: Spikes_0
+    21300856: Spikes_1
+    21300858: Symbol_21
+    21300860: Stones_12
+    21300862: Stones_13
+    21300864: Rack_2
     21300866: Roguelike_Template_433
     21300868: Roguelike_Template_434
     21300870: Roguelike_Template_435
@@ -456,196 +456,196 @@ TextureImporter:
     21300898: Roguelike_Template_449
     21300900: Roguelike_Template_450
     21300902: Roguelike_Template_451
-    21300904: Roguelike_Template_452
-    21300906: Roguelike_Template_453
-    21300908: Roguelike_Template_454
-    21300910: Roguelike_Template_455
-    21300912: Roguelike_Template_456
-    21300914: Roguelike_Template_457
-    21300916: Roguelike_Template_458
-    21300918: Roguelike_Template_459
-    21300920: Roguelike_Template_460
-    21300922: Roguelike_Template_461
-    21300924: Roguelike_Template_462
-    21300926: Roguelike_Template_463
-    21300928: Roguelike_Template_464
-    21300930: Roguelike_Template_465
-    21300932: Roguelike_Template_466
-    21300934: Roguelike_Template_467
-    21300936: Roguelike_Template_468
-    21300938: Roguelike_Template_469
-    21300940: Roguelike_Template_470
-    21300942: Roguelike_Template_471
-    21300944: Roguelike_Template_472
-    21300946: Roguelike_Template_473
-    21300948: Roguelike_Template_474
-    21300950: Roguelike_Template_475
-    21300952: Roguelike_Template_476
-    21300954: Roguelike_Template_477
-    21300956: Roguelike_Template_478
-    21300958: Roguelike_Template_479
-    21300960: Roguelike_Template_480
-    21300962: Roguelike_Template_481
-    21300964: Roguelike_Template_482
-    21300966: Roguelike_Template_483
-    21300968: Roguelike_Template_484
-    21300970: Roguelike_Template_485
-    21300972: Roguelike_Template_486
-    21300974: Roguelike_Template_487
-    21300976: Roguelike_Template_488
-    21300978: Roguelike_Template_489
-    21300980: Roguelike_Template_490
-    21300982: Roguelike_Template_491
-    21300984: Roguelike_Template_492
-    21300986: Roguelike_Template_493
-    21300988: Roguelike_Template_494
-    21300990: Roguelike_Template_495
-    21300992: Roguelike_Template_496
-    21300994: Roguelike_Template_497
-    21300996: Roguelike_Template_498
-    21300998: Roguelike_Template_499
-    21301000: Roguelike_Template_500
-    21301002: Roguelike_Template_501
+    21300904: Char_Melee_0
+    21300906: Char_Melee_1
+    21300908: Char_Melee_2
+    21300910: Char_Melee_3
+    21300912: Char_Wizard_0
+    21300914: Char_Wizard_1
+    21300916: Char_Melee_4
+    21300918: Char_Melee_5
+    21300920: Char_Wizard_2
+    21300922: Char_Wizard_3
+    21300924: Char_Wizard_4
+    21300926: Char_Wizard_5
+    21300928: Char_Wizard_6
+    21300930: Char_Wizard_7
+    21300932: Char_Wizard_8
+    21300934: Char_Melee_6
+    21300936: Char_Wizard_9
+    21300938: Char_Melee_8
+    21300940: Char_Melee_9
+    21300942: Char_Ranged_0
+    21300944: Char_Ranged_1
+    21300946: Char_Ranged_2
+    21300948: Char_Ranged_3
+    21300950: Char_Melee_10
+    21300952: Char_Melee_11
+    21300954: Char_Melee_12
+    21300956: Char_Melee_13
+    21300958: Char_Wizard_10
+    21300960: Char_Wizard_11
+    21300962: Char_Wizard_12
+    21300964: Char_Wizard_13
+    21300966: Short_Melee_0
+    21300968: Short_Wizard_1
+    21300970: Short_Melee_1
+    21300972: Short_Melee_2
+    21300974: Char_Melee_14
+    21300976: Char_Melee_15
+    21300978: Char_Wizard_14
+    21300980: Crab_0
+    21300982: Rat_0
+    21300984: Cricket_0
+    21300986: Wolf_0
+    21300988: Longneck_0
+    21300990: Beast_0
+    21300992: Bat_0
+    21300994: Cricket_1
+    21300996: Cobra_0
+    21300998: Salamander_0
+    21301000: Frog_0
+    21301002: Cat_0
     21301004: Roguelike_Template_502
-    21301006: Roguelike_Template_503
-    21301008: Roguelike_Template_504
-    21301010: Roguelike_Template_505
-    21301012: Roguelike_Template_506
-    21301014: Roguelike_Template_507
-    21301016: Roguelike_Template_508
-    21301018: Roguelike_Template_509
-    21301020: Roguelike_Template_510
-    21301022: Roguelike_Template_511
-    21301024: Roguelike_Template_512
-    21301026: Roguelike_Template_513
-    21301028: Roguelike_Template_514
-    21301030: Roguelike_Template_515
-    21301032: Roguelike_Template_516
-    21301034: Roguelike_Template_517
-    21301036: Roguelike_Template_518
-    21301038: Roguelike_Template_519
-    21301040: Roguelike_Template_520
-    21301042: Roguelike_Template_521
-    21301044: Roguelike_Template_522
-    21301046: Roguelike_Template_523
-    21301048: Roguelike_Template_524
-    21301050: Roguelike_Template_525
-    21301052: Roguelike_Template_526
-    21301054: Roguelike_Template_527
-    21301056: Roguelike_Template_528
-    21301058: Roguelike_Template_529
-    21301060: Roguelike_Template_530
-    21301062: Roguelike_Template_531
-    21301064: Roguelike_Template_532
-    21301066: Roguelike_Template_533
-    21301068: Roguelike_Template_534
-    21301070: Roguelike_Template_535
-    21301072: Roguelike_Template_536
-    21301074: Roguelike_Template_537
-    21301076: Roguelike_Template_538
-    21301078: Roguelike_Template_539
-    21301080: Roguelike_Template_540
-    21301082: Roguelike_Template_541
-    21301084: Roguelike_Template_542
-    21301086: Roguelike_Template_543
-    21301088: Roguelike_Template_544
-    21301090: Roguelike_Template_545
-    21301092: Roguelike_Template_546
-    21301094: Roguelike_Template_547
-    21301096: Roguelike_Template_548
-    21301098: Roguelike_Template_549
-    21301100: Roguelike_Template_550
-    21301102: Roguelike_Template_551
-    21301104: Roguelike_Template_552
-    21301106: Roguelike_Template_553
-    21301108: Roguelike_Template_554
-    21301110: Roguelike_Template_555
+    21301006: Cat_1
+    21301008: Lion_0
+    21301010: Bird_0
+    21301012: Vulture_0
+    21301014: Eel_0
+    21301016: Eel_1
+    21301018: Dolphin_0
+    21301020: Dolphin_1
+    21301022: Squid_0
+    21301024: Lotus_0
+    21301026: Lotus_1
+    21301028: Lotus_2
+    21301030: Beast_1
+    21301032: Spider_0
+    21301034: Spider_1
+    21301036: Wasp_0
+    21301038: Wasp_1
+    21301040: Dragonfly_0
+    21301042: Cerberus_0
+    21301044: Korlux_0
+    21301046: Korlux_1
+    21301048: Korlux_2
+    21301050: Korlux_3
+    21301052: Angel_0
+    21301054: Angel_1
+    21301056: Centaur_0
+    21301058: Centaur_1
+    21301060: Centaur_2
+    21301062: Centar_3
+    21301064: Naga_0
+    21301066: Naga_1
+    21301068: Naga_2
+    21301070: Borz_0
+    21301072: Borz_1
+    21301074: Borz_2
+    21301076: Borz_3
+    21301078: Char_Melee_16
+    21301080: Char_Melee_17
+    21301082: Char_Fat_0
+    21301084: Forsaken_0
+    21301086: Forsaken_1
+    21301088: Forsaken_2
+    21301090: Char_Hurt_0
+    21301092: Char_Hurt_1
+    21301094: Reexus_0
+    21301096: Reexus_1
+    21301098: Reexus_2
+    21301100: Louik_0
+    21301102: Louik_1
+    21301104: Louik_2
+    21301106: Louik_3
+    21301108: Louik_4
+    21301110: Louik_5
     21301112: Roguelike_Template_556
     21301114: Roguelike_Template_557
     21301116: Roguelike_Template_558
-    21301118: Roguelike_Template_559
-    21301120: Roguelike_Template_560
-    21301122: Roguelike_Template_561
-    21301124: Roguelike_Template_562
-    21301126: Roguelike_Template_563
-    21301128: Roguelike_Template_564
-    21301130: Roguelike_Template_565
-    21301132: Roguelike_Template_566
-    21301134: Roguelike_Template_567
-    21301136: Roguelike_Template_568
-    21301138: Roguelike_Template_569
-    21301140: Roguelike_Template_570
-    21301142: Roguelike_Template_571
-    21301144: Roguelike_Template_572
-    21301146: Roguelike_Template_573
-    21301148: Roguelike_Template_574
-    21301150: Roguelike_Template_575
-    21301152: Roguelike_Template_576
-    21301154: Roguelike_Template_577
-    21301156: Roguelike_Template_578
-    21301158: Roguelike_Template_579
-    21301160: Roguelike_Template_580
-    21301162: Roguelike_Template_581
-    21301164: Roguelike_Template_582
-    21301166: Roguelike_Template_583
-    21301168: Roguelike_Template_584
-    21301170: Roguelike_Template_585
-    21301172: Roguelike_Template_586
-    21301174: Roguelike_Template_587
-    21301176: Roguelike_Template_588
-    21301178: Roguelike_Template_589
-    21301180: Roguelike_Template_590
-    21301182: Roguelike_Template_591
-    21301184: Roguelike_Template_592
-    21301186: Roguelike_Template_593
-    21301188: Roguelike_Template_594
-    21301190: Roguelike_Template_595
-    21301192: Roguelike_Template_596
-    21301194: Roguelike_Template_597
-    21301196: Roguelike_Template_598
-    21301198: Roguelike_Template_599
-    21301200: Roguelike_Template_600
-    21301202: Roguelike_Template_601
-    21301204: Roguelike_Template_602
-    21301206: Roguelike_Template_603
-    21301208: Roguelike_Template_604
-    21301210: Roguelike_Template_605
-    21301212: Roguelike_Template_606
-    21301214: Roguelike_Template_607
-    21301216: Roguelike_Template_608
-    21301218: Roguelike_Template_609
-    21301220: Roguelike_Template_610
-    21301222: Roguelike_Template_611
-    21301224: Roguelike_Template_612
-    21301226: Roguelike_Template_613
-    21301228: Roguelike_Template_614
-    21301230: Roguelike_Template_615
-    21301232: Roguelike_Template_616
-    21301234: Roguelike_Template_617
-    21301236: Roguelike_Template_618
-    21301238: Roguelike_Template_619
-    21301240: Roguelike_Template_620
-    21301242: Roguelike_Template_621
-    21301244: Roguelike_Template_622
-    21301246: Roguelike_Template_623
-    21301248: Roguelike_Template_624
-    21301250: Roguelike_Template_625
-    21301252: Roguelike_Template_626
-    21301254: Roguelike_Template_627
-    21301256: Roguelike_Template_628
-    21301258: Roguelike_Template_629
-    21301260: Roguelike_Template_630
-    21301262: Roguelike_Template_631
-    21301264: Roguelike_Template_632
-    21301266: Roguelike_Template_633
-    21301268: Roguelike_Template_634
-    21301270: Roguelike_Template_635
-    21301272: Roguelike_Template_636
-    21301274: Roguelike_Template_637
-    21301276: Roguelike_Template_638
-    21301278: Roguelike_Template_639
-    21301280: Roguelike_Template_640
-    21301282: Roguelike_Template_641
+    21301118: Fairy_0
+    21301120: Fair_1
+    21301122: Fairy_2
+    21301124: Char_Wizard_15
+    21301126: Char_Melee_18
+    21301128: Gas_2
+    21301130: Gas_3
+    21301132: Skeleton_0
+    21301134: Skeleton_1
+    21301136: Skeleton_2
+    21301138: Skeleton_3
+    21301140: Skeleton_4
+    21301142: Skeleton_5
+    21301144: Skeleton_6
+    21301146: Hawbs_0
+    21301148: Hawbs_1
+    21301150: Hawbs_2
+    21301152: Hawbs_3
+    21301154: Trimel_0
+    21301156: Trimel_1
+    21301158: Trimel_2
+    21301160: Trimel_3
+    21301162: Trimel_4
+    21301164: Trimel_5
+    21301166: Anubus_0
+    21301168: Trimel_6
+    21301170: Beast_2
+    21301172: Beast_3
+    21301174: Beast_4
+    21301176: Beast_5
+    21301178: Beast_6
+    21301180: Beast_7
+    21301182: Beast_8
+    21301184: Beast_9
+    21301186: Beast_10
+    21301188: Beast_11
+    21301190: Beast_12
+    21301192: Wurm_0
+    21301194: Beast_13
+    21301196: Kobra_1
+    21301198: Kobra_2
+    21301200: Beast_14
+    21301202: Beast_15
+    21301204: Beast_16
+    21301206: Beast_17
+    21301208: Trimel_7
+    21301210: Trimel_8
+    21301212: Ghost_0
+    21301214: Ghost_1
+    21301216: Ghost_2
+    21301218: Beast_18
+    21301220: Wurm_1
+    21301222: Unicorn_0
+    21301224: Unicorn_1
+    21301226: Horse_0
+    21301228: Horse_1
+    21301230: Camel_0
+    21301232: Beast_19
+    21301234: Ent_0
+    21301236: Beast_20
+    21301238: Scorpion_0
+    21301240: Beast_21
+    21301242: Beast_22
+    21301244: Beast_23
+    21301246: Skeleton_7
+    21301248: Beast_24
+    21301250: Random_Item_10
+    21301252: Klaws_0
+    21301254: Klaws_1
+    21301256: Klaws_2
+    21301258: Random_Item_11
+    21301260: Random_Item_12
+    21301262: Symbol_22
+    21301264: Elemental_0
+    21301266: Elemental_1
+    21301268: Elemental_2
+    21301270: Minataur_0
+    21301272: Minataur_1
+    21301274: Giant_0
+    21301276: Giant_1
+    21301278: Dragon_0
+    21301280: Dragon_1
+    21301282: Dragon_2
     21301284: Roguelike_Template_642
     21301286: Roguelike_Template_643
     21301288: Roguelike_Template_644
@@ -665,12 +665,12 @@ TextureImporter:
     21301316: Roguelike_Template_658
     21301318: Roguelike_Template_659
     21301320: Roguelike_Template_660
-    21301322: Roguelike_Template_661
-    21301324: Roguelike_Template_662
-    21301326: Roguelike_Template_663
-    21301328: Roguelike_Template_664
-    21301330: Roguelike_Template_665
-    21301332: Roguelike_Template_666
+    21301322: Menu_Border_TL
+    21301324: Menu_Border_TR
+    21301326: Menu_Border_BL
+    21301328: Menu_Border_BR
+    21301330: Menu_Border_LS
+    21301332: Menu_Border_LL
     21301334: Roguelike_Template_667
     21301336: Roguelike_Template_668
     21301338: Roguelike_Template_669
@@ -1744,7 +1744,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sword_1
+      name: GreatSword_0
       rect:
         serializedVersion: 2
         x: 16
@@ -1814,7 +1814,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Staff_2
+      name: Spear_0
       rect:
         serializedVersion: 2
         x: 96
@@ -1842,7 +1842,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Axe_2
+      name: GreatAxe_0
       rect:
         serializedVersion: 2
         x: 128
@@ -1856,7 +1856,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Axe_3
+      name: Axe_2
       rect:
         serializedVersion: 2
         x: 144
@@ -1926,7 +1926,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Axe_5
+      name: Axe_3
       rect:
         serializedVersion: 2
         x: 224
@@ -1954,7 +1954,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Staff_3
+      name: Staff_2
       rect:
         serializedVersion: 2
         x: 256
@@ -6462,7 +6462,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_391
+      name: Symbol_9
       rect:
         serializedVersion: 2
         x: 240
@@ -6476,7 +6476,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_392
+      name: Symbol_10
       rect:
         serializedVersion: 2
         x: 256
@@ -6490,7 +6490,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_393
+      name: Stalacmite_0
       rect:
         serializedVersion: 2
         x: 272
@@ -6504,7 +6504,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_394
+      name: Stalactite_0
       rect:
         serializedVersion: 2
         x: 288
@@ -6518,7 +6518,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_395
+      name: Grass_0
       rect:
         serializedVersion: 2
         x: 0
@@ -6532,7 +6532,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_396
+      name: Grass_1
       rect:
         serializedVersion: 2
         x: 16
@@ -6546,7 +6546,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_397
+      name: Flower_0
       rect:
         serializedVersion: 2
         x: 32
@@ -6560,7 +6560,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_398
+      name: Tree_0
       rect:
         serializedVersion: 2
         x: 48
@@ -6574,7 +6574,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_399
+      name: Tree_1
       rect:
         serializedVersion: 2
         x: 64
@@ -6588,7 +6588,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_400
+      name: Tree_2
       rect:
         serializedVersion: 2
         x: 80
@@ -6602,7 +6602,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_401
+      name: Tree_3
       rect:
         serializedVersion: 2
         x: 96
@@ -6616,7 +6616,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_402
+      name: Plant_0
       rect:
         serializedVersion: 2
         x: 112
@@ -6630,7 +6630,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_403
+      name: Plant_1
       rect:
         serializedVersion: 2
         x: 128
@@ -6644,7 +6644,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_404
+      name: Flower_1
       rect:
         serializedVersion: 2
         x: 144
@@ -6658,7 +6658,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_405
+      name: Bush_0
       rect:
         serializedVersion: 2
         x: 160
@@ -6672,7 +6672,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_406
+      name: Mushroom_0
       rect:
         serializedVersion: 2
         x: 176
@@ -6686,7 +6686,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_407
+      name: Stones_8
       rect:
         serializedVersion: 2
         x: 192
@@ -6700,7 +6700,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_408
+      name: Stones_9
       rect:
         serializedVersion: 2
         x: 208
@@ -6714,7 +6714,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_409
+      name: Stones_10
       rect:
         serializedVersion: 2
         x: 224
@@ -6728,7 +6728,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_410
+      name: Stones_11
       rect:
         serializedVersion: 2
         x: 240
@@ -6742,7 +6742,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_411
+      name: Butterfly_0
       rect:
         serializedVersion: 2
         x: 256
@@ -6756,7 +6756,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_412
+      name: Butterfly_1
       rect:
         serializedVersion: 2
         x: 272
@@ -6770,7 +6770,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_413
+      name: Pillory_0
       rect:
         serializedVersion: 2
         x: 288
@@ -6784,7 +6784,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_414
+      name: Puddle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -6798,7 +6798,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_415
+      name: Symbol_11
       rect:
         serializedVersion: 2
         x: 16
@@ -6812,7 +6812,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_416
+      name: Symbol_12
       rect:
         serializedVersion: 2
         x: 32
@@ -6826,7 +6826,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_417
+      name: Symbol_13
       rect:
         serializedVersion: 2
         x: 48
@@ -6840,7 +6840,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_418
+      name: Symbol_14
       rect:
         serializedVersion: 2
         x: 64
@@ -6854,7 +6854,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_419
+      name: Symbol_15
       rect:
         serializedVersion: 2
         x: 80
@@ -6868,7 +6868,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_420
+      name: Symbol_16
       rect:
         serializedVersion: 2
         x: 96
@@ -6882,7 +6882,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_421
+      name: Symbol_17
       rect:
         serializedVersion: 2
         x: 112
@@ -6896,7 +6896,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_422
+      name: Symbol_18
       rect:
         serializedVersion: 2
         x: 128
@@ -6910,7 +6910,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_423
+      name: Switch_0
       rect:
         serializedVersion: 2
         x: 144
@@ -6924,7 +6924,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_424
+      name: Switch_1
       rect:
         serializedVersion: 2
         x: 160
@@ -6938,7 +6938,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_425
+      name: Symbol_19
       rect:
         serializedVersion: 2
         x: 176
@@ -6952,7 +6952,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_426
+      name: Symbol_20
       rect:
         serializedVersion: 2
         x: 192
@@ -6966,7 +6966,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_427
+      name: Spikes_0
       rect:
         serializedVersion: 2
         x: 208
@@ -6980,7 +6980,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_428
+      name: Spikes_1
       rect:
         serializedVersion: 2
         x: 224
@@ -6994,7 +6994,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_429
+      name: Symbol_21
       rect:
         serializedVersion: 2
         x: 240
@@ -7008,7 +7008,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_430
+      name: Stones_12
       rect:
         serializedVersion: 2
         x: 256
@@ -7022,7 +7022,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_431
+      name: Stones_13
       rect:
         serializedVersion: 2
         x: 272
@@ -7036,7 +7036,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_432
+      name: Rack_2
       rect:
         serializedVersion: 2
         x: 288
@@ -7316,7 +7316,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_452
+      name: Char_Melee_0
       rect:
         serializedVersion: 2
         x: 0
@@ -7330,7 +7330,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_453
+      name: Char_Melee_1
       rect:
         serializedVersion: 2
         x: 16
@@ -7344,7 +7344,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_454
+      name: Char_Melee_2
       rect:
         serializedVersion: 2
         x: 32
@@ -7358,7 +7358,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_455
+      name: Char_Melee_3
       rect:
         serializedVersion: 2
         x: 48
@@ -7372,7 +7372,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_456
+      name: Char_Wizard_0
       rect:
         serializedVersion: 2
         x: 64
@@ -7386,7 +7386,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_457
+      name: Char_Wizard_1
       rect:
         serializedVersion: 2
         x: 80
@@ -7400,7 +7400,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_458
+      name: Char_Melee_4
       rect:
         serializedVersion: 2
         x: 96
@@ -7414,7 +7414,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_459
+      name: Char_Melee_5
       rect:
         serializedVersion: 2
         x: 112
@@ -7428,7 +7428,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_460
+      name: Char_Wizard_2
       rect:
         serializedVersion: 2
         x: 128
@@ -7442,7 +7442,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_461
+      name: Char_Wizard_3
       rect:
         serializedVersion: 2
         x: 144
@@ -7456,7 +7456,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_462
+      name: Char_Wizard_4
       rect:
         serializedVersion: 2
         x: 160
@@ -7470,7 +7470,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_463
+      name: Char_Wizard_5
       rect:
         serializedVersion: 2
         x: 176
@@ -7484,7 +7484,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_464
+      name: Char_Wizard_6
       rect:
         serializedVersion: 2
         x: 192
@@ -7498,7 +7498,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_465
+      name: Char_Wizard_7
       rect:
         serializedVersion: 2
         x: 208
@@ -7512,7 +7512,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_466
+      name: Char_Wizard_8
       rect:
         serializedVersion: 2
         x: 224
@@ -7526,7 +7526,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_467
+      name: Char_Melee_6
       rect:
         serializedVersion: 2
         x: 240
@@ -7540,7 +7540,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_468
+      name: Char_Wizard_9
       rect:
         serializedVersion: 2
         x: 256
@@ -7554,7 +7554,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_469
+      name: Char_Melee_8
       rect:
         serializedVersion: 2
         x: 272
@@ -7568,7 +7568,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_470
+      name: Char_Melee_9
       rect:
         serializedVersion: 2
         x: 288
@@ -7582,7 +7582,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_471
+      name: Char_Ranged_0
       rect:
         serializedVersion: 2
         x: 0
@@ -7596,7 +7596,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_472
+      name: Char_Ranged_1
       rect:
         serializedVersion: 2
         x: 16
@@ -7610,7 +7610,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_473
+      name: Char_Ranged_2
       rect:
         serializedVersion: 2
         x: 32
@@ -7624,7 +7624,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_474
+      name: Char_Ranged_3
       rect:
         serializedVersion: 2
         x: 48
@@ -7638,7 +7638,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_475
+      name: Char_Melee_10
       rect:
         serializedVersion: 2
         x: 64
@@ -7652,7 +7652,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_476
+      name: Char_Melee_11
       rect:
         serializedVersion: 2
         x: 80
@@ -7666,7 +7666,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_477
+      name: Char_Melee_12
       rect:
         serializedVersion: 2
         x: 96
@@ -7680,7 +7680,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_478
+      name: Char_Melee_13
       rect:
         serializedVersion: 2
         x: 112
@@ -7694,7 +7694,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_479
+      name: Char_Wizard_10
       rect:
         serializedVersion: 2
         x: 128
@@ -7708,7 +7708,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_480
+      name: Char_Wizard_11
       rect:
         serializedVersion: 2
         x: 144
@@ -7722,7 +7722,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_481
+      name: Char_Wizard_12
       rect:
         serializedVersion: 2
         x: 160
@@ -7736,7 +7736,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_482
+      name: Char_Wizard_13
       rect:
         serializedVersion: 2
         x: 176
@@ -7750,7 +7750,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_483
+      name: Short_Melee_0
       rect:
         serializedVersion: 2
         x: 192
@@ -7764,7 +7764,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_484
+      name: Short_Wizard_1
       rect:
         serializedVersion: 2
         x: 208
@@ -7778,7 +7778,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_485
+      name: Short_Melee_1
       rect:
         serializedVersion: 2
         x: 224
@@ -7792,7 +7792,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_486
+      name: Short_Melee_2
       rect:
         serializedVersion: 2
         x: 240
@@ -7806,7 +7806,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_487
+      name: Char_Melee_14
       rect:
         serializedVersion: 2
         x: 256
@@ -7820,7 +7820,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_488
+      name: Char_Melee_15
       rect:
         serializedVersion: 2
         x: 272
@@ -7834,7 +7834,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_489
+      name: Char_Wizard_14
       rect:
         serializedVersion: 2
         x: 288
@@ -7848,7 +7848,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_490
+      name: Crab_0
       rect:
         serializedVersion: 2
         x: 0
@@ -7862,7 +7862,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_491
+      name: Rat_0
       rect:
         serializedVersion: 2
         x: 16
@@ -7876,7 +7876,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_492
+      name: Cricket_0
       rect:
         serializedVersion: 2
         x: 32
@@ -7890,7 +7890,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_493
+      name: Wolf_0
       rect:
         serializedVersion: 2
         x: 48
@@ -7904,7 +7904,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_494
+      name: Longneck_0
       rect:
         serializedVersion: 2
         x: 64
@@ -7918,7 +7918,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_495
+      name: Beast_0
       rect:
         serializedVersion: 2
         x: 80
@@ -7932,7 +7932,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_496
+      name: Bat_0
       rect:
         serializedVersion: 2
         x: 96
@@ -7946,7 +7946,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_497
+      name: Cricket_1
       rect:
         serializedVersion: 2
         x: 112
@@ -7960,7 +7960,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_498
+      name: Cobra_0
       rect:
         serializedVersion: 2
         x: 128
@@ -7974,7 +7974,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_499
+      name: Salamander_0
       rect:
         serializedVersion: 2
         x: 144
@@ -7988,7 +7988,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_500
+      name: Frog_0
       rect:
         serializedVersion: 2
         x: 160
@@ -8002,7 +8002,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_501
+      name: Cat_0
       rect:
         serializedVersion: 2
         x: 176
@@ -8030,7 +8030,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_503
+      name: Cat_1
       rect:
         serializedVersion: 2
         x: 208
@@ -8044,7 +8044,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_504
+      name: Lion_0
       rect:
         serializedVersion: 2
         x: 224
@@ -8058,7 +8058,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_505
+      name: Bird_0
       rect:
         serializedVersion: 2
         x: 240
@@ -8072,7 +8072,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_506
+      name: Vulture_0
       rect:
         serializedVersion: 2
         x: 256
@@ -8086,7 +8086,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_507
+      name: Eel_0
       rect:
         serializedVersion: 2
         x: 272
@@ -8100,7 +8100,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_508
+      name: Eel_1
       rect:
         serializedVersion: 2
         x: 288
@@ -8114,7 +8114,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_509
+      name: Dolphin_0
       rect:
         serializedVersion: 2
         x: 0
@@ -8128,7 +8128,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_510
+      name: Dolphin_1
       rect:
         serializedVersion: 2
         x: 16
@@ -8142,7 +8142,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_511
+      name: Squid_0
       rect:
         serializedVersion: 2
         x: 32
@@ -8156,7 +8156,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_512
+      name: Lotus_0
       rect:
         serializedVersion: 2
         x: 48
@@ -8170,7 +8170,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_513
+      name: Lotus_1
       rect:
         serializedVersion: 2
         x: 64
@@ -8184,7 +8184,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_514
+      name: Lotus_2
       rect:
         serializedVersion: 2
         x: 80
@@ -8198,7 +8198,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_515
+      name: Beast_1
       rect:
         serializedVersion: 2
         x: 96
@@ -8212,7 +8212,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_516
+      name: Spider_0
       rect:
         serializedVersion: 2
         x: 112
@@ -8226,7 +8226,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_517
+      name: Spider_1
       rect:
         serializedVersion: 2
         x: 128
@@ -8240,7 +8240,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_518
+      name: Wasp_0
       rect:
         serializedVersion: 2
         x: 144
@@ -8254,7 +8254,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_519
+      name: Wasp_1
       rect:
         serializedVersion: 2
         x: 160
@@ -8268,7 +8268,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_520
+      name: Dragonfly_0
       rect:
         serializedVersion: 2
         x: 176
@@ -8282,7 +8282,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_521
+      name: Cerberus_0
       rect:
         serializedVersion: 2
         x: 192
@@ -8296,7 +8296,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_522
+      name: Korlux_0
       rect:
         serializedVersion: 2
         x: 208
@@ -8310,7 +8310,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_523
+      name: Korlux_1
       rect:
         serializedVersion: 2
         x: 224
@@ -8324,7 +8324,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_524
+      name: Korlux_2
       rect:
         serializedVersion: 2
         x: 240
@@ -8338,7 +8338,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_525
+      name: Korlux_3
       rect:
         serializedVersion: 2
         x: 256
@@ -8352,7 +8352,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_526
+      name: Angel_0
       rect:
         serializedVersion: 2
         x: 272
@@ -8366,7 +8366,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_527
+      name: Angel_1
       rect:
         serializedVersion: 2
         x: 288
@@ -8380,7 +8380,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_528
+      name: Centaur_0
       rect:
         serializedVersion: 2
         x: 0
@@ -8394,7 +8394,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_529
+      name: Centaur_1
       rect:
         serializedVersion: 2
         x: 16
@@ -8408,7 +8408,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_530
+      name: Centaur_2
       rect:
         serializedVersion: 2
         x: 32
@@ -8422,7 +8422,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_531
+      name: Centar_3
       rect:
         serializedVersion: 2
         x: 48
@@ -8436,7 +8436,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_532
+      name: Naga_0
       rect:
         serializedVersion: 2
         x: 64
@@ -8450,7 +8450,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_533
+      name: Naga_1
       rect:
         serializedVersion: 2
         x: 80
@@ -8464,7 +8464,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_534
+      name: Naga_2
       rect:
         serializedVersion: 2
         x: 96
@@ -8478,7 +8478,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_535
+      name: Borz_0
       rect:
         serializedVersion: 2
         x: 112
@@ -8492,7 +8492,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_536
+      name: Borz_1
       rect:
         serializedVersion: 2
         x: 128
@@ -8506,7 +8506,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_537
+      name: Borz_2
       rect:
         serializedVersion: 2
         x: 144
@@ -8520,7 +8520,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_538
+      name: Borz_3
       rect:
         serializedVersion: 2
         x: 160
@@ -8534,7 +8534,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_539
+      name: Char_Melee_16
       rect:
         serializedVersion: 2
         x: 176
@@ -8548,7 +8548,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_540
+      name: Char_Melee_17
       rect:
         serializedVersion: 2
         x: 192
@@ -8562,7 +8562,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_541
+      name: Char_Fat_0
       rect:
         serializedVersion: 2
         x: 208
@@ -8576,7 +8576,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_542
+      name: Forsaken_0
       rect:
         serializedVersion: 2
         x: 224
@@ -8590,7 +8590,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_543
+      name: Forsaken_1
       rect:
         serializedVersion: 2
         x: 240
@@ -8604,7 +8604,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_544
+      name: Forsaken_2
       rect:
         serializedVersion: 2
         x: 256
@@ -8618,7 +8618,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_545
+      name: Char_Hurt_0
       rect:
         serializedVersion: 2
         x: 272
@@ -8632,7 +8632,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_546
+      name: Char_Hurt_1
       rect:
         serializedVersion: 2
         x: 288
@@ -8646,7 +8646,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_547
+      name: Reexus_0
       rect:
         serializedVersion: 2
         x: 0
@@ -8660,7 +8660,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_548
+      name: Reexus_1
       rect:
         serializedVersion: 2
         x: 16
@@ -8674,7 +8674,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_549
+      name: Reexus_2
       rect:
         serializedVersion: 2
         x: 32
@@ -8688,7 +8688,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_550
+      name: Louik_0
       rect:
         serializedVersion: 2
         x: 48
@@ -8702,7 +8702,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_551
+      name: Louik_1
       rect:
         serializedVersion: 2
         x: 64
@@ -8716,7 +8716,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_552
+      name: Louik_2
       rect:
         serializedVersion: 2
         x: 80
@@ -8730,7 +8730,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_553
+      name: Louik_3
       rect:
         serializedVersion: 2
         x: 96
@@ -8744,7 +8744,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_554
+      name: Louik_4
       rect:
         serializedVersion: 2
         x: 112
@@ -8758,7 +8758,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_555
+      name: Louik_5
       rect:
         serializedVersion: 2
         x: 128
@@ -8814,7 +8814,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_559
+      name: Fairy_0
       rect:
         serializedVersion: 2
         x: 192
@@ -8828,7 +8828,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_560
+      name: Fair_1
       rect:
         serializedVersion: 2
         x: 208
@@ -8842,7 +8842,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_561
+      name: Fairy_2
       rect:
         serializedVersion: 2
         x: 224
@@ -8856,7 +8856,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_562
+      name: Char_Wizard_15
       rect:
         serializedVersion: 2
         x: 240
@@ -8870,7 +8870,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_563
+      name: Char_Melee_18
       rect:
         serializedVersion: 2
         x: 256
@@ -8884,7 +8884,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_564
+      name: Gas_2
       rect:
         serializedVersion: 2
         x: 272
@@ -8898,7 +8898,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_565
+      name: Gas_3
       rect:
         serializedVersion: 2
         x: 288
@@ -8912,7 +8912,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_566
+      name: Skeleton_0
       rect:
         serializedVersion: 2
         x: 0
@@ -8926,7 +8926,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_567
+      name: Skeleton_1
       rect:
         serializedVersion: 2
         x: 16
@@ -8940,7 +8940,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_568
+      name: Skeleton_2
       rect:
         serializedVersion: 2
         x: 32
@@ -8954,7 +8954,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_569
+      name: Skeleton_3
       rect:
         serializedVersion: 2
         x: 48
@@ -8968,7 +8968,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_570
+      name: Skeleton_4
       rect:
         serializedVersion: 2
         x: 64
@@ -8982,7 +8982,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_571
+      name: Skeleton_5
       rect:
         serializedVersion: 2
         x: 80
@@ -8996,7 +8996,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_572
+      name: Skeleton_6
       rect:
         serializedVersion: 2
         x: 96
@@ -9010,7 +9010,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_573
+      name: Hawbs_0
       rect:
         serializedVersion: 2
         x: 112
@@ -9024,7 +9024,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_574
+      name: Hawbs_1
       rect:
         serializedVersion: 2
         x: 128
@@ -9038,7 +9038,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_575
+      name: Hawbs_2
       rect:
         serializedVersion: 2
         x: 144
@@ -9052,7 +9052,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_576
+      name: Hawbs_3
       rect:
         serializedVersion: 2
         x: 160
@@ -9066,7 +9066,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_577
+      name: Trimel_0
       rect:
         serializedVersion: 2
         x: 176
@@ -9080,7 +9080,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_578
+      name: Trimel_1
       rect:
         serializedVersion: 2
         x: 192
@@ -9094,7 +9094,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_579
+      name: Trimel_2
       rect:
         serializedVersion: 2
         x: 208
@@ -9108,7 +9108,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_580
+      name: Trimel_3
       rect:
         serializedVersion: 2
         x: 224
@@ -9122,7 +9122,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_581
+      name: Trimel_4
       rect:
         serializedVersion: 2
         x: 240
@@ -9136,7 +9136,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_582
+      name: Trimel_5
       rect:
         serializedVersion: 2
         x: 256
@@ -9150,7 +9150,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_583
+      name: Anubus_0
       rect:
         serializedVersion: 2
         x: 272
@@ -9164,7 +9164,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_584
+      name: Trimel_6
       rect:
         serializedVersion: 2
         x: 288
@@ -9178,7 +9178,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_585
+      name: Beast_2
       rect:
         serializedVersion: 2
         x: 0
@@ -9192,7 +9192,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_586
+      name: Beast_3
       rect:
         serializedVersion: 2
         x: 16
@@ -9206,7 +9206,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_587
+      name: Beast_4
       rect:
         serializedVersion: 2
         x: 32
@@ -9220,7 +9220,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_588
+      name: Beast_5
       rect:
         serializedVersion: 2
         x: 48
@@ -9234,7 +9234,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_589
+      name: Beast_6
       rect:
         serializedVersion: 2
         x: 64
@@ -9248,7 +9248,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_590
+      name: Beast_7
       rect:
         serializedVersion: 2
         x: 80
@@ -9262,7 +9262,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_591
+      name: Beast_8
       rect:
         serializedVersion: 2
         x: 96
@@ -9276,7 +9276,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_592
+      name: Beast_9
       rect:
         serializedVersion: 2
         x: 112
@@ -9290,7 +9290,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_593
+      name: Beast_10
       rect:
         serializedVersion: 2
         x: 128
@@ -9304,7 +9304,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_594
+      name: Beast_11
       rect:
         serializedVersion: 2
         x: 144
@@ -9318,7 +9318,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_595
+      name: Beast_12
       rect:
         serializedVersion: 2
         x: 160
@@ -9332,7 +9332,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_596
+      name: Wurm_0
       rect:
         serializedVersion: 2
         x: 176
@@ -9346,7 +9346,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_597
+      name: Beast_13
       rect:
         serializedVersion: 2
         x: 192
@@ -9360,7 +9360,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_598
+      name: Kobra_1
       rect:
         serializedVersion: 2
         x: 208
@@ -9374,7 +9374,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_599
+      name: Kobra_2
       rect:
         serializedVersion: 2
         x: 224
@@ -9388,7 +9388,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_600
+      name: Beast_14
       rect:
         serializedVersion: 2
         x: 240
@@ -9402,7 +9402,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_601
+      name: Beast_15
       rect:
         serializedVersion: 2
         x: 256
@@ -9416,7 +9416,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_602
+      name: Beast_16
       rect:
         serializedVersion: 2
         x: 272
@@ -9430,7 +9430,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_603
+      name: Beast_17
       rect:
         serializedVersion: 2
         x: 288
@@ -9444,7 +9444,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_604
+      name: Trimel_7
       rect:
         serializedVersion: 2
         x: 0
@@ -9458,7 +9458,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_605
+      name: Trimel_8
       rect:
         serializedVersion: 2
         x: 16
@@ -9472,7 +9472,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_606
+      name: Ghost_0
       rect:
         serializedVersion: 2
         x: 32
@@ -9486,7 +9486,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_607
+      name: Ghost_1
       rect:
         serializedVersion: 2
         x: 48
@@ -9500,7 +9500,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_608
+      name: Ghost_2
       rect:
         serializedVersion: 2
         x: 64
@@ -9514,7 +9514,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_609
+      name: Beast_18
       rect:
         serializedVersion: 2
         x: 80
@@ -9528,7 +9528,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_610
+      name: Wurm_1
       rect:
         serializedVersion: 2
         x: 96
@@ -9542,7 +9542,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_611
+      name: Unicorn_0
       rect:
         serializedVersion: 2
         x: 112
@@ -9556,7 +9556,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_612
+      name: Unicorn_1
       rect:
         serializedVersion: 2
         x: 128
@@ -9570,7 +9570,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_613
+      name: Horse_0
       rect:
         serializedVersion: 2
         x: 144
@@ -9584,7 +9584,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_614
+      name: Horse_1
       rect:
         serializedVersion: 2
         x: 160
@@ -9598,7 +9598,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_615
+      name: Camel_0
       rect:
         serializedVersion: 2
         x: 176
@@ -9612,7 +9612,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_616
+      name: Beast_19
       rect:
         serializedVersion: 2
         x: 192
@@ -9626,7 +9626,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_617
+      name: Ent_0
       rect:
         serializedVersion: 2
         x: 208
@@ -9640,7 +9640,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_618
+      name: Beast_20
       rect:
         serializedVersion: 2
         x: 224
@@ -9654,7 +9654,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_619
+      name: Scorpion_0
       rect:
         serializedVersion: 2
         x: 240
@@ -9668,7 +9668,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_620
+      name: Beast_21
       rect:
         serializedVersion: 2
         x: 256
@@ -9682,7 +9682,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_621
+      name: Beast_22
       rect:
         serializedVersion: 2
         x: 272
@@ -9696,7 +9696,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_622
+      name: Beast_23
       rect:
         serializedVersion: 2
         x: 288
@@ -9710,7 +9710,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_623
+      name: Skeleton_7
       rect:
         serializedVersion: 2
         x: 0
@@ -9724,7 +9724,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_624
+      name: Beast_24
       rect:
         serializedVersion: 2
         x: 16
@@ -9738,7 +9738,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_625
+      name: Random_Item_10
       rect:
         serializedVersion: 2
         x: 32
@@ -9752,7 +9752,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_626
+      name: Klaws_0
       rect:
         serializedVersion: 2
         x: 48
@@ -9766,7 +9766,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_627
+      name: Klaws_1
       rect:
         serializedVersion: 2
         x: 64
@@ -9780,7 +9780,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_628
+      name: Klaws_2
       rect:
         serializedVersion: 2
         x: 80
@@ -9794,7 +9794,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_629
+      name: Random_Item_11
       rect:
         serializedVersion: 2
         x: 96
@@ -9808,7 +9808,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_630
+      name: Random_Item_12
       rect:
         serializedVersion: 2
         x: 112
@@ -9822,7 +9822,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_631
+      name: Symbol_22
       rect:
         serializedVersion: 2
         x: 128
@@ -9836,7 +9836,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_632
+      name: Elemental_0
       rect:
         serializedVersion: 2
         x: 144
@@ -9850,7 +9850,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_633
+      name: Elemental_1
       rect:
         serializedVersion: 2
         x: 160
@@ -9864,7 +9864,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_634
+      name: Elemental_2
       rect:
         serializedVersion: 2
         x: 176
@@ -9878,7 +9878,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_635
+      name: Minataur_0
       rect:
         serializedVersion: 2
         x: 192
@@ -9892,7 +9892,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_636
+      name: Minataur_1
       rect:
         serializedVersion: 2
         x: 208
@@ -9906,7 +9906,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_637
+      name: Giant_0
       rect:
         serializedVersion: 2
         x: 224
@@ -9920,7 +9920,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_638
+      name: Giant_1
       rect:
         serializedVersion: 2
         x: 240
@@ -9934,7 +9934,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_639
+      name: Dragon_0
       rect:
         serializedVersion: 2
         x: 256
@@ -9948,7 +9948,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_640
+      name: Dragon_1
       rect:
         serializedVersion: 2
         x: 272
@@ -9962,7 +9962,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_641
+      name: Dragon_2
       rect:
         serializedVersion: 2
         x: 288
@@ -10242,7 +10242,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_661
+      name: Menu_Border_TL
       rect:
         serializedVersion: 2
         x: 0
@@ -10256,7 +10256,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_662
+      name: Menu_Border_TR
       rect:
         serializedVersion: 2
         x: 16
@@ -10270,7 +10270,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_663
+      name: Menu_Border_BL
       rect:
         serializedVersion: 2
         x: 32
@@ -10284,7 +10284,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_664
+      name: Menu_Border_BR
       rect:
         serializedVersion: 2
         x: 48
@@ -10298,7 +10298,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_665
+      name: Menu_Border_LS
       rect:
         serializedVersion: 2
         x: 64
@@ -10312,7 +10312,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roguelike_Template_666
+      name: Menu_Border_LL
       rect:
         serializedVersion: 2
         x: 80
