@@ -128,6 +128,28 @@ public class Board : ScriptableObject{
 		}
 	}
 
+	private void AddDestroyedNeighbours(ref List<GameTile> list, GameTile tile){
+		//FloodFillDestroyedTiles helper function, returns a list containing the destroyed neighbour tiles
+		//of a tile that should be included in the flood fill
+		grid[tile.GetX()][tile.GetY()].SetIsMarked(true);
+		if((tile.GetY() + 1) < rows && grid[tile.GetX()][tile.GetY()+1].IsDestroyed() && !grid[tile.GetX()][tile.GetY()+1].IsMarked()){
+			grid[tile.GetX()][tile.GetY()+1].SetIsMarked(true);
+			list.Add(grid[tile.GetX()][tile.GetY()+1]);
+		}
+		if ((tile.GetY() - 1) >= 0 && grid[tile.GetX()][tile.GetY()-1].IsDestroyed() && !grid[tile.GetX()][tile.GetY()-1].IsMarked()) {
+			grid[tile.GetX()][tile.GetY()-1].SetIsMarked(true);
+			list.Add(grid[tile.GetX()][tile.GetY()-1]);
+		}
+		if ((tile.GetX() + 1) < cols && grid[tile.GetX()+1][tile.GetY()].IsDestroyed() && !grid[tile.GetX()+1][tile.GetY()].IsMarked()) {
+			grid[tile.GetX()+1][tile.GetY()].SetIsMarked(true);
+			list.Add(grid[tile.GetX()+1][tile.GetY()]);
+		}
+		if ((tile.GetX() - 1) >= 0 && grid[tile.GetX()-1][tile.GetY()].IsDestroyed() && !grid[tile.GetX()-1][tile.GetY()].IsMarked()) {
+			grid[tile.GetX()-1][tile.GetY()].SetIsMarked(true);
+			list.Add(grid[tile.GetX()-1][tile.GetY()]);
+		}
+	}
+
 	private void AddValidNeighbours(ref List<GameTile> list, GameTile tile){
 		//FloodFill helper function, returns a list containing the neighbours
 		//of a tile that should be included in the flood fill
@@ -331,6 +353,7 @@ public class Board : ScriptableObject{
 				int DestroyedCount = countDestroyed (x, y);
 				if (DestroyedCount >= 1 && !(grid[x][y].IsWall())) {
 					grid[x][y].SetIsWall(true);
+					grid[x][y].SetIsDestroyed(false);
 					grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = p_wallSprite;
 				}
 			}
@@ -356,6 +379,40 @@ public class Board : ScriptableObject{
 				validNeighbours[x].SetIsMarked(true);
 				allMarkedCells.Add(validNeighbours[x]);
 				AddValidNeighbours(ref nextValidNeighbours, validNeighbours[x]);
+			}
+			validNeighbours = new List<GameTile>(nextValidNeighbours);
+		} while (nextValidNeighbours.Count != 0);
+		FloodFilledAreas.Add(allMarkedCells);
+		return count;
+	}
+
+	protected int FloodFillDestroyedTiles(ref GameTile tile, ref List<List<GameTile>> FloodFilledAreas, ref bool containsMapEdge)
+	{
+		//starting from the provided tile, mark all connected tiles (meaning stop at walls)
+		//this essentially produces a cut out of a room that is reachable, i.e. no walls blocking off certian parts
+		//it can also return a int count of the number of tiles in the area cut out
+		List<GameTile> allMarkedCells = new List<GameTile>();
+		List<GameTile> validNeighbours = new List<GameTile>();
+		containsMapEdge = false;
+		int count = 1;
+		grid[tile.GetX()][tile.GetY()].SetIsMarked(true);
+		allMarkedCells.Add(grid[tile.GetX()][tile.GetY()]);
+		if (grid[tile.GetX()][tile.GetY()].IsMapEdge()) {
+			containsMapEdge = true;
+		}
+		AddDestroyedNeighbours(ref validNeighbours,tile);
+		List<GameTile> nextValidNeighbours = new List<GameTile>();
+		do {
+			nextValidNeighbours.Clear();
+			count += validNeighbours.Count;
+			for (int x = 0; x < validNeighbours.Count; x++) {
+				validNeighbours[x].SetIsMarked(true);
+				allMarkedCells.Add(validNeighbours[x]);
+				if(validNeighbours[x].IsMapEdge())
+				{
+					containsMapEdge = true;
+				}
+				AddDestroyedNeighbours(ref nextValidNeighbours, validNeighbours[x]);
 			}
 			validNeighbours = new List<GameTile>(nextValidNeighbours);
 		} while (nextValidNeighbours.Count != 0);

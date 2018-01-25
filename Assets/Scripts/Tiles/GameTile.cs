@@ -7,6 +7,7 @@ public class GameTile {
 	private int x=0; 
 	private int y=0;
 	//
+	private Vector2 UnityPosition = new Vector2(); // corresponds to the tiles position within Unity, can be used to regenerate a tile that has its object deleted.
 	private bool wall = false;
 	private bool destroyed = false;
 	private bool occupied = false;
@@ -15,6 +16,7 @@ public class GameTile {
 	private bool visible = false;
 	private bool edge = false;
 	private bool visited = false;
+	private bool mapEdge = false; //if the tile is a border tile, i.e. if located at grid[49][x] or grid[x][49] in a 50 by 50 grid
 
 	private Sprite originalSprite;
 	private Color originalColor;
@@ -47,6 +49,11 @@ public class GameTile {
 	public bool IsMarked()
 	{
 		return marked;
+	}
+
+	public bool IsMapEdge()
+	{
+		return mapEdge;
 	}
 
 	public bool IsDestroyed()
@@ -119,6 +126,16 @@ public class GameTile {
 	public GameTile GetTileWest(){
 		return tileWest;
 	}
+
+	public float GetUnityXPosition()
+	{
+		return UnityPosition.x;
+	}
+
+	public float GetUnityYPosition()
+	{
+		return UnityPosition.y;
+	}
 //
 
 //setters
@@ -169,6 +186,11 @@ public class GameTile {
 		edge = val;
 	}
 
+	public void SetIsMapEdge(bool val)
+	{
+		mapEdge = val;
+	}
+
 	public void SetIsVisited(bool val)
 	{
 		visited = val;
@@ -198,6 +220,11 @@ public class GameTile {
 
 	public void SetTileWest(GameTile tile){
 		tileWest = tile;
+	}
+
+	public void SetUnityPosition(float x, float y)
+	{
+		UnityPosition = new Vector2(x, y);
 	}
 //
 	public bool OpenForPlacement()

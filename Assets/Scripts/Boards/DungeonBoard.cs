@@ -15,6 +15,7 @@ public class DungeonBoard : Board {
 	private float minimumPercentageOfOpenTiles = 0.1f;
 	private Sprite innerWallSprite;
 	private Sprite teleporterSprite;
+	private Sprite waterSprite;
 	private bool runEdgeSmoothing = false;
 	private bool allowDisconnectedCaves = true;
 
@@ -29,6 +30,7 @@ public class DungeonBoard : Board {
 		Settings.cols = (Settings.cols < minNumberOfCols) ? minNumberOfCols : Settings.cols;
 		Settings.minimumPercentageOfOpenTiles = (Settings.rows == minNumberOfRows && Settings.cols == minNumberOfCols) ? 0.25f : Settings.minimumPercentageOfOpenTiles;
 
+		//TODO:Just make Settings a part of the DungeonBoard and then hand off what is needed from the settings object instead of doing all this setup
 		//Configure based off of setting values
 		base.init(Settings.rows, Settings.cols, Settings.tileObject);
 		chanceToStartAlive = Settings.chanceToStartAlive;
@@ -39,13 +41,14 @@ public class DungeonBoard : Board {
 		innerWallSprite = Settings.innerWallSprite;
 		wallSprite = Settings.wallSprite;
 		floorSprite = Settings.floorSprite;
+		waterSprite = Settings.waterSprite;
 		teleporterSprite = Settings.teleporterSprite;
 		runEdgeSmoothing = Settings.runEdgeSmoothing;
 		allowDisconnectedCaves = Settings.allowDisconnectedCaves;
 		xPadding = Settings.xPadding;
 		yPadding = Settings.yPadding;
+		//
 		gridContainerName = "DungeonGrid";
-
 		initMap();
 		if (!EnsureSpawnPointAndExitCanExist()) {
 			RespawnMap();
@@ -69,9 +72,13 @@ public class DungeonBoard : Board {
 				float randNum = Random.Range(.0f, 1.0f);
 				GameTile tile = new GameTile(x, y, floorSprite);
 				GameObject instance = Instantiate (tileObject, new Vector3 (xSpace, ySpace, 0.0f), Quaternion.identity, container);
+				tile.SetUnityPosition(xSpace, ySpace);
 				instance.name = "(" + x + "," + y + ")";
 				ySpace += yPadding;
 				instance.GetComponent<SpriteRenderer>().sprite = floorSprite;
+				if (x == 0 || x == cols - 1 || y == 0 || y == rows - 1) {
+					tile.SetIsMapEdge(true);
+				}
 				if (randNum < chanceToStartAlive) {
 					//set the tile to be a wall tile since it passed random test
 					//at this point its pointless to destroy and reinstantiate a wall object but in the future we may have to do that
@@ -126,6 +133,17 @@ public class DungeonBoard : Board {
 		return;
 	}
 
+	private void RespawnMap()
+	{
+		//Constantly rerolls the map until a valid map is generated
+		DeleteEntireMap();
+		initMap();
+		if(!EnsureSpawnPointAndExitCanExist())
+		{
+			RespawnMap();
+		}
+	}
+
 //Map Cleanup functions
 	private void MapCleanUp()
 	{
@@ -145,12 +163,13 @@ public class DungeonBoard : Board {
 				SmoothMapEdges ();
 			}
 		}
+		SetDestroyed();
+		GenerateLiquid();
 		ChangeInnerWallSprites();
 	}
 
 	private void CheckForMinimumMapSize()
 	{
-		//TODO: Finish debugging this for maps with skewed rows to col ratio without disconnected caves
 		float percentageOfOpenTiles = CalculatePlayingArea();
 		if (percentageOfOpenTiles < minimumPercentageOfOpenTiles) {
 			if (numberOfMapsGenerated < maxMapsToGenerate) {
@@ -205,6 +224,7 @@ public class DungeonBoard : Board {
 	private void ConnectDisconnectedCaves()
 	{
 		//connect all disconnected caves with "teleporters" in order to ensure the player can reach all caves
+		UnMarkAllTiles();
 		List<List<GameTile>> FloodFilledAreas = new List<List<GameTile>>();
 		Vector2 randomPoint;
 		bool atLeastOneOpen;
@@ -288,8 +308,9 @@ public class DungeonBoard : Board {
 
 	private void RemoveDisconnectedCaves()
 	{
-		List<List<GameTile>> FloodFilledAreas = new List<List<GameTile>>();
 		//Finds disconnected caves and removes them from the map
+		UnMarkAllTiles();
+		List<List<GameTile>> FloodFilledAreas = new List<List<GameTile>>();
 		Vector2 randomPoint;
 		GameTile startingTile;
 		int size = 0, largest_size = 0, largest_index = 0, count = -1;
@@ -319,14 +340,90 @@ public class DungeonBoard : Board {
 		FloodFilledAreas.Clear();
 	}
 
-	private void RespawnMap()
+	private void SetDestroyed()
 	{
-		//Constantly rerolls the map until a valid map is generated
-		DeleteEntireMap();
-		initMap();
-		if(!EnsureSpawnPointAndExitCanExist())
-		{
-			RespawnMap();
+		//Iterate through the grid, if an grid tile does not have an object in unity then update it to be a Destroyed tile
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (grid[x][y].GetObject() == null) {
+					grid[x][y].SetIsDestroyed(true);
+				}
+			}
+		}
+	}
+
+	private void GenerateLiquid()
+	{
+		//generates liquid in internal areas of the map that have been destoryed, basically generates liquid in blank spaces within the map
+		UnMarkAllTiles();
+		List<List<GameTile>> FloodFilledAreas = new List<List<GameTile>>();
+		List<GameTile> FloodFillStartLocations = new List<GameTile>();
+		GameTile destroyedTile;
+		bool containsMapEdge = false;
+		do {
+			Vector2 randomPoint = GetNextDestroyedUnMarkedPoint();
+			destroyedTile = grid[(int)randomPoint.x][(int)randomPoint.y];
+			grid[(int)randomPoint.x][(int)randomPoint.y].SetIsMarked(true);
+			FloodFillDestroyedTiles(ref destroyedTile, ref FloodFilledAreas, ref containsMapEdge);
+			if (!containsMapEdge) {
+				FloodFillStartLocations.Add(grid[(int)randomPoint.x][(int)randomPoint.y]);
+			}
+		} while (HasUnmarkedDestroyedTiles());
+		UnMarkAllTiles();
+		for (int i = 0; i < FloodFillStartLocations.Count; i++) {
+			destroyedTile = FloodFillStartLocations[i];
+			destroyedTile.SetIsMarked(true);
+			FloodFillDestroyedTiles(ref destroyedTile, ref FloodFilledAreas, ref containsMapEdge);
+		}
+		GenerateGameObjectsForLiquidTiles();
+		FloodFilledAreas.Clear();
+	}
+
+	private Vector2 GetNextDestroyedUnMarkedPoint()
+	{
+		//return a destoryed unmarked point, helper function for Generate Liquid, should only be called when HasUnMarkedDestoryedTiles() has ensured a return
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if ((!grid[x][y].IsMarked()) && (grid[x][y].IsDestroyed())) {
+					grid[x][y].SetIsMarked(true);
+					return new Vector2 (grid[x][y].GetX(), grid[x][y].GetY());
+				}
+			}
+		}
+		Debug.Log("No tile was found MAJOR ERROR AT DUNGEON BOARD 196");
+		return new Vector2(-99.0f, -99.0f); //error value will cause out of bound exception
+	}
+
+	private bool HasUnmarkedDestroyedTiles()
+	{
+		//return true if the board has any destroyed tiles that aren't marked that could be marked
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (!grid[x][y].IsMarked() && grid[x][y].IsDestroyed()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private void GenerateGameObjectsForLiquidTiles()
+	{
+		//Now that we have found the tiles that we want to turn into water, we need to regenerate game objects for them and make them water
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (grid[x][y].IsMarked()) {
+					grid[x][y].SetIsDestroyed(false);
+					grid[x][y].SetIsWall(false);
+					grid[x][y].SetIsMarked(false);
+					grid[x][y].SetIsWalkAble(false);
+					grid[x][y].SetIsOccupied(true);
+					GameObject instance = Instantiate (tileObject, new Vector3 (grid[x][y].GetUnityXPosition(), grid[x][y].GetUnityYPosition(), 0.0f), Quaternion.identity, container);
+					instance.name = "(" + x + "," + y + ")";
+					instance.GetComponent<SpriteRenderer>().sprite = waterSprite;
+					grid[x][y].SetObject(instance);
+				}
+			}
 		}
 	}
 }

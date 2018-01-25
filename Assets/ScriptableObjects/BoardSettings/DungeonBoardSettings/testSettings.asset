@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 638ee26a06a113c4285c46d649175633, type: 3}
-  m_Name: MainDungeonBoardSettings
+  m_Name: testSettings
   m_EditorClassIdentifier: 
   floorLevel: 1
   chanceToStartAlive: 0.4
@@ -21,11 +21,11 @@ MonoBehaviour:
   xPadding: 0.16
   yPadding: 0.24
   tileObject: {fileID: 1486118325208144, guid: b9cdeba00a8a8f846a0dd3e9f4587ab9, type: 2}
-  floorSprite: {fileID: 21300578, guid: f1508987d08af7542a245717b9fc27de, type: 3}
-  wallSprite: {fileID: 21300504, guid: f1508987d08af7542a245717b9fc27de, type: 3}
-  innerWallSprite: {fileID: 21300466, guid: f1508987d08af7542a245717b9fc27de, type: 3}
-  teleporterSprite: {fileID: 21300320, guid: f1508987d08af7542a245717b9fc27de, type: 3}
-  waterSprite: {fileID: 21300562, guid: f1508987d08af7542a245717b9fc27de, type: 3}
+  floorSprite: {fileID: 21300578, guid: 17a0df5158812d74b9ad4ff84aba3b7e, type: 3}
+  wallSprite: {fileID: 21300504, guid: 17a0df5158812d74b9ad4ff84aba3b7e, type: 3}
+  innerWallSprite: {fileID: 21300466, guid: 17a0df5158812d74b9ad4ff84aba3b7e, type: 3}
+  teleporterSprite: {fileID: 21300320, guid: 17a0df5158812d74b9ad4ff84aba3b7e, type: 3}
+  waterSprite: {fileID: 21300562, guid: 17a0df5158812d74b9ad4ff84aba3b7e, type: 3}
   runEdgeSmoothing: 0
   allowDisconnectedCaves: 1
   minimumPercentageOfOpenTiles: 0.3

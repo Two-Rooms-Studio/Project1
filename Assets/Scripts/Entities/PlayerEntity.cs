@@ -10,7 +10,7 @@ public class PlayerEntity : Entity {
 
 	public void init (GameTile spawnPoint)
 	{
-		playerObject = Resources.Load("Prefabs/PlayerPrefab") as GameObject; //TODO:use scriptable object settings instead of loading prefabs
+		playerObject = Resources.Load("Prefabs/PlayerPrefab") as GameObject; //TODO:use scriptable object settings instead of loading prefab
 		playerTile = spawnPoint;
 		playerSprite = playerObject.GetComponent<SpriteRenderer>().sprite;
 		playerColor = playerObject.GetComponent<SpriteRenderer>().color;
