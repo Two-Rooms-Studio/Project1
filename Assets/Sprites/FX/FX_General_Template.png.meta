@@ -1,0 +1,1278 @@
+fileFormatVersion: 2
+guid: 1828887d203ca5f458b8ff95dd325e0e
+timeCreated: 1516840078
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: FX_Slice_0
+    21300002: FX_Slice_1
+    21300004: FX_Slice_2
+    21300006: FX_Slice_3
+    21300008: FX_Implosion_0
+    21300010: FX_Implosion_1
+    21300012: FX_Sparkle_0
+    21300014: FX_Sparkle_1
+    21300016: FX_Cut_0
+    21300018: FX_Cut_1
+    21300020: FX_Cut_2
+    21300022: FX_Cut_3
+    21300024: FX_Cut_4
+    21300026: FX_Explosion_0
+    21300028: FX_Explosion_1
+    21300030: FX_Explosion_2
+    21300032: FX_Gas_0
+    21300034: FX_Gas_1
+    21300036: FX_Implosion_2
+    21300038: FX_Implosion_3
+    21300040: FX_Implosion_4
+    21300042: FX_Target_0
+    21300044: FX_Target_1
+    21300046: FX_Target_2
+    21300048: FX_Fire_0
+    21300050: FX_Fire_1
+    21300052: FX_Fire_2
+    21300054: FX_Fire_3
+    21300056: FX_Rain_0
+    21300058: FX_Rain_1
+    21300060: FX_Dust_0
+    21300062: FX_Dust_1
+    21300064: FX_Snowflakes_0
+    21300066: FX_Snowflakes_1
+    21300068: FX_Sight_0
+    21300070: FX_Sight_1
+    21300072: FX_Bubble_0
+    21300074: FX_Bubble_1
+    21300076: FX_Aura_0
+    21300078: FX_Beam_0
+    21300080: FX_Shield_0
+    21300082: FX_Beam_1
+    21300084: FX_Eyes_0
+    21300086: FX_Eyes_1
+    21300088: FX_Implosion_5
+    21300090: FX_Implosion_6
+    21300092: FX_Aura_1
+    21300094: FX_Lightning_0
+    21300096: FX_Lightning_1
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FX_Slice_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Slice_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Slice_2
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Slice_3
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Implosion_0
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Implosion_1
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Sparkle_0
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Sparkle_1
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Cut_0
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Cut_1
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Cut_2
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Cut_3
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Cut_4
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Explosion_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Explosion_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Explosion_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Gas_0
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Gas_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Implosion_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Implosion_3
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Implosion_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Target_0
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Target_1
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Target_2
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Fire_0
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Fire_1
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Fire_2
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Fire_3
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 48
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Rain_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Rain_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Dust_0
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Dust_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Snowflakes_0
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Snowflakes_1
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Sight_0
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Sight_1
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Bubble_0
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Bubble_1
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Aura_0
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Beam_0
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Shield_0
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Beam_1
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 24
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Eyes_0
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Eyes_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Implosion_5
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Implosion_6
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Aura_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Lightning_0
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FX_Lightning_1
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline:
+    - - {x: -47, y: -22}
+      - {x: -47, y: -48}
+      - {x: -32, y: -48}
+      - {x: -32, y: -30}
+      - {x: -38, y: -22}
+    - - {x: -23, y: -16}
+      - {x: -32, y: -30}
+      - {x: -32, y: -45}
+      - {x: -29, y: -48}
+      - {x: -15, y: -48}
+      - {x: -15, y: -16}
+    - - {x: -56, y: -46}
+      - {x: -53, y: -45}
+      - {x: -53, y: -42}
+      - {x: -56, y: -41}
+      - {x: -58, y: -43}
+    - - {x: -75, y: -26}
+      - {x: -80, y: -27}
+      - {x: -80, y: -44}
+      - {x: -74, y: -45}
+      - {x: -60, y: -45}
+      - {x: -59, y: -43}
+      - {x: -59, y: -26}
+    - - {x: -53, y: -42}
+      - {x: -50, y: -45}
+      - {x: -47, y: -44}
+      - {x: -47, y: -42}
+      - {x: -50, y: -39}
+      - {x: -52, y: -39}
+    - - {x: -138, y: -36}
+      - {x: -140, y: -37}
+      - {x: -140, y: -40}
+      - {x: -139, y: -42}
+      - {x: -134, y: -42}
+      - {x: -133, y: -40}
+      - {x: -133, y: -37}
+      - {x: -134, y: -36}
+    - - {x: -124, y: -38}
+      - {x: -123, y: -41}
+      - {x: -119, y: -41}
+      - {x: -117, y: -39}
+      - {x: -118, y: -36}
+      - {x: -122, y: -36}
+    - - {x: -93, y: -30}
+      - {x: -94, y: -32}
+      - {x: -94, y: -40}
+      - {x: -93, y: -41}
+      - {x: -83, y: -41}
+      - {x: -82, y: -39}
+      - {x: -82, y: -31}
+      - {x: -83, y: -30}
+    - - {x: -108, y: -35}
+      - {x: -109, y: -37}
+      - {x: -108, y: -40}
+      - {x: -103, y: -40}
+      - {x: -100, y: -39}
+      - {x: -100, y: -36}
+      - {x: -102, y: -35}
+    - - {x: -49, y: -38}
+      - {x: -46, y: -37}
+      - {x: -46, y: -34}
+      - {x: -49, y: -33}
+      - {x: -51, y: -35}
+    - - {x: -53, y: -29}
+      - {x: -53, y: -31}
+      - {x: -51, y: -32}
+      - {x: -49, y: -32}
+      - {x: -47, y: -29}
+      - {x: -47, y: -27}
+      - {x: -50, y: -26}
+    - - {x: -57, y: -30}
+      - {x: -54, y: -29}
+      - {x: -54, y: -26}
+      - {x: -57, y: -25}
+      - {x: -59, y: -27}
+    - - {x: -144, y: 2}
+      - {x: -144, y: -26}
+      - {x: -110, y: -26}
+      - {x: -110, y: 2}
+    - - {x: -121, y: -23}
+      - {x: -118, y: -26}
+      - {x: -115, y: -25}
+      - {x: -115, y: -23}
+      - {x: -118, y: -20}
+      - {x: -120, y: -20}
+    - - {x: -71, y: -23}
+      - {x: -68, y: -22}
+      - {x: -68, y: -19}
+      - {x: -71, y: -18}
+      - {x: -73, y: -20}
+    - - {x: -38, y: -22}
+      - {x: -35, y: -21}
+      - {x: -35, y: -18}
+      - {x: -38, y: -17}
+      - {x: -40, y: -19}
+    - - {x: 84, y: -14}
+      - {x: 81, y: -17}
+      - {x: 81, y: -21}
+      - {x: 83, y: -22}
+      - {x: 93, y: -22}
+      - {x: 96, y: -19}
+      - {x: 96, y: -14}
+    - - {x: -91, y: -21}
+      - {x: -88, y: -20}
+      - {x: -88, y: -17}
+      - {x: -91, y: -16}
+      - {x: -93, y: -18}
+    - - {x: 20, y: -3}
+      - {x: 17, y: -11}
+      - {x: 17, y: -17}
+      - {x: 23, y: -20}
+      - {x: 24, y: -20}
+      - {x: 27, y: -19}
+      - {x: 32, y: -12}
+      - {x: 31, y: -9}
+      - {x: 25, y: -3}
+    - - {x: 103, y: -2}
+      - {x: 101, y: -4}
+      - {x: 101, y: -18}
+      - {x: 103, y: -20}
+      - {x: 105, y: -20}
+      - {x: 107, y: -18}
+      - {x: 107, y: -4}
+      - {x: 105, y: -2}
+    - - {x: 112, y: -2}
+      - {x: 112, y: -13}
+      - {x: 116, y: -20}
+      - {x: 121, y: -20}
+      - {x: 128, y: -16}
+      - {x: 128, y: -2}
+    - - {x: 133, y: -2}
+      - {x: 132, y: -4}
+      - {x: 132, y: -19}
+      - {x: 134, y: -20}
+      - {x: 138, y: -20}
+      - {x: 140, y: -15}
+      - {x: 140, y: -3}
+      - {x: 138, y: -2}
+    - - {x: 65, y: -5}
+      - {x: 65, y: -18}
+      - {x: 76, y: -18}
+      - {x: 78, y: -16}
+      - {x: 78, y: -5}
+    - - {x: -67, y: -17}
+      - {x: -64, y: -16}
+      - {x: -64, y: -13}
+      - {x: -67, y: -12}
+      - {x: -69, y: -14}
+    - - {x: -43, y: -9}
+      - {x: -46, y: -12}
+      - {x: -46, y: -13}
+      - {x: -43, y: -16}
+      - {x: -42, y: -16}
+      - {x: -39, y: -13}
+      - {x: -39, y: -12}
+      - {x: -42, y: -9}
+    - - {x: 37, y: -7}
+      - {x: 36, y: -8}
+      - {x: 36, y: -15}
+      - {x: 37, y: -16}
+      - {x: 44, y: -16}
+      - {x: 45, y: -15}
+      - {x: 45, y: -8}
+      - {x: 44, y: -7}
+    - - {x: 55, y: -7}
+      - {x: 52, y: -10}
+      - {x: 52, y: -13}
+      - {x: 55, y: -16}
+      - {x: 58, y: -16}
+      - {x: 61, y: -13}
+      - {x: 61, y: -10}
+      - {x: 58, y: -7}
+    - - {x: -27, y: -15}
+      - {x: -24, y: -14}
+      - {x: -24, y: -11}
+      - {x: -27, y: -10}
+      - {x: -29, y: -12}
+    - - {x: 8, y: -8}
+      - {x: 5, y: -9}
+      - {x: 5, y: -12}
+      - {x: 6, y: -15}
+      - {x: 9, y: -15}
+      - {x: 12, y: -14}
+      - {x: 12, y: -11}
+      - {x: 11, y: -8}
+    - - {x: -83, y: -14}
+      - {x: -80, y: -13}
+      - {x: -80, y: -10}
+      - {x: -83, y: -9}
+      - {x: -85, y: -11}
+    - - {x: -77, y: -14}
+      - {x: -74, y: -13}
+      - {x: -74, y: -10}
+      - {x: -77, y: -9}
+      - {x: -79, y: -11}
+    - - {x: 78, y: -11}
+      - {x: 79, y: -14}
+      - {x: 82, y: -14}
+      - {x: 84, y: -12}
+      - {x: 83, y: -9}
+      - {x: 80, y: -9}
+    - - {x: 92, y: -11}
+      - {x: 93, y: -14}
+      - {x: 96, y: -14}
+      - {x: 98, y: -12}
+      - {x: 97, y: -9}
+      - {x: 94, y: -9}
+    - - {x: -93, y: -10}
+      - {x: -90, y: -9}
+      - {x: -90, y: -6}
+      - {x: -93, y: -5}
+      - {x: -95, y: -7}
+    - - {x: -35, y: -10}
+      - {x: -32, y: -9}
+      - {x: -32, y: -6}
+      - {x: -35, y: -5}
+      - {x: -37, y: -7}
+    - - {x: -19, y: -10}
+      - {x: -16, y: -9}
+      - {x: -16, y: -6}
+      - {x: -19, y: -5}
+      - {x: -21, y: -7}
+    - - {x: 84, y: -1}
+      - {x: 81, y: -4}
+      - {x: 81, y: -9}
+      - {x: 94, y: -9}
+      - {x: 96, y: -8}
+      - {x: 96, y: -2}
+      - {x: 94, y: -1}
+    - - {x: -144, y: 2}
+      - {x: -144, y: -8}
+      - {x: -141, y: -6}
+      - {x: -140, y: -2}
+      - {x: -140, y: -1}
+      - {x: -143, y: 2}
+    - - {x: -69, y: -8}
+      - {x: -66, y: -7}
+      - {x: -66, y: -4}
+      - {x: -69, y: -3}
+      - {x: -71, y: -5}
+    - - {x: -29, y: 1}
+      - {x: -32, y: -2}
+      - {x: -32, y: -3}
+      - {x: -29, y: -6}
+      - {x: -28, y: -6}
+      - {x: -25, y: -3}
+      - {x: -25, y: -2}
+      - {x: -28, y: 1}
+    - - {x: -89, y: -5}
+      - {x: -86, y: -4}
+      - {x: -86, y: -1}
+      - {x: -89, y: 0}
+      - {x: -91, y: -2}
+    - - {x: -45, y: -5}
+      - {x: -42, y: -4}
+      - {x: -42, y: -1}
+      - {x: -45, y: 0}
+      - {x: -47, y: -2}
+    - - {x: -96, y: 25}
+      - {x: -127, y: 20}
+      - {x: -127, y: 2}
+      - {x: -97, y: 0}
+      - {x: -68, y: 0}
+      - {x: -63, y: 4}
+      - {x: -63, y: 25}
+    - - {x: -22, y: 22}
+      - {x: -31, y: 19}
+      - {x: -31, y: 8}
+      - {x: -29, y: 5}
+      - {x: -16, y: 2}
+      - {x: 21, y: 2}
+      - {x: 32, y: 5}
+      - {x: 32, y: 15}
+      - {x: 29, y: 22}
+    - - {x: 54, y: 24}
+      - {x: 48, y: 16}
+      - {x: 48, y: 6}
+      - {x: 50, y: 2}
+      - {x: 60, y: 2}
+      - {x: 64, y: 7}
+      - {x: 64, y: 20}
+      - {x: 59, y: 24}
+    - - {x: 73, y: 24}
+      - {x: 68, y: 24}
+      - {x: 64, y: 16}
+      - {x: 64, y: 4}
+      - {x: 67, y: 3}
+      - {x: 69, y: 2}
+      - {x: 76, y: 2}
+      - {x: 80, y: 6}
+      - {x: 80, y: 12}
+      - {x: 77, y: 21}
+    - - {x: 108, y: 20}
+      - {x: 101, y: 20}
+      - {x: 96, y: 14}
+      - {x: 96, y: 7}
+      - {x: 99, y: 2}
+      - {x: 107, y: 2}
+      - {x: 112, y: 4}
+      - {x: 112, y: 10}
+      - {x: 110, y: 19}
+    - - {x: 116, y: 20}
+      - {x: 112, y: 13}
+      - {x: 112, y: 4}
+      - {x: 118, y: 2}
+      - {x: 128, y: 2}
+      - {x: 128, y: 15}
+      - {x: 127, y: 20}
+    - - {x: -137, y: 18}
+      - {x: -142, y: 17}
+      - {x: -142, y: 6}
+      - {x: -133, y: 6}
+      - {x: -130, y: 10}
+      - {x: -130, y: 15}
+      - {x: -132, y: 17}
+    - - {x: -46, y: 6}
+      - {x: -34, y: 6}
+      - {x: -34, y: 18}
+      - {x: -43, y: 18}
+      - {x: -46, y: 14}
+    - - {x: 39, y: 17}
+      - {x: 35, y: 15}
+      - {x: 35, y: 10}
+      - {x: 39, y: 6}
+      - {x: 42, y: 6}
+      - {x: 46, y: 8}
+      - {x: 46, y: 14}
+      - {x: 45, y: 17}
+    - - {x: -129, y: 45}
+      - {x: -130, y: 45}
+      - {x: -144, y: 33}
+      - {x: -144, y: 27}
+      - {x: -141, y: 27}
+      - {x: -130, y: 36}
+      - {x: -127, y: 42}
+      - {x: -127, y: 44}
+    - - {x: -97, y: 42}
+      - {x: -87, y: 31}
+      - {x: -82, y: 27}
+      - {x: -79, y: 28}
+      - {x: -79, y: 30}
+      - {x: -82, y: 37}
+      - {x: -93, y: 45}
+      - {x: -96, y: 45}
+    - - {x: -1, y: 45}
+      - {x: -1, y: 27}
+      - {x: 17, y: 27}
+      - {x: 17, y: 44}
+      - {x: 12, y: 45}
+    - - {x: 48, y: 27}
+      - {x: 52, y: 27}
+      - {x: 66, y: 42}
+      - {x: 65, y: 45}
+      - {x: 59, y: 45}
+      - {x: 48, y: 38}
+    - - {x: 64, y: 32}
+      - {x: 64, y: 28}
+      - {x: 66, y: 27}
+      - {x: 69, y: 28}
+      - {x: 71, y: 35}
+      - {x: 68, y: 37}
+      - {x: 65, y: 35}
+    - - {x: 82, y: 27}
+      - {x: 85, y: 28}
+      - {x: 85, y: 31}
+      - {x: 82, y: 32}
+      - {x: 80, y: 30}
+    - - {x: 96, y: 31}
+      - {x: 97, y: 28}
+      - {x: 110, y: 28}
+      - {x: 112, y: 29}
+      - {x: 112, y: 38}
+      - {x: 109, y: 43}
+      - {x: 106, y: 44}
+      - {x: 100, y: 44}
+      - {x: 96, y: 40}
+    - - {x: 112, y: 31}
+      - {x: 114, y: 28}
+      - {x: 126, y: 28}
+      - {x: 126, y: 36}
+      - {x: 123, y: 42}
+      - {x: 113, y: 42}
+      - {x: 112, y: 39}
+    - - {x: -47, y: 43}
+      - {x: -47, y: 30}
+      - {x: -45, y: 29}
+      - {x: -33, y: 29}
+      - {x: -33, y: 43}
+    - - {x: 140, y: 37}
+      - {x: 137, y: 37}
+      - {x: 134, y: 32}
+      - {x: 134, y: 30}
+      - {x: 136, y: 29}
+      - {x: 139, y: 29}
+      - {x: 142, y: 32}
+      - {x: 142, y: 36}
+    - - {x: -125, y: 33}
+      - {x: -124, y: 31}
+      - {x: -122, y: 31}
+      - {x: -116, y: 34}
+      - {x: -115, y: 39}
+      - {x: -118, y: 41}
+      - {x: -123, y: 38}
+    - - {x: -74, y: 31}
+      - {x: -67, y: 31}
+      - {x: -67, y: 36}
+      - {x: -69, y: 40}
+      - {x: -75, y: 41}
+      - {x: -77, y: 38}
+    - - {x: 22, y: 41}
+      - {x: 20, y: 41}
+      - {x: 19, y: 38}
+      - {x: 19, y: 37}
+      - {x: 22, y: 32}
+      - {x: 26, y: 31}
+      - {x: 29, y: 32}
+      - {x: 29, y: 38}
+      - {x: 26, y: 40}
+    - - {x: -27, y: 40}
+      - {x: -28, y: 38}
+      - {x: -28, y: 33}
+      - {x: -26, y: 32}
+      - {x: -21, y: 32}
+      - {x: -20, y: 34}
+      - {x: -20, y: 39}
+      - {x: -22, y: 40}
+    - - {x: -105, y: 39}
+      - {x: -107, y: 37}
+      - {x: -107, y: 35}
+      - {x: -105, y: 33}
+      - {x: -103, y: 33}
+      - {x: -101, y: 35}
+      - {x: -101, y: 37}
+      - {x: -103, y: 39}
+    - - {x: -57, y: 39}
+      - {x: -59, y: 37}
+      - {x: -59, y: 35}
+      - {x: -57, y: 33}
+      - {x: -55, y: 33}
+      - {x: -53, y: 35}
+      - {x: -53, y: 37}
+      - {x: -55, y: 39}
+    - - {x: -10, y: 39}
+      - {x: -11, y: 37}
+      - {x: -11, y: 34}
+      - {x: -9, y: 33}
+      - {x: -6, y: 33}
+      - {x: -5, y: 34}
+      - {x: -5, y: 39}
+    - - {x: 38, y: 39}
+      - {x: 37, y: 37}
+      - {x: 37, y: 34}
+      - {x: 39, y: 33}
+      - {x: 42, y: 33}
+      - {x: 43, y: 34}
+      - {x: 43, y: 39}
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
