@@ -24,7 +24,7 @@ MonoBehaviour:
   floorSprite: {fileID: 21300578, guid: 17a0df5158812d74b9ad4ff84aba3b7e, type: 3}
   wallSprite: {fileID: 21300504, guid: 17a0df5158812d74b9ad4ff84aba3b7e, type: 3}
   innerWallSprite: {fileID: 21300466, guid: 17a0df5158812d74b9ad4ff84aba3b7e, type: 3}
-  teleporterSprite: {fileID: 21300320, guid: 17a0df5158812d74b9ad4ff84aba3b7e, type: 3}
+  teleporterSprite: {fileID: 21300042, guid: 1828887d203ca5f458b8ff95dd325e0e, type: 3}
   waterSprite: {fileID: 21300562, guid: 17a0df5158812d74b9ad4ff84aba3b7e, type: 3}
   runEdgeSmoothing: 0
   allowDisconnectedCaves: 1
