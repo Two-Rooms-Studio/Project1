@@ -14,7 +14,7 @@ MonoBehaviour:
   armor: 0
   weapon: 1
   consumable: 0
-  itemSprite: {fileID: 21300140, guid: 17a0df5158812d74b9ad4ff84aba3b7e, type: 3}
+  itemSprite: {fileID: 21300000, guid: c6c55efaca608dd4984aaa63a111afb5, type: 3}
   itemColor: {r: 0.7490196, g: 0.7137255, b: 0.6509804, a: 1}
   guiSprite: {fileID: 0}
   guiColor: {r: 0, g: 0, b: 0, a: 0}
