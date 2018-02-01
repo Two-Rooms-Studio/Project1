@@ -114,7 +114,7 @@ public class Board : ScriptableObject{
 			list.Add(grid[tile.GetX()][tile.GetY()+1]);
 			grid[tile.GetX()][tile.GetY()+1].SetIsMarked(true);
 		}
-		if ((tile.GetY() - 1) > 0 && !grid[tile.GetX()][tile.GetY()-1].IsMarked()) {
+		if ((tile.GetY() - 1) >= 0 && !grid[tile.GetX()][tile.GetY()-1].IsMarked()) {
 			list.Add(grid[tile.GetX()][tile.GetY()-1]);
 			grid[tile.GetX()][tile.GetY()-1].SetIsMarked(true);
 		}
@@ -122,7 +122,7 @@ public class Board : ScriptableObject{
 			list.Add(grid[tile.GetX()+1][tile.GetY()]);
 			grid[tile.GetX()+1][tile.GetY()].SetIsMarked(true);
 		}
-		if ((tile.GetX() - 1) > 0 && !grid[tile.GetX()-1][tile.GetY()].IsMarked()) {
+		if ((tile.GetX() - 1) >= 0 && !grid[tile.GetX()-1][tile.GetY()].IsMarked()) {
 			list.Add(grid[tile.GetX()-1][tile.GetY()]);
 			grid[tile.GetX()-1][tile.GetY()].SetIsMarked(true);
 		}
@@ -154,19 +154,19 @@ public class Board : ScriptableObject{
 		//FloodFill helper function, returns a list containing the neighbours
 		//of a tile that should be included in the flood fill
 		grid[tile.GetX()][tile.GetY()].SetIsMarked(true);
-		if((tile.GetY() + 1) < rows && !grid[tile.GetX()][tile.GetY()+1].IsWall() && !grid[tile.GetX()][tile.GetY()+1].IsMarked()){
+		if((tile.GetY() + 1) < rows && grid[tile.GetX()][tile.GetY()+1].OpenForPlacement() && !grid[tile.GetX()][tile.GetY()+1].IsMarked()){
 			list.Add(grid[tile.GetX()][tile.GetY()+1]);
 			grid[tile.GetX()][tile.GetY()+1].SetIsMarked(true);
 		}
-		if ((tile.GetY() - 1) > 0 && !grid[tile.GetX()][tile.GetY()-1].IsWall() && !grid[tile.GetX()][tile.GetY()-1].IsMarked()) {
+		if ((tile.GetY() - 1) >= 0 && grid[tile.GetX()][tile.GetY()-1].OpenForPlacement() && !grid[tile.GetX()][tile.GetY()-1].IsMarked()) {
 			list.Add(grid[tile.GetX()][tile.GetY()-1]);
 			grid[tile.GetX()][tile.GetY()-1].SetIsMarked(true);
 		}
-		if ((tile.GetX() + 1) < cols && !grid[tile.GetX()+1][tile.GetY()].IsWall() && !grid[tile.GetX()+1][tile.GetY()].IsMarked()) {
+		if ((tile.GetX() + 1) < cols && grid[tile.GetX()+1][tile.GetY()].OpenForPlacement() && !grid[tile.GetX()+1][tile.GetY()].IsMarked()) {
 			list.Add(grid[tile.GetX()+1][tile.GetY()]);
 			grid[tile.GetX()+1][tile.GetY()].SetIsMarked(true);
 		}
-		if ((tile.GetX() - 1) > 0 && !grid[tile.GetX()-1][tile.GetY()].IsWall() && !grid[tile.GetX()-1][tile.GetY()].IsMarked()) {
+		if ((tile.GetX() - 1) >= 0 && grid[tile.GetX()-1][tile.GetY()].OpenForPlacement() && !grid[tile.GetX()-1][tile.GetY()].IsMarked()) {
 			list.Add(grid[tile.GetX()-1][tile.GetY()]);
 			grid[tile.GetX()-1][tile.GetY()].SetIsMarked(true);
 		}
@@ -426,7 +426,7 @@ public class Board : ScriptableObject{
 		//for floodfill correction of blocked off rooms
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				if (!grid[x][y].IsMarked() && !grid[x][y].IsWall()) {
+				if (!grid[x][y].IsMarked() && grid[x][y].OpenForPlacement()) {
 					return true;
 				}
 			}

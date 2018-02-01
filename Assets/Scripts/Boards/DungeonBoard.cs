@@ -151,6 +151,7 @@ public class DungeonBoard : Board {
 		RemoveBlockedOpenTiles();
 		FixEdges(wallSprite);
 		RemoveFloatingWalls();
+		GenerateLiquid();
 		if (allowDisconnectedCaves) {
 			ConnectDisconnectedCaves();
 			if (runEdgeSmoothing) {
@@ -164,7 +165,6 @@ public class DungeonBoard : Board {
 			}
 		}
 		SetDestroyed();
-		GenerateLiquid();
 		ChangeInnerWallSprites();
 	}
 
@@ -185,6 +185,7 @@ public class DungeonBoard : Board {
 				RemoveBlockedOpenTiles();
 				FixEdges(wallSprite);
 				RemoveFloatingWalls();
+				GenerateLiquid();
 				RemoveDisconnectedCaves();
 				CheckForMinimumMapSize();
 				return;
@@ -201,6 +202,7 @@ public class DungeonBoard : Board {
 				RemoveBlockedOpenTiles();
 				FixEdges(wallSprite);
 				RemoveFloatingWalls();
+				GenerateLiquid();
 				RemoveDisconnectedCaves();
 				return;
 			}
@@ -434,49 +436,56 @@ public class DungeonBoard : Board {
 	private void BreakWallsRandomlyAroundWater(ref List<List<GameTile>> waterTilesSeperatedByAreas)
 	{
 		//grab the valid walls around our water areas (walls that are touching floor tiles) and break them (turn them into water tiles)
-		int divisor = 3; // What fraction of walls should we ensured are punched out around the water? if divisor = 3 then 1/3 (rounded down) of all walls around a water area will be removed
-		float chanceForOtherWallBreaks = 0.35f; // after the ensured walls every other wall has this chance of breaking, for example if set to .45f every other wall would have a 45% chance of breaking
-		float chanceForWaterExpansion = 0.35f; // the chance for water to "expand" outwards for the edge of a pool of water
+		int divisor = 4; // What fraction of walls should we ensured are punched out around the water? if divisor = 3 then 1/3 (rounded down) of all walls around a water area will be removed
+		float chanceForOtherWallBreaks = 0.10f; // after the ensured walls every other wall has this chance of breaking, for example if set to .45f every other wall would have a 45% chance of breaking
+		float chanceForWaterExpansion = 0.75f; // the chance for water to "expand" outwards for the edge of a pool of water
 		UnMarkAllTiles();
 		List<List<GameTile>> wallsAroundWaterTilesSeperatedByAreas = GetWallsSurroundingWaterAreas(ref waterTilesSeperatedByAreas);
+		List<GameTile> waterEdgeTiles = new List<GameTile>();
+
 		for (int i = 0; i < wallsAroundWaterTilesSeperatedByAreas.Count; i++) {
 			int ensuredWallBreaks = wallsAroundWaterTilesSeperatedByAreas[i].Count / divisor;
 			ensuredWallBreaks = (ensuredWallBreaks <= 0) ? 1 : ensuredWallBreaks; //atleast always destory one wall around a water area
 			//walk down all of the walls for a given area, selecting a wall at random and breaking it, repeat a number of times equal to our ensuredWallBreaks
 			for (int c = 0; c < ensuredWallBreaks; c++) {
 				int randomWall = (int)(Random.Range(0.0f, (float)wallsAroundWaterTilesSeperatedByAreas[i].Count - 1));
-				BreakWall(wallsAroundWaterTilesSeperatedByAreas[i][randomWall]);
+				BreakWall(wallsAroundWaterTilesSeperatedByAreas[i][randomWall], ref waterEdgeTiles);
 				if (CheckForIsolatedWaterTile(wallsAroundWaterTilesSeperatedByAreas[i][randomWall])) {
-					FindAndBreakDividerWall(wallsAroundWaterTilesSeperatedByAreas[i][randomWall]);
+					GameTile tile = FindDividerWall(wallsAroundWaterTilesSeperatedByAreas[i][randomWall]);
+					BreakWall(tile, ref waterEdgeTiles);
+					wallsAroundWaterTilesSeperatedByAreas[i].Remove(grid[tile.GetX()][tile.GetY()]);
 				}
 				wallsAroundWaterTilesSeperatedByAreas[i].RemoveAt(randomWall);
 			}
 			int originalSize = wallsAroundWaterTilesSeperatedByAreas[i].Count;
 			//walk down all of the walls for a given area, attempting to break each wall, the attempt success rate is based off of our chanceForOtherWallBreaks value
 			for (int c = 0; c < originalSize; c++) {
-				float breakWallCheck = Random.Range(0.0f, 100.0f);
+				float breakWallCheck = Random.Range(0.0f, 1.0f);
 				if ((breakWallCheck <= chanceForOtherWallBreaks) && (wallsAroundWaterTilesSeperatedByAreas[i].Count > 0)) {
 					int randomWall = (int)(Random.Range(0.0f, (float)wallsAroundWaterTilesSeperatedByAreas[i].Count - 1));
-					BreakWall(wallsAroundWaterTilesSeperatedByAreas[i][randomWall]);
+					BreakWall(wallsAroundWaterTilesSeperatedByAreas[i][randomWall], ref waterEdgeTiles);
 					if (CheckForIsolatedWaterTile(wallsAroundWaterTilesSeperatedByAreas[i][randomWall])) {
-						FindAndBreakDividerWall(wallsAroundWaterTilesSeperatedByAreas[i][randomWall]);
+						GameTile tile = FindDividerWall(wallsAroundWaterTilesSeperatedByAreas[i][randomWall]);
+						BreakWall(tile, ref waterEdgeTiles);
+						wallsAroundWaterTilesSeperatedByAreas[i].Remove(grid[tile.GetX()][tile.GetY()]);
 					}
 					wallsAroundWaterTilesSeperatedByAreas[i].RemoveAt(randomWall);
 				}
 			}
 		}
+		for (int i = 0; i < waterEdgeTiles.Count; i++) {
+			//walk down the edges of all the water areas and attempt to allow the water to expand outward, the attempt sucess rate is based off of our chanceForWaterExpansion value
+			float ExpandWaterCheck = Random.Range(0.0f, 1.0f);
+			if (ExpandWaterCheck <= chanceForWaterExpansion) {
+				List<GameTile> floorTiles = GetFloorTilesAroundTile(waterEdgeTiles[i]);
+				if (floorTiles.Count != 0) {
+					for (int j = 0; j < floorTiles.Count; j++) {
+						AttemptWaterExpansion(floorTiles[j]);
+					}
+				}
+			}
+		}
 		UnMarkAllTiles();
-//		//walk down all of the water tiles for a given area, attempting to cause the water to expand outward, the attempt sucess rate is based off of our chanceForWaterExpansion value
-//		for(int i = 0; i < waterTilesSeperatedByAreas.Count; i++) {
-//			int originalSize = waterTilesSeperatedByAreas[i].Count;
-//			for (int j = 0; j < originalSize; j++) {
-//				float ExpandWaterCheck = Random.Range(0.0f, 100.0f);
-//				if ((ExpandWaterCheck <= chanceForWaterExpansion) && (waterTilesSeperatedByAreas[i].Count > 0)) {
-//					AttemptToExpandWater(waterTilesSeperatedByAreas[i][j], ref waterTilesSeperatedByAreas);
-//				}
-//			}
-//		}
-//		UnMarkAllTiles();
 	}
 
 	private List<List<GameTile>> GetWallsSurroundingWaterAreas(ref List<List<GameTile>> waterTilesSeperatedByAreas)
@@ -554,7 +563,7 @@ public class DungeonBoard : Board {
 		return validWallsList;
 	}
 
-	private void BreakWall(GameTile wall)
+	private void BreakWall(GameTile wall, ref List<GameTile> waterEdgeTiles)
 	{
 		//sets the wall sprite to water and apply data changes
 		grid[wall.GetX()][wall.GetY()].SetIsDestroyed(false);
@@ -562,6 +571,7 @@ public class DungeonBoard : Board {
 		grid[wall.GetX()][wall.GetY()].SetIsWalkAble(false);
 		grid[wall.GetX()][wall.GetY()].SetIsOccupied(true);
 		grid[wall.GetX()][wall.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite = waterSprite;
+		waterEdgeTiles.Add(grid[wall.GetX()][wall.GetY()]);
 		//todo:Add color settings
 	}
 
@@ -577,7 +587,7 @@ public class DungeonBoard : Board {
 		return false;
 	}
 
-	private void FindAndBreakDividerWall(GameTile tile)
+	private GameTile FindDividerWall(GameTile tile)
 	{
 		bool WallRight = (((tile.GetY() + 1) < rows) && (grid[tile.GetX()][tile.GetY() + 1].IsWall())) ? true : false;
 		bool WallLeft = (((tile.GetY() - 1) >= 0) && (grid[tile.GetX()][tile.GetY() - 1].IsWall())) ? true : false;
@@ -590,8 +600,7 @@ public class DungeonBoard : Board {
 			bool WaterNorth = (((tile.GetX() + 1) < cols) && (grid[tile.GetX() + 1][tile.GetY()].GetObject() != null) && (grid[tile.GetX() + 1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
 			bool WaterSouth = (((tile.GetX() - 1) >= 0) && (grid[tile.GetX() - 1][tile.GetY()].GetObject() != null) && (grid[tile.GetX() - 1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
 			if (WaterRight || WaterNorth || WaterSouth) {
-				BreakWall(tile);
-				return;
+				return tile;
 			}
 		}
 		if (WallLeft) {
@@ -601,8 +610,7 @@ public class DungeonBoard : Board {
 			bool WaterNorth = (((tile.GetX() + 1) < cols) && (grid[tile.GetX() + 1][tile.GetY()].GetObject() != null) && (grid[tile.GetX() + 1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
 			bool WaterSouth = (((tile.GetX() - 1) >= 0) && (grid[tile.GetX() - 1][tile.GetY()].GetObject() != null) && (grid[tile.GetX() - 1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
 			if (WaterLeft || WaterNorth || WaterSouth) {
-				BreakWall(tile);
-				return;
+				return tile;
 			}
 		}
 		if (WallNorth) {
@@ -612,8 +620,7 @@ public class DungeonBoard : Board {
 			bool WaterLeft = (((tile.GetY() - 1) >= 0) && (grid[tile.GetX()][tile.GetY() - 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() - 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
 			bool WaterNorth = (((tile.GetX() + 1) < cols) && (grid[tile.GetX() + 1][tile.GetY()].GetObject() != null) && (grid[tile.GetX() + 1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
 			if (WaterLeft || WaterNorth || WaterRight) {
-				BreakWall(tile);
-				return;
+				return tile;
 			}
 		}
 		if (WallSouth) {
@@ -623,12 +630,66 @@ public class DungeonBoard : Board {
 			bool WaterLeft = (((tile.GetY() - 1) >= 0) && (grid[tile.GetX()][tile.GetY() - 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() - 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
 			bool WaterSouth = (((tile.GetX() - 1) >= 0) && (grid[tile.GetX()-1][tile.GetY()].GetObject() != null) && (grid[tile.GetX()-1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
 			if (WaterLeft || WaterSouth || WaterRight) {
-				BreakWall(tile);
-				return;
+				return tile;
 			}
 		}
 		Debug.Log("Couldn't find divider wall for water generation error!!");
 		Debug.Log("Tile is: " + tile.GetX() + ", " + tile.GetY());
-		return;
+		return tile;
+	}
+
+	private List<GameTile> GetFloorTilesAroundTile(GameTile tile)
+	{
+		//water expansion helper function get the floor tiles around a tile in the cardinal directions
+		bool FloorRight = (((tile.GetY() + 1) < rows) && (grid[tile.GetX()][tile.GetY() + 1].OpenForPlacement())) ? true : false;
+		bool FloorLeft = (((tile.GetY() - 1) >= 0) && (grid[tile.GetX()][tile.GetY() - 1].OpenForPlacement())) ? true : false;
+		bool FloorNorth = (((tile.GetX() + 1) < cols) && (grid[tile.GetX()+1][tile.GetY()].OpenForPlacement())) ? true : false;
+		bool FloorSouth = (((tile.GetX() - 1) >= 0) && (grid[tile.GetX()-1][tile.GetY()].OpenForPlacement())) ? true : false;
+		List<GameTile> floorNeighbours = new List<GameTile>();
+		if (FloorRight) {
+			floorNeighbours.Add(grid[tile.GetX()][tile.GetY() + 1]);
+		}
+		if (FloorLeft) {
+			floorNeighbours.Add(grid[tile.GetX()][tile.GetY() - 1]);
+		}
+		if (FloorNorth) {
+			floorNeighbours.Add(grid[tile.GetX() + 1][tile.GetY()]);
+		}
+		if (FloorSouth) {
+			floorNeighbours.Add(grid[tile.GetX() - 1][tile.GetY()]);
+		}
+		return floorNeighbours;
+	}
+
+	private void AttemptWaterExpansion(GameTile floorTile)
+	{
+		int count = countWaterNeighbours(floorTile);
+		if (count != 1) 
+			return;
+		grid[floorTile.GetX()][floorTile.GetY()].SetIsDestroyed(false);
+		grid[floorTile.GetX()][floorTile.GetY()].SetIsWall(false);
+		grid[floorTile.GetX()][floorTile.GetY()].SetIsWalkAble(false);
+		grid[floorTile.GetX()][floorTile.GetY()].SetIsOccupied(true);
+		grid[floorTile.GetX()][floorTile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite = waterSprite;
+		
+	}
+
+	private int countWaterNeighbours(GameTile tile)
+	{
+		//atempt water expansion helper count water tiles in cardinal directions
+		int count = 0;
+		bool WaterRight = (((tile.GetY() + 1) < rows) && (grid[tile.GetX()][tile.GetY() + 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() + 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
+		bool WaterLeft = (((tile.GetY() - 1) >= 0) && (grid[tile.GetX()][tile.GetY() - 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() - 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
+		bool WaterNorth = (((tile.GetX() + 1) < cols) && (grid[tile.GetX()+1][tile.GetY()].GetObject() != null) && (grid[tile.GetX()+1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
+		bool WaterSouth = (((tile.GetX() - 1) >= 0) && (grid[tile.GetX()-1][tile.GetY()].GetObject() != null) && (grid[tile.GetX()-1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
+		if (WaterRight)
+			count++;
+		if (WaterLeft)
+			count++;
+		if (WaterNorth)
+			count++;
+		if (WaterSouth)
+			count++;
+		return count;
 	}
 }
