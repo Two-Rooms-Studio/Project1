@@ -6,22 +6,26 @@ public class Board : ScriptableObject{
 	protected int rows = 5;
 	protected int cols = 5;
 	protected List<List<GameTile>> grid = new List<List<GameTile>>(); //data structure for our entire map
-	private List<GameTile> Edges = new List<GameTile>(); //map edges used for player vision logic
+	protected List<GameTile> Edges = new List<GameTile>(); //map edges used for player vision logic
 	protected float xPadding = 0.16f; //spacing we need to place between each tile in the grid
 	protected float yPadding = 0.24f; //this SHOULD be consistent throughout all boards....
 	protected GameObject tileObject;
-	protected Sprite wallSprite;
-	protected Sprite floorSprite;
 	protected string gridContainerName; //all tiles created by the board will be placed inside a gameobject container that has this name
 	protected GameTile playerSpawnPoint;
 
 	//public
-	public void init(int p_rows, int p_cols, GameObject p_tileObject)
+	public void init(int p_rows, int p_cols, GameObject p_tileObject, string p_gridContainerName)
 	{
 		//set up consistent gameboard parameters
 		rows = p_rows;
 		cols = p_cols;
 		tileObject = p_tileObject;
+		gridContainerName = p_gridContainerName;
+	}
+
+	public GameObject GetTileObject()
+	{
+		return tileObject;
 	}
 
 	public GameTile GetGridTile(int x, int y)
@@ -93,6 +97,18 @@ public class Board : ScriptableObject{
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
 				grid[x][y].SetIsVisible(false);
+			}
+		}
+	}
+
+	public void SetDestroyed()
+	{
+		//Iterate through the grid, if an grid tile does not have an object in unity then update it to be a Destroyed tile
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (grid[x][y].GetObject() == null) {
+					grid[x][y].SetIsDestroyed(true);
+				}
 			}
 		}
 	}
@@ -386,7 +402,7 @@ public class Board : ScriptableObject{
 		return count;
 	}
 
-	protected int FloodFillDestroyedTiles(ref GameTile tile, ref List<List<GameTile>> FloodFilledAreas, ref bool containsMapEdge)
+	public int FloodFillDestroyedTiles(ref GameTile tile, ref List<List<GameTile>> FloodFilledAreas, ref bool containsMapEdge)
 	{
 		//starting from the provided tile, mark all connected tiles (meaning stop at walls)
 		//this essentially produces a cut out of a room that is reachable, i.e. no walls blocking off certian parts

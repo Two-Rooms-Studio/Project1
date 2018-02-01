@@ -3,23 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DungeonBoard : Board {
-	//setup vars
 	private int minNumberOfRows = 4;
 	private int minNumberOfCols = 4;
-	private float chanceToStartAlive = 0.4f;
-	private int deathLimit = 3;
-	private int birthLimit = 4;
-	private int numberOfSimulations = 5;
 	private int numberOfMapsGenerated = 0; //keep track of how many times we try to generate a map with minimumPercentageOfOpenTiles
-	private int maxMapsToGenerate = 5; // if we can't generate a map with minimumPercentageOfOpenTiles before reaching this number, then just generate a any map
-	private float minimumPercentageOfOpenTiles = 0.1f;
-	private Sprite innerWallSprite;
-	private Sprite teleporterSprite;
-	private Sprite waterSprite;
-	private bool runEdgeSmoothing = false;
-	private bool allowDisconnectedCaves = true;
-
-	//other
+	private int maxMapsToGenerate = 15; // if we can't generate a map with minimumPercentageOfOpenTiles before reaching this number, then just generate a any map
+	DungeonBoardSettings mapSettings;
 	private Transform container;
 
 	//public
@@ -29,35 +17,52 @@ public class DungeonBoard : Board {
 		Settings.rows = (Settings.rows < minNumberOfRows) ? minNumberOfRows : Settings.rows;
 		Settings.cols = (Settings.cols < minNumberOfCols) ? minNumberOfCols : Settings.cols;
 		Settings.minimumPercentageOfOpenTiles = (Settings.rows == minNumberOfRows && Settings.cols == minNumberOfCols) ? 0.25f : Settings.minimumPercentageOfOpenTiles;
-
-		//TODO:Just make Settings a part of the DungeonBoard and then hand off what is needed from the settings object instead of doing all this setup
-		//Configure based off of setting values
-		base.init(Settings.rows, Settings.cols, Settings.tileObject);
-		chanceToStartAlive = Settings.chanceToStartAlive;
-		minimumPercentageOfOpenTiles = Settings.minimumPercentageOfOpenTiles;
-		deathLimit = Settings.deathLimit;
-		birthLimit = Settings.birthLimit;
-		numberOfSimulations = Settings.numberOfSimulations;
-		innerWallSprite = Settings.innerWallSprite;
-		wallSprite = Settings.wallSprite;
-		floorSprite = Settings.floorSprite;
-		waterSprite = Settings.waterSprite;
-		teleporterSprite = Settings.teleporterSprite;
-		runEdgeSmoothing = Settings.runEdgeSmoothing;
-		allowDisconnectedCaves = Settings.allowDisconnectedCaves;
-		xPadding = Settings.xPadding;
-		yPadding = Settings.yPadding;
 		//
-		gridContainerName = "DungeonGrid";
-		initMap();
-		if (!EnsureSpawnPointAndExitCanExist()) {
+
+		//basic board info setup
+		base.init(Settings.rows, Settings.cols, Settings.tileObject, "DungeonGrid");
+		mapSettings = Settings;
+		//
+
+		//map generation
+		initMap(); //create the static grid that we use to play the game of life on
+		MapSimulation(); //play the game of life on the grid a number of times equal to mapSettings.numberOfSimulations
+		//
+
+		//map cleanup
+		if (!EnsureSpawnPointAndExitCanExist()) { //ensure that we can create a spawn and exit, if not restart map generation
 			RespawnMap();
 		}
-		MapCleanUp();
+		RemoveBlockedOpenTiles(); // if any floor tiles are completely blocked in, remove them from the game
+		FixEdges(mapSettings.wallSprite); //if any floor tiles are touching the edge of the gird change them to walls
+		RemoveFloatingWalls(); //remove any walls that are just freefloating next to destoryed tiles
+		//
+
+		//water generation
+		DungeonBoardWaterGeneration waterGeneration = ScriptableObject.CreateInstance<DungeonBoardWaterGeneration>();
+		waterGeneration.GenerateLiquid(this, ref container, mapSettings.waterSprite);
+		//
+
+		//fix caves
+		if (mapSettings.allowDisconnectedCaves) {
+			ConnectDisconnectedCaves();
+		} else {
+			RemoveDisconnectedCaves();
+			CheckForMinimumMapSize();
+		}
+		if (mapSettings.runEdgeSmoothing) {
+			SmoothMapEdges ();
+		}
+		SetDestroyed();
+		ChangeInnerWallSprites();
+		//
+
+		//Final data setup
 		SetAllOriginalSpritesAndColors();
 		SpawnPlayerAndExitPoint();
 		SetUpEdges(); //setup all tiles with edge information
 		CalculateTileNeighbours(); //setup all tiles with neighbour information
+		//
 	}
 
 	//privates
@@ -70,20 +75,20 @@ public class DungeonBoard : Board {
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
 				float randNum = Random.Range(.0f, 1.0f);
-				GameTile tile = new GameTile(x, y, floorSprite);
+				GameTile tile = new GameTile(x, y, mapSettings.floorSprite);
 				GameObject instance = Instantiate (tileObject, new Vector3 (xSpace, ySpace, 0.0f), Quaternion.identity, container);
 				tile.SetUnityPosition(xSpace, ySpace);
 				instance.name = "(" + x + "," + y + ")";
 				ySpace += yPadding;
-				instance.GetComponent<SpriteRenderer>().sprite = floorSprite;
+				instance.GetComponent<SpriteRenderer>().sprite = mapSettings.floorSprite;
 				if (x == 0 || x == cols - 1 || y == 0 || y == rows - 1) {
 					tile.SetIsMapEdge(true);
 				}
-				if (randNum < chanceToStartAlive) {
+				if (randNum < mapSettings.chanceToStartAlive) {
 					//set the tile to be a wall tile since it passed random test
 					//at this point its pointless to destroy and reinstantiate a wall object but in the future we may have to do that
 					tile.SetIsWall(true);
-					instance.GetComponent<SpriteRenderer>().sprite = wallSprite;
+					instance.GetComponent<SpriteRenderer>().sprite = mapSettings.wallSprite;
 				}
 				tile.SetObject(instance);
 				row.Add(tile);
@@ -93,13 +98,12 @@ public class DungeonBoard : Board {
 			ySpace = 0.0f;
 			xSpace += xPadding;
 		}
-		MapSimulation();
 		return;
 	}
 
 	private void MapSimulation()
 	{
-		for (int i = 0; i < numberOfSimulations; i++) {
+		for (int i = 0; i < mapSettings.numberOfSimulations; i++) {
 			SimulationStep();
 		}
 	}
@@ -112,21 +116,15 @@ public class DungeonBoard : Board {
 			for (int y = 0; y < rows; y++) {
 				int wallsAroundPoint = countWalls (x, y, oldmap);
 				if (oldmap[x][y].IsWall()) {
-					if (wallsAroundPoint < deathLimit) {
+					if (wallsAroundPoint < mapSettings.deathLimit) {
 						grid[x][y].SetIsWall(false);
-						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = floorSprite;
-					} else {
-						grid[x][y].SetIsWall(true);
-						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = wallSprite;
-					}
+						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = mapSettings.floorSprite;
+					} 
 				} else {
-					if (wallsAroundPoint > birthLimit) {
+					if (wallsAroundPoint > mapSettings.birthLimit) {
 						grid[x][y].SetIsWall(true);
-						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = wallSprite;
-					} else {
-						grid[x][y].SetIsWall(false);
-						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = floorSprite;
-					}
+						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = mapSettings.wallSprite;
+					} 
 				}
 			}
 		}
@@ -137,90 +135,23 @@ public class DungeonBoard : Board {
 	{
 		//Constantly rerolls the map until a valid map is generated
 		DeleteEntireMap();
-		initMap();
+		init(mapSettings);
 		if(!EnsureSpawnPointAndExitCanExist())
 		{
 			RespawnMap();
 		}
 	}
 
-//Map Cleanup functions
-	private void MapCleanUp()
+	private void DeleteEntireMap()
 	{
-		//Cleanup various factors left over after generation
-		RemoveBlockedOpenTiles();
-		FixEdges(wallSprite);
-		RemoveFloatingWalls();
-		GenerateLiquid();
-		if (allowDisconnectedCaves) {
-			ConnectDisconnectedCaves();
-			if (runEdgeSmoothing) {
-				SmoothMapEdges ();
-			}
-		} else {
-			RemoveDisconnectedCaves();
-			CheckForMinimumMapSize();
-			if (runEdgeSmoothing) {
-				SmoothMapEdges ();
-			}
-		}
-		SetDestroyed();
-		ChangeInnerWallSprites();
-	}
-
-	private void CheckForMinimumMapSize()
-	{
-		float percentageOfOpenTiles = CalculatePlayingArea();
-		if (percentageOfOpenTiles < minimumPercentageOfOpenTiles) {
-			if (numberOfMapsGenerated < maxMapsToGenerate) {
-				numberOfMapsGenerated++;
-				// if this reaches MaxMapsToGenerate then we have tried to generate too many maps with the minimumPercentageOfOpenTiles,
-				//at this point to prevent a crash we need to ignore minimumPercentageOfOpenTiles
-				DeleteEntireMap();
-				initMap();
-				if (!EnsureSpawnPointAndExitCanExist()) {
-					RespawnMap();
-				}
-				//rerun the already called MapCleanUp functions
-				RemoveBlockedOpenTiles();
-				FixEdges(wallSprite);
-				RemoveFloatingWalls();
-				GenerateLiquid();
-				RemoveDisconnectedCaves();
-				CheckForMinimumMapSize();
-				return;
-			} else {
-				Debug.Log("Map generation failed too many times based off of minimum percentage of open tiles allowed, therefore a map was generated without a minimum number of open tiles, consider the settings your using!");
-				minimumPercentageOfOpenTiles = 0.0f;
-				numberOfMapsGenerated = 0;
-				DeleteEntireMap();
-				initMap();
-				if (!EnsureSpawnPointAndExitCanExist()) {
-					RespawnMap();
-				}
-				//rerun the already called MapCleanUp functions
-				RemoveBlockedOpenTiles();
-				FixEdges(wallSprite);
-				RemoveFloatingWalls();
-				GenerateLiquid();
-				RemoveDisconnectedCaves();
-				return;
-			}
-		}
-	}
-
-	private void ChangeInnerWallSprites()
-	{
-		//changes walls the player can not see the outside of too a different sprite
+		//Deletes the entire map in order to generate a new one
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				if((y-1) >= 0 && grid[x][y].IsWall()) {
-					if ((!grid[x][y-1].IsDestroyed() && grid[x][y-1].IsWall())) {
-						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = innerWallSprite;
-					}
-				}
+				Destroy(grid[x][y].GetObject());
 			}
 		}
+		grid.Clear();
+		Destroy(container.gameObject);
 	}
 
 	private void ConnectDisconnectedCaves()
@@ -270,40 +201,10 @@ public class DungeonBoard : Board {
 		FloodFilledAreas.Clear();
 	}
 
-	private void DeleteEntireMap()
-	{
-		//Deletes the entire map in order to generate a new one
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				Destroy(grid[x][y].GetObject());
-			}
-		}
-		grid.Clear();
-		Destroy(container.gameObject);
-	}
-
-	private Vector2 GetRandomOpenUnMarkedPoint()
-	{
-		Vector2 randomPoint;
-		do {
-			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
-		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].OpenForPlacement() || grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
-		return randomPoint;
-	}
-
-	private Vector2 GetRandomOpenMarkedPoint()
-	{
-		Vector2 randomPoint;
-		do {
-			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
-		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].OpenForPlacement() && !grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
-		return randomPoint;
-	}
-
 	private void PlaceTeleporter(ref GameTile tile)
 	{
 		tile.SetIsOccupied(true);
-		tile.GetObject().GetComponent<SpriteRenderer>().sprite = teleporterSprite;
+		tile.GetObject().GetComponent<SpriteRenderer>().sprite = mapSettings.teleporterSprite;
 		tile.GetObject().GetComponent<SpriteRenderer>().color = Color.cyan;
 		tile.SetIsWalkAble(true);
 	}
@@ -338,358 +239,82 @@ public class DungeonBoard : Board {
 		}
 		DeleteAllMarkedTiles();
 		RemoveFloatingWalls();
-		FixEdges(wallSprite);
+		FixEdges(mapSettings.wallSprite);
 		FloodFilledAreas.Clear();
 	}
 
-	private void SetDestroyed()
+	private Vector2 GetRandomOpenUnMarkedPoint()
 	{
-		//Iterate through the grid, if an grid tile does not have an object in unity then update it to be a Destroyed tile
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				if (grid[x][y].GetObject() == null) {
-					grid[x][y].SetIsDestroyed(true);
-				}
-			}
-		}
-	}
-
-	private void GenerateLiquid()
-	{
-		//generates liquid in internal areas of the map that have been destoryed, basically generates liquid in blank spaces within the map
-		UnMarkAllTiles();
-		List<List<GameTile>> FloodFilledAreas = new List<List<GameTile>>();
-		List<GameTile> FloodFillStartLocations = new List<GameTile>();
-		GameTile destroyedTile;
-		bool containsMapEdge = false;
+		Vector2 randomPoint;
 		do {
-			Vector2 randomPoint = GetNextDestroyedUnMarkedPoint();
-			destroyedTile = grid[(int)randomPoint.x][(int)randomPoint.y];
-			grid[(int)randomPoint.x][(int)randomPoint.y].SetIsMarked(true);
-			FloodFillDestroyedTiles(ref destroyedTile, ref FloodFilledAreas, ref containsMapEdge);
-			if (!containsMapEdge) {
-				FloodFillStartLocations.Add(grid[(int)randomPoint.x][(int)randomPoint.y]);
-			}
-		} while (HasUnmarkedDestroyedTiles());
-		FloodFilledAreas.Clear();
-		UnMarkAllTiles();
-		for (int i = 0; i < FloodFillStartLocations.Count; i++) {
-			destroyedTile = FloodFillStartLocations[i];
-			destroyedTile.SetIsMarked(true);
-			FloodFillDestroyedTiles(ref destroyedTile, ref FloodFilledAreas, ref containsMapEdge);
-		}
-		GenerateGameObjectsForLiquidTiles();
-		BreakWallsRandomlyAroundWater(ref FloodFilledAreas);
-		UnMarkAllTiles();
-		FloodFilledAreas.Clear();
+			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
+		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].OpenForPlacement() || grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
+		return randomPoint;
 	}
 
-	private Vector2 GetNextDestroyedUnMarkedPoint()
+	private Vector2 GetRandomOpenMarkedPoint()
 	{
-		//return a destoryed unmarked point, helper function for Generate Liquid, should only be called when HasUnMarkedDestoryedTiles() has ensured a return
+		Vector2 randomPoint;
+		do {
+			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
+		} while (!grid[(int)randomPoint.x][(int)randomPoint.y].OpenForPlacement() && !grid[(int)randomPoint.x][(int)randomPoint.y].IsMarked());
+		return randomPoint;
+	}
+
+	private void CheckForMinimumMapSize()
+	{
+		float percentageOfOpenTiles = CalculatePlayingArea();
+		if (percentageOfOpenTiles < mapSettings.minimumPercentageOfOpenTiles) {
+			if (numberOfMapsGenerated < maxMapsToGenerate) {
+				numberOfMapsGenerated++;
+				// if this reaches MaxMapsToGenerate then we have tried to generate too many maps with the minimumPercentageOfOpenTiles,
+				//at this point to prevent a crash we need to ignore minimumPercentageOfOpenTiles
+				DeleteEntireMap();
+				initMap();
+				if (!EnsureSpawnPointAndExitCanExist()) {
+					RespawnMap();
+				}
+				//rerun the already called MapCleanUp functions
+				RemoveBlockedOpenTiles();
+				FixEdges(mapSettings.wallSprite);
+				RemoveFloatingWalls();
+				DungeonBoardWaterGeneration waterGeneration = ScriptableObject.CreateInstance<DungeonBoardWaterGeneration>();
+				waterGeneration.GenerateLiquid(this, ref container, mapSettings.waterSprite);
+				RemoveDisconnectedCaves();
+				CheckForMinimumMapSize();
+				return;
+			} else {
+				Debug.Log("Map generation failed too many times based off of minimum percentage of open tiles allowed, therefore a map was generated without a minimum number of open tiles, consider the settings your using!");
+				mapSettings.minimumPercentageOfOpenTiles = 0.0f;
+				numberOfMapsGenerated = 0;
+				DeleteEntireMap();
+				initMap();
+				if (!EnsureSpawnPointAndExitCanExist()) {
+					RespawnMap();
+				}
+				//rerun the already called MapCleanUp functions
+				RemoveBlockedOpenTiles();
+				FixEdges(mapSettings.wallSprite);
+				RemoveFloatingWalls();
+				DungeonBoardWaterGeneration waterGeneration = ScriptableObject.CreateInstance<DungeonBoardWaterGeneration>();
+				waterGeneration.GenerateLiquid(this, ref container, mapSettings.waterSprite);
+				RemoveDisconnectedCaves();
+				return;
+			}
+		}
+	}
+
+	private void ChangeInnerWallSprites()
+	{
+		//changes walls the player can not see the outside of too a different sprite
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				if ((!grid[x][y].IsMarked()) && (grid[x][y].IsDestroyed())) {
-					grid[x][y].SetIsMarked(true);
-					return new Vector2 (grid[x][y].GetX(), grid[x][y].GetY());
-				}
-			}
-		}
-		Debug.Log("No tile was found MAJOR ERROR AT DUNGEON BOARD 196");
-		return new Vector2(-99.0f, -99.0f); //error value will cause out of bound exception
-	}
-
-	private bool HasUnmarkedDestroyedTiles()
-	{
-		//return true if the board has any destroyed tiles that aren't marked that could be marked
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				if (!grid[x][y].IsMarked() && grid[x][y].IsDestroyed()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	private void GenerateGameObjectsForLiquidTiles()
-	{
-		//Now that we have found the tiles that we want to turn into water, we need to regenerate game objects for them and make them water
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				if (grid[x][y].IsMarked()) {
-					grid[x][y].SetIsDestroyed(false);
-					grid[x][y].SetIsWall(false);
-					grid[x][y].SetIsMarked(false);
-					grid[x][y].SetIsWalkAble(false);
-					grid[x][y].SetIsOccupied(true);
-					GameObject instance = Instantiate (tileObject, new Vector3 (grid[x][y].GetUnityXPosition(), grid[x][y].GetUnityYPosition(), 0.0f), Quaternion.identity, container);
-					instance.name = "(" + x + "," + y + ")";
-					instance.GetComponent<SpriteRenderer>().sprite = waterSprite;
-					//todo:add color settings
-					grid[x][y].SetObject(instance);
-				}
-			}
-		}
-	}
-
-	private void BreakWallsRandomlyAroundWater(ref List<List<GameTile>> waterTilesSeperatedByAreas)
-	{
-		//grab the valid walls around our water areas (walls that are touching floor tiles) and break them (turn them into water tiles)
-		int divisor = 4; // What fraction of walls should we ensured are punched out around the water? if divisor = 3 then 1/3 (rounded down) of all walls around a water area will be removed
-		float chanceForOtherWallBreaks = 0.10f; // after the ensured walls every other wall has this chance of breaking, for example if set to .45f every other wall would have a 45% chance of breaking
-		float chanceForWaterExpansion = 0.75f; // the chance for water to "expand" outwards for the edge of a pool of water
-		UnMarkAllTiles();
-		List<List<GameTile>> wallsAroundWaterTilesSeperatedByAreas = GetWallsSurroundingWaterAreas(ref waterTilesSeperatedByAreas);
-		List<GameTile> waterEdgeTiles = new List<GameTile>();
-
-		for (int i = 0; i < wallsAroundWaterTilesSeperatedByAreas.Count; i++) {
-			int ensuredWallBreaks = wallsAroundWaterTilesSeperatedByAreas[i].Count / divisor;
-			ensuredWallBreaks = (ensuredWallBreaks <= 0) ? 1 : ensuredWallBreaks; //atleast always destory one wall around a water area
-			//walk down all of the walls for a given area, selecting a wall at random and breaking it, repeat a number of times equal to our ensuredWallBreaks
-			for (int c = 0; c < ensuredWallBreaks; c++) {
-				int randomWall = (int)(Random.Range(0.0f, (float)wallsAroundWaterTilesSeperatedByAreas[i].Count - 1));
-				BreakWall(wallsAroundWaterTilesSeperatedByAreas[i][randomWall], ref waterEdgeTiles);
-				if (CheckForIsolatedWaterTile(wallsAroundWaterTilesSeperatedByAreas[i][randomWall])) {
-					GameTile tile = FindDividerWall(wallsAroundWaterTilesSeperatedByAreas[i][randomWall]);
-					BreakWall(tile, ref waterEdgeTiles);
-					wallsAroundWaterTilesSeperatedByAreas[i].Remove(grid[tile.GetX()][tile.GetY()]);
-				}
-				wallsAroundWaterTilesSeperatedByAreas[i].RemoveAt(randomWall);
-			}
-			int originalSize = wallsAroundWaterTilesSeperatedByAreas[i].Count;
-			//walk down all of the walls for a given area, attempting to break each wall, the attempt success rate is based off of our chanceForOtherWallBreaks value
-			for (int c = 0; c < originalSize; c++) {
-				float breakWallCheck = Random.Range(0.0f, 1.0f);
-				if ((breakWallCheck <= chanceForOtherWallBreaks) && (wallsAroundWaterTilesSeperatedByAreas[i].Count > 0)) {
-					int randomWall = (int)(Random.Range(0.0f, (float)wallsAroundWaterTilesSeperatedByAreas[i].Count - 1));
-					BreakWall(wallsAroundWaterTilesSeperatedByAreas[i][randomWall], ref waterEdgeTiles);
-					if (CheckForIsolatedWaterTile(wallsAroundWaterTilesSeperatedByAreas[i][randomWall])) {
-						GameTile tile = FindDividerWall(wallsAroundWaterTilesSeperatedByAreas[i][randomWall]);
-						BreakWall(tile, ref waterEdgeTiles);
-						wallsAroundWaterTilesSeperatedByAreas[i].Remove(grid[tile.GetX()][tile.GetY()]);
-					}
-					wallsAroundWaterTilesSeperatedByAreas[i].RemoveAt(randomWall);
-				}
-			}
-		}
-		for (int i = 0; i < waterEdgeTiles.Count; i++) {
-			//walk down the edges of all the water areas and attempt to allow the water to expand outward, the attempt sucess rate is based off of our chanceForWaterExpansion value
-			float ExpandWaterCheck = Random.Range(0.0f, 1.0f);
-			if (ExpandWaterCheck <= chanceForWaterExpansion) {
-				List<GameTile> floorTiles = GetFloorTilesAroundTile(waterEdgeTiles[i]);
-				if (floorTiles.Count != 0) {
-					for (int j = 0; j < floorTiles.Count; j++) {
-						AttemptWaterExpansion(floorTiles[j]);
+				if((y-1) >= 0 && grid[x][y].IsWall()) {
+					if ((!grid[x][y-1].IsDestroyed() && grid[x][y-1].IsWall())) {
+						grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite = mapSettings.innerWallSprite;
 					}
 				}
 			}
 		}
-		UnMarkAllTiles();
-	}
-
-	private List<List<GameTile>> GetWallsSurroundingWaterAreas(ref List<List<GameTile>> waterTilesSeperatedByAreas)
-	{
-		//return the walls around a area of water that are touching a valid floor tile.
-		List<GameTile> wallsAroundWaterArea = new List<GameTile>();
-		List<List<GameTile>> wallsAroundWaterTilesSeperatedByAreas = new List<List<GameTile>>();
-		for (int i = 0; i < waterTilesSeperatedByAreas.Count; i++) {
-			for (int j = 0; j < waterTilesSeperatedByAreas[i].Count; j++) {
-				wallsAroundWaterArea = (ReturnFloorTouchingWallsAroundTile(waterTilesSeperatedByAreas[i][j]));
-				if (wallsAroundWaterArea.Count > 0) {
-					wallsAroundWaterTilesSeperatedByAreas.Add(wallsAroundWaterArea);
-				}
-			}
-		}
-		return wallsAroundWaterTilesSeperatedByAreas;
-	}
-
-	private List<GameTile> ReturnFloorTouchingWallsAroundTile(GameTile tile)
-	{
-		//retruns walls around a given tile, will only add tiles that aren't marked and are valid neighbour's of floor tiles
-		List<GameTile> allWallsList = new List<GameTile>();
-		List<GameTile> validWallsList = new List<GameTile>();
-		grid[tile.GetX()][tile.GetY()].SetIsMarked(true);
-		if((tile.GetY() + 1) < rows && grid[tile.GetX()][tile.GetY()+1].IsWall() && !grid[tile.GetX()][tile.GetY()+1].IsMarked()){
-			grid[tile.GetX()][tile.GetY()+1].SetIsMarked(true);
-			allWallsList.Add(grid[tile.GetX()][tile.GetY()+1]);
-		}
-		if ((tile.GetY() - 1) >= 0 && grid[tile.GetX()][tile.GetY()-1].IsWall() && !grid[tile.GetX()][tile.GetY()-1].IsMarked()) {
-			grid[tile.GetX()][tile.GetY()-1].SetIsMarked(true);
-			allWallsList.Add(grid[tile.GetX()][tile.GetY()-1]);
-		}
-		if ((tile.GetX() + 1) < cols && grid[tile.GetX()+1][tile.GetY()].IsWall() && !grid[tile.GetX()+1][tile.GetY()].IsMarked()) {
-			grid[tile.GetX()+1][tile.GetY()].SetIsMarked(true);
-			allWallsList.Add(grid[tile.GetX()+1][tile.GetY()]);
-		}
-		if ((tile.GetX() - 1) >= 0 && grid[tile.GetX()-1][tile.GetY()].IsWall() && !grid[tile.GetX()-1][tile.GetY()].IsMarked()) {
-			grid[tile.GetX()-1][tile.GetY()].SetIsMarked(true);
-			allWallsList.Add(grid[tile.GetX()-1][tile.GetY()]);
-		}
-		if ((tile.GetX() + 1) < cols && tile.GetY() + 1 < rows && grid[tile.GetX() + 1][tile.GetY() + 1].IsWall() && !grid[tile.GetX() + 1][tile.GetY() + 1].IsMarked()) {
-			grid[tile.GetX()+1][tile.GetY()+1].SetIsMarked(true);
-			allWallsList.Add(grid[tile.GetX()+1][tile.GetY()+1]);
-		}
-		if ((tile.GetX() - 1) >= 0 && tile.GetY() - 1 >= 0 && grid[tile.GetX() - 1][tile.GetY() - 1].IsWall() && !grid[tile.GetX() - 1][tile.GetY() - 1].IsMarked()) {
-			grid[tile.GetX()-1][tile.GetY()-1].SetIsMarked(true);
-			allWallsList.Add(grid[tile.GetX()-1][tile.GetY()-1]);
-		}
-		if ((tile.GetX() + 1) < cols && tile.GetY() - 1 >= 0 && grid[tile.GetX() + 1][tile.GetY() - 1].IsWall() && !grid[tile.GetX() + 1][tile.GetY() - 1].IsMarked()) {
-			grid[tile.GetX()+1][tile.GetY()-1].SetIsMarked(true);
-			allWallsList.Add(grid[tile.GetX()+1][tile.GetY()-1]);
-		}
-		if ((tile.GetX() - 1) >= 0 && tile.GetY() + 1 < rows && grid[tile.GetX() - 1][tile.GetY() + 1].IsWall() && !grid[tile.GetX() - 1][tile.GetY() + 1].IsMarked()) {
-			grid[tile.GetX()-1][tile.GetY()+1].SetIsMarked(true);
-			allWallsList.Add(grid[tile.GetX()-1][tile.GetY()+1]);
-		}
-		for (int i = 0; i < allWallsList.Count; i++) {
-			int count = 0;
-			if((allWallsList[i].GetY() + 1) < rows && grid[allWallsList[i].GetX()][allWallsList[i].GetY() + 1].OpenForPlacement()){
-				count++;
-			}
-			if ((allWallsList[i].GetY() - 1) >= 0 && grid[allWallsList[i].GetX()][allWallsList[i].GetY()-1].OpenForPlacement()) {
-				count++;
-			}
-			if ((allWallsList[i].GetX() + 1) < cols && grid[allWallsList[i].GetX()+1][allWallsList[i].GetY()].OpenForPlacement()) {
-				count++;
-			}
-			if ((allWallsList[i].GetX() - 1) >= 0 && grid[allWallsList[i].GetX()-1][allWallsList[i].GetY()].OpenForPlacement()) {
-				count++;
-			}
-			if (count > 0) {
-				validWallsList.Add(allWallsList[i]);
-			}
-		}
-		return validWallsList;
-	}
-
-	private void BreakWall(GameTile wall, ref List<GameTile> waterEdgeTiles)
-	{
-		//sets the wall sprite to water and apply data changes
-		grid[wall.GetX()][wall.GetY()].SetIsDestroyed(false);
-		grid[wall.GetX()][wall.GetY()].SetIsWall(false);
-		grid[wall.GetX()][wall.GetY()].SetIsWalkAble(false);
-		grid[wall.GetX()][wall.GetY()].SetIsOccupied(true);
-		grid[wall.GetX()][wall.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite = waterSprite;
-		waterEdgeTiles.Add(grid[wall.GetX()][wall.GetY()]);
-		//todo:Add color settings
-	}
-
-	private bool CheckForIsolatedWaterTile(GameTile tile)
-	{
-		bool WaterRight = (((tile.GetY() + 1) < rows) && (grid[tile.GetX()][tile.GetY() + 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() + 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-		bool WaterLeft = (((tile.GetY() - 1) >= 0) && (grid[tile.GetX()][tile.GetY() - 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() - 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-		bool WaterNorth = (((tile.GetX() + 1) < cols) && (grid[tile.GetX()+1][tile.GetY()].GetObject() != null) && (grid[tile.GetX()+1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-		bool WaterSouth = (((tile.GetX() - 1) >= 0) && (grid[tile.GetX()-1][tile.GetY()].GetObject() != null) && (grid[tile.GetX()-1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-		if (!WaterRight && !WaterLeft && !WaterNorth && !WaterSouth) {
-			return true;
-		}
-		return false;
-	}
-
-	private GameTile FindDividerWall(GameTile tile)
-	{
-		bool WallRight = (((tile.GetY() + 1) < rows) && (grid[tile.GetX()][tile.GetY() + 1].IsWall())) ? true : false;
-		bool WallLeft = (((tile.GetY() - 1) >= 0) && (grid[tile.GetX()][tile.GetY() - 1].IsWall())) ? true : false;
-		bool WallNorth = (((tile.GetX() + 1) < cols) && (grid[tile.GetX()+1][tile.GetY()].IsWall())) ? true : false;
-		bool WallSouth = (((tile.GetX() - 1) >= 0) && (grid[tile.GetX()-1][tile.GetY()].IsWall())) ? true : false;
-		if (WallRight) {
-			//don't check left as that would be the original tile
-			tile = grid[tile.GetX()][tile.GetY() + 1];
-			bool WaterRight = (((tile.GetY() + 1) < rows) && (grid[tile.GetX()][tile.GetY() + 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() + 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-			bool WaterNorth = (((tile.GetX() + 1) < cols) && (grid[tile.GetX() + 1][tile.GetY()].GetObject() != null) && (grid[tile.GetX() + 1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-			bool WaterSouth = (((tile.GetX() - 1) >= 0) && (grid[tile.GetX() - 1][tile.GetY()].GetObject() != null) && (grid[tile.GetX() - 1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-			if (WaterRight || WaterNorth || WaterSouth) {
-				return tile;
-			}
-		}
-		if (WallLeft) {
-			//dont check right as that would be the original tile
-			tile = grid[tile.GetX()][tile.GetY() - 1];
-			bool WaterLeft = (((tile.GetY() - 1) >= 0) && (grid[tile.GetX()][tile.GetY() - 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() - 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-			bool WaterNorth = (((tile.GetX() + 1) < cols) && (grid[tile.GetX() + 1][tile.GetY()].GetObject() != null) && (grid[tile.GetX() + 1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-			bool WaterSouth = (((tile.GetX() - 1) >= 0) && (grid[tile.GetX() - 1][tile.GetY()].GetObject() != null) && (grid[tile.GetX() - 1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-			if (WaterLeft || WaterNorth || WaterSouth) {
-				return tile;
-			}
-		}
-		if (WallNorth) {
-			//dont check south as this would be the original tile
-			tile = grid[tile.GetX() + 1][tile.GetY()];
-			bool WaterRight = (((tile.GetY() + 1) < rows) && (grid[tile.GetX()][tile.GetY() + 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() + 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-			bool WaterLeft = (((tile.GetY() - 1) >= 0) && (grid[tile.GetX()][tile.GetY() - 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() - 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-			bool WaterNorth = (((tile.GetX() + 1) < cols) && (grid[tile.GetX() + 1][tile.GetY()].GetObject() != null) && (grid[tile.GetX() + 1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-			if (WaterLeft || WaterNorth || WaterRight) {
-				return tile;
-			}
-		}
-		if (WallSouth) {
-			//dont check north as this would be the original tile
-			tile = grid[tile.GetX() - 1][tile.GetY()];
-			bool WaterRight = (((tile.GetY() + 1) < rows) && (grid[tile.GetX()][tile.GetY() + 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() + 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-			bool WaterLeft = (((tile.GetY() - 1) >= 0) && (grid[tile.GetX()][tile.GetY() - 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() - 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-			bool WaterSouth = (((tile.GetX() - 1) >= 0) && (grid[tile.GetX()-1][tile.GetY()].GetObject() != null) && (grid[tile.GetX()-1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-			if (WaterLeft || WaterSouth || WaterRight) {
-				return tile;
-			}
-		}
-		Debug.Log("Couldn't find divider wall for water generation error!!");
-		Debug.Log("Tile is: " + tile.GetX() + ", " + tile.GetY());
-		return tile;
-	}
-
-	private List<GameTile> GetFloorTilesAroundTile(GameTile tile)
-	{
-		//water expansion helper function get the floor tiles around a tile in the cardinal directions
-		bool FloorRight = (((tile.GetY() + 1) < rows) && (grid[tile.GetX()][tile.GetY() + 1].OpenForPlacement())) ? true : false;
-		bool FloorLeft = (((tile.GetY() - 1) >= 0) && (grid[tile.GetX()][tile.GetY() - 1].OpenForPlacement())) ? true : false;
-		bool FloorNorth = (((tile.GetX() + 1) < cols) && (grid[tile.GetX()+1][tile.GetY()].OpenForPlacement())) ? true : false;
-		bool FloorSouth = (((tile.GetX() - 1) >= 0) && (grid[tile.GetX()-1][tile.GetY()].OpenForPlacement())) ? true : false;
-		List<GameTile> floorNeighbours = new List<GameTile>();
-		if (FloorRight) {
-			floorNeighbours.Add(grid[tile.GetX()][tile.GetY() + 1]);
-		}
-		if (FloorLeft) {
-			floorNeighbours.Add(grid[tile.GetX()][tile.GetY() - 1]);
-		}
-		if (FloorNorth) {
-			floorNeighbours.Add(grid[tile.GetX() + 1][tile.GetY()]);
-		}
-		if (FloorSouth) {
-			floorNeighbours.Add(grid[tile.GetX() - 1][tile.GetY()]);
-		}
-		return floorNeighbours;
-	}
-
-	private void AttemptWaterExpansion(GameTile floorTile)
-	{
-		int count = countWaterNeighbours(floorTile);
-		if (count != 1) 
-			return;
-		grid[floorTile.GetX()][floorTile.GetY()].SetIsDestroyed(false);
-		grid[floorTile.GetX()][floorTile.GetY()].SetIsWall(false);
-		grid[floorTile.GetX()][floorTile.GetY()].SetIsWalkAble(false);
-		grid[floorTile.GetX()][floorTile.GetY()].SetIsOccupied(true);
-		grid[floorTile.GetX()][floorTile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite = waterSprite;
-		
-	}
-
-	private int countWaterNeighbours(GameTile tile)
-	{
-		//atempt water expansion helper count water tiles in cardinal directions
-		int count = 0;
-		bool WaterRight = (((tile.GetY() + 1) < rows) && (grid[tile.GetX()][tile.GetY() + 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() + 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-		bool WaterLeft = (((tile.GetY() - 1) >= 0) && (grid[tile.GetX()][tile.GetY() - 1].GetObject() != null) && (grid[tile.GetX()][tile.GetY() - 1].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-		bool WaterNorth = (((tile.GetX() + 1) < cols) && (grid[tile.GetX()+1][tile.GetY()].GetObject() != null) && (grid[tile.GetX()+1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-		bool WaterSouth = (((tile.GetX() - 1) >= 0) && (grid[tile.GetX()-1][tile.GetY()].GetObject() != null) && (grid[tile.GetX()-1][tile.GetY()].GetObject().GetComponent<SpriteRenderer>().sprite == waterSprite)) ? true : false;
-		if (WaterRight)
-			count++;
-		if (WaterLeft)
-			count++;
-		if (WaterNorth)
-			count++;
-		if (WaterSouth)
-			count++;
-		return count;
 	}
 }

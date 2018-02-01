@@ -27,5 +27,5 @@ MonoBehaviour:
   teleporterSprite: {fileID: 21300042, guid: 1828887d203ca5f458b8ff95dd325e0e, type: 3}
   waterSprite: {fileID: 21300562, guid: 17a0df5158812d74b9ad4ff84aba3b7e, type: 3}
   runEdgeSmoothing: 0
-  allowDisconnectedCaves: 1
+  allowDisconnectedCaves: 0
   minimumPercentageOfOpenTiles: 0.3
