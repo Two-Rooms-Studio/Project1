@@ -34,7 +34,7 @@ public class DungeonBoardWaterGeneration : ScriptableObject {
 				}
 			}
 		}
-		Debug.Log("No tile was found MAJOR ERROR AT WATER GENERATION 55");
+		Debug.Log("No tile was found MAJOR ERROR AT WATER GENERATION");
 		return new Vector2(-99.0f, -99.0f); //error value will cause out of bound exception
 	}
 
@@ -92,6 +92,7 @@ public class DungeonBoardWaterGeneration : ScriptableObject {
 					board.GetGrid()[x][y].SetIsOccupied(true);
 					GameObject instance = Instantiate (board.GetTileObject(), new Vector3 (board.GetGrid()[x][y].GetUnityXPosition(), board.GetGrid()[x][y].GetUnityYPosition(), 0.0f), Quaternion.identity, container);
 					instance.name = "(" + x + "," + y + ")";
+					instance.AddComponent<WaterTile>();
 					instance.GetComponent<SpriteRenderer>().sprite = waterSprite;
 					board.GetGrid()[x][y].SetObject(instance);
 					//todo:add color settings
@@ -192,6 +193,7 @@ public class DungeonBoardWaterGeneration : ScriptableObject {
 		wall.SetIsWalkAble(false);
 		wall.SetIsOccupied(true);
 		wall.SetSprite(waterSprite);
+		wall.GetObject().AddComponent<WaterTile>();
 		waterEdgeTiles.Add(wall);
 		//todo:Add color settings
 	}
@@ -201,7 +203,7 @@ public class DungeonBoardWaterGeneration : ScriptableObject {
 		//return true if tile is a isolated water tile (a water tile without any water as a cardinal neighbour)
 		List<GameTile> neighbours = board.GetTileCardinalNeighbours(tile);
 		foreach (GameTile q in neighbours) {
-			if (q.GetSprite() == waterSprite)
+			if (q.IsWater())
 				return false;
 		}
 		return true;
@@ -221,12 +223,12 @@ public class DungeonBoardWaterGeneration : ScriptableObject {
 			List<GameTile> possibleDividerNeighbours = board.GetTileCardinalNeighbours(possibleDivider);
 			foreach (GameTile possibleMainWaterTile in possibleDividerNeighbours) {
 				if (possibleMainWaterTile != isolatedWaterTile) { //dont check the original tile
-					if (possibleMainWaterTile.GetSprite() == waterSprite)
+					if (possibleMainWaterTile.IsWater())
 						return possibleDivider;
 				}
 			}
 		}
-		Debug.Log("Couldn't find divider wall for water generation error!!");
+		Debug.Log("Couldn't find divider wall for water generation error!");
 		Debug.Log("Tile is: " + isolatedWaterTile.GetX() + ", " + isolatedWaterTile.GetY());
 		return isolatedWaterTile;
 	}
@@ -268,6 +270,7 @@ public class DungeonBoardWaterGeneration : ScriptableObject {
 		floorTile.SetIsWall(false);
 		floorTile.SetIsWalkAble(false);
 		floorTile.SetIsOccupied(true);
+		floorTile.GetObject().AddComponent<WaterTile>();
 		floorTile.SetSprite(waterSprite);
 	}
 
@@ -277,7 +280,7 @@ public class DungeonBoardWaterGeneration : ScriptableObject {
 		int count = 0;
 		List<GameTile> neighbours = board.GetTileCardinalNeighbours(tile);
 		foreach (GameTile q in neighbours) {
-			if (q.GetSprite() == waterSprite) {
+			if (q.IsWater()) {
 				count++;
 			}
 		}

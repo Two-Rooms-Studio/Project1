@@ -81,6 +81,14 @@ public class GameTile {
 		return visited;
 	}
 
+	public bool IsWater()
+	{
+		if (GetObject().GetComponent<WaterTile>() != null) {
+			return true;
+		}
+		return false;
+	}
+
 	public Vector2 GetPosition()
 	{
 		return new Vector2(this.x, this.y);

@@ -164,7 +164,6 @@ public class Board : ScriptableObject{
 	{
 		List<GameTile> validTileNeighbours = new List<GameTile>();
 		List<GameTile> allTileNeighbours = new List<GameTile>();
-
 		allTileNeighbours.Add(GetTileWest(tile));
 		allTileNeighbours.Add(GetTileEast(tile));
 		allTileNeighbours.Add(GetTileNorth(tile));
@@ -173,7 +172,6 @@ public class Board : ScriptableObject{
 		allTileNeighbours.Add(GetRightTopCorner(tile));
 		allTileNeighbours.Add(GetLeftBotCorner(tile));
 		allTileNeighbours.Add(GetRightBotCorner(tile));
-
 		foreach (GameTile q in allTileNeighbours) {
 			if (q != null && q.GetObject() != null) {
 				validTileNeighbours.Add(q);
@@ -186,12 +184,10 @@ public class Board : ScriptableObject{
 	{
 		List<GameTile> validTileNeighbours = new List<GameTile>();
 		List<GameTile> allTileNeighbours = new List<GameTile>();
-
 		allTileNeighbours.Add(GetTileWest(tile));
 		allTileNeighbours.Add(GetTileEast(tile));
 		allTileNeighbours.Add(GetTileNorth(tile));
 		allTileNeighbours.Add(GetTileSouth(tile));
-
 		foreach (GameTile q in allTileNeighbours) {
 			if (q != null && q.GetObject() != null) {
 				validTileNeighbours.Add(q);
