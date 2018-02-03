@@ -203,6 +203,7 @@ public class DungeonBoard : Board {
 
 	private void PlaceTeleporter(ref GameTile tile)
 	{
+		//place a teleporter on tile
 		tile.SetIsOccupied(true);
 		tile.GetObject().GetComponent<SpriteRenderer>().sprite = mapSettings.teleporterSprite;
 		tile.GetObject().GetComponent<SpriteRenderer>().color = Color.cyan;
@@ -245,6 +246,7 @@ public class DungeonBoard : Board {
 
 	private Vector2 GetRandomOpenUnMarkedPoint()
 	{
+		//return a random tile that is open and not marked
 		Vector2 randomPoint;
 		do {
 			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
@@ -254,6 +256,7 @@ public class DungeonBoard : Board {
 
 	private Vector2 GetRandomOpenMarkedPoint()
 	{
+		//return a random tile that is open and marked
 		Vector2 randomPoint;
 		do {
 			randomPoint = new Vector2((int)Random.Range(0, cols - 1), (int)Random.Range(0, rows - 1));
@@ -263,6 +266,7 @@ public class DungeonBoard : Board {
 
 	private void CheckForMinimumMapSize()
 	{
+		//check that our map has atleast a certain minimum of playable space if not regenerate the map
 		float percentageOfOpenTiles = CalculatePlayingArea();
 		if (percentageOfOpenTiles < mapSettings.minimumPercentageOfOpenTiles) {
 			if (numberOfMapsGenerated < maxMapsToGenerate) {

@@ -96,17 +96,17 @@ public class Board : ScriptableObject{
 		return grid[tile.GetX()][tile.GetY()];
 	}
 
-	public GameTile GetTileLeft(GameTile tile)
+	public GameTile GetTileWest(GameTile tile)
 	{
-		GameTile tileLeft = new GameTile(tile.GetX(), tile.GetY() - 1, tile.GetOriginalSprite());
+		GameTile tileLeft = new GameTile(tile.GetX() - 1, tile.GetY(), tile.GetOriginalSprite());
 		if (InBounds(tileLeft))
 			return GetTile(tileLeft);
 		return null;
 	}
 
-	public GameTile GetTileRight(GameTile tile)
+	public GameTile GetTileEast(GameTile tile)
 	{
-		GameTile tileRight = new GameTile(tile.GetX(), tile.GetY() + 1, tile.GetOriginalSprite());
+		GameTile tileRight = new GameTile(tile.GetX() + 1, tile.GetY(), tile.GetOriginalSprite());
 		if (InBounds(tileRight))
 			return GetTile(tileRight);
 		return null;
@@ -114,7 +114,7 @@ public class Board : ScriptableObject{
 
 	public GameTile GetTileNorth(GameTile tile)
 	{
-		GameTile tileNorth = new GameTile(tile.GetX() + 1, tile.GetY(), tile.GetOriginalSprite());
+		GameTile tileNorth = new GameTile(tile.GetX(), tile.GetY() + 1, tile.GetOriginalSprite());
 		if (InBounds(tileNorth))
 			return GetTile(tileNorth);
 		return null;
@@ -122,7 +122,7 @@ public class Board : ScriptableObject{
 
 	public GameTile GetTileSouth(GameTile tile)
 	{
-		GameTile tileSouth = new GameTile(tile.GetX() - 1, tile.GetY(), tile.GetOriginalSprite());
+		GameTile tileSouth = new GameTile(tile.GetX(), tile.GetY() - 1, tile.GetOriginalSprite());
 		if (InBounds(tileSouth))
 			return GetTile(tileSouth);
 		return null;
@@ -165,8 +165,8 @@ public class Board : ScriptableObject{
 		List<GameTile> validTileNeighbours = new List<GameTile>();
 		List<GameTile> allTileNeighbours = new List<GameTile>();
 
-		allTileNeighbours.Add(GetTileLeft(tile));
-		allTileNeighbours.Add(GetTileRight(tile));
+		allTileNeighbours.Add(GetTileWest(tile));
+		allTileNeighbours.Add(GetTileEast(tile));
 		allTileNeighbours.Add(GetTileNorth(tile));
 		allTileNeighbours.Add(GetTileSouth(tile));
 		allTileNeighbours.Add(GetLeftTopCorner(tile));
@@ -187,8 +187,8 @@ public class Board : ScriptableObject{
 		List<GameTile> validTileNeighbours = new List<GameTile>();
 		List<GameTile> allTileNeighbours = new List<GameTile>();
 
-		allTileNeighbours.Add(GetTileLeft(tile));
-		allTileNeighbours.Add(GetTileRight(tile));
+		allTileNeighbours.Add(GetTileWest(tile));
+		allTileNeighbours.Add(GetTileEast(tile));
 		allTileNeighbours.Add(GetTileNorth(tile));
 		allTileNeighbours.Add(GetTileSouth(tile));
 
@@ -336,26 +336,10 @@ public class Board : ScriptableObject{
 		//set up the neighbour information for each tile on the map
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				if (y + 1 >= rows) {
-					grid [x] [y].SetTileNorth (null);
-				} else {
-					grid[x][y].SetTileNorth(grid[x][y + 1]);
-				}
-				if (y - 1 < 0) {
-					grid [x] [y].SetTileSouth (null);
-				} else {
-					grid[x][y].SetTileSouth(grid[x][y - 1]);
-				}
-				if (x + 1 >= cols) {
-					grid[x][y].SetTileEast(null);
-				} else {
-					grid[x][y].SetTileEast(grid[x + 1][y]);
-				}
-				if (x - 1 < 0) {
-					grid[x][y].SetTileWest(null);
-				} else {
-					grid[x][y].SetTileWest(grid[x - 1][y]);
-				}
+				grid[x][y].SetTileNorth(GetTileNorth(grid[x][y]));
+				grid[x][y].SetTileEast(GetTileEast(grid[x][y]));
+				grid[x][y].SetTileWest(GetTileWest(grid[x][y]));
+				grid[x][y].SetTileSouth(GetTileSouth(grid[x][y]));
 			}
 		}
 	}
