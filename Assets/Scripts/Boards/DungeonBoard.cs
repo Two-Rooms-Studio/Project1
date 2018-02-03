@@ -40,26 +40,26 @@ public class DungeonBoard : Board {
 
 		//water generation
 		DungeonBoardWaterGeneration waterGeneration = ScriptableObject.CreateInstance<DungeonBoardWaterGeneration>();
-		waterGeneration.GenerateLiquid(this, ref container, mapSettings.waterSprite);
+		waterGeneration.GenerateLiquid(this, ref container, mapSettings.waterSprite); //generate water in natural holes in the map
 		//
 
 		//fix caves
-		if (mapSettings.allowDisconnectedCaves) {
+		if (mapSettings.allowDisconnectedCaves) { //if we allow caves to spawn disconnected then place teleporters to connect them
 			ConnectDisconnectedCaves();
-		} else {
+		} else { //otherwise remove the disconnected caves and make sure we retain a certain percentage of play space
 			RemoveDisconnectedCaves();
 			CheckForMinimumMapSize();
 		}
-		if (mapSettings.runEdgeSmoothing) {
+		if (mapSettings.runEdgeSmoothing) { //if we enable smoothing out map edges
 			SmoothMapEdges ();
 		}
-		SetDestroyed();
-		ChangeInnerWallSprites();
+		SetDestroyed(); //Set the destroyed status for all tiles
+		ChangeInnerWallSprites(); //set walls that the player cannot see the "bottom" side of to a different sprite
 		//
 
 		//Final data setup
-		SetAllOriginalSpritesAndColors();
-		SpawnPlayerAndExitPoint();
+		SetAllOriginalSpritesAndColors(); //set the sprite and color values for each tile for use in later logic
+		SpawnPlayerAndExitPoint(); //spawn the player and the exit point for the map
 		SetUpEdges(); //setup all tiles with edge information
 		CalculateTileNeighbours(); //setup all tiles with neighbour information
 		//

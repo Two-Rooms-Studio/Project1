@@ -111,6 +111,11 @@ public class GameTile {
 		return originalColor;
 	}
 
+	public Sprite GetSprite()
+	{
+		return GetObject().GetComponent<SpriteRenderer>().sprite;
+	}
+
 	public GameTile GetTileNorth(){
 		return tileNorth;
 	}
@@ -199,6 +204,11 @@ public class GameTile {
 	public void SetOriginalSprite(Sprite p_originalSprite)
 	{
 		originalSprite = p_originalSprite;
+	}
+
+	public void SetSprite(Sprite sprite)
+	{
+		GetObject().GetComponent<SpriteRenderer>().sprite = sprite;
 	}
 		
 	public void SetOriginalColor(Color p_originalColor)

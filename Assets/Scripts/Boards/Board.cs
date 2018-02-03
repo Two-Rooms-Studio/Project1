@@ -91,6 +91,122 @@ public class Board : ScriptableObject{
 		return allMarkedCells;
 	}
 
+	public GameTile GetTile(GameTile tile)
+	{
+		return grid[tile.GetX()][tile.GetY()];
+	}
+
+	public GameTile GetTileLeft(GameTile tile)
+	{
+		GameTile tileLeft = new GameTile(tile.GetX(), tile.GetY() - 1, tile.GetOriginalSprite());
+		if (InBounds(tileLeft))
+			return GetTile(tileLeft);
+		return null;
+	}
+
+	public GameTile GetTileRight(GameTile tile)
+	{
+		GameTile tileRight = new GameTile(tile.GetX(), tile.GetY() + 1, tile.GetOriginalSprite());
+		if (InBounds(tileRight))
+			return GetTile(tileRight);
+		return null;
+	}
+
+	public GameTile GetTileNorth(GameTile tile)
+	{
+		GameTile tileNorth = new GameTile(tile.GetX() + 1, tile.GetY(), tile.GetOriginalSprite());
+		if (InBounds(tileNorth))
+			return GetTile(tileNorth);
+		return null;
+	}
+
+	public GameTile GetTileSouth(GameTile tile)
+	{
+		GameTile tileSouth = new GameTile(tile.GetX() - 1, tile.GetY(), tile.GetOriginalSprite());
+		if (InBounds(tileSouth))
+			return GetTile(tileSouth);
+		return null;
+	}
+
+	public GameTile GetLeftTopCorner(GameTile tile)
+	{
+		GameTile tileLeftTopCorner = new GameTile(tile.GetX() - 1, tile.GetY() + 1, tile.GetOriginalSprite());
+		if (InBounds(tileLeftTopCorner))
+			return GetTile(tileLeftTopCorner);
+		return null;
+	}
+
+	public GameTile GetRightTopCorner(GameTile tile)
+	{
+		GameTile tileRightTopCorner = new GameTile(tile.GetX() + 1, tile.GetY() + 1, tile.GetOriginalSprite());
+		if (InBounds(tileRightTopCorner))
+			return GetTile(tileRightTopCorner);
+		return null;
+	}
+
+	public GameTile GetLeftBotCorner(GameTile tile)
+	{
+		GameTile tileLeftBotCorner = new GameTile(tile.GetX() - 1, tile.GetY() - 1, tile.GetOriginalSprite());
+		if (InBounds(tileLeftBotCorner))
+			return GetTile(tileLeftBotCorner);
+		return null;
+	}
+
+	public GameTile GetRightBotCorner(GameTile tile)
+	{
+		GameTile tileRightBotCorner = new GameTile(tile.GetX() + 1, tile.GetY() - 1, tile.GetOriginalSprite());
+		if (InBounds(tileRightBotCorner))
+			return GetTile(tileRightBotCorner);
+		return null;
+	}
+
+	public List<GameTile> GetTileNeighbours(GameTile tile)
+	{
+		List<GameTile> validTileNeighbours = new List<GameTile>();
+		List<GameTile> allTileNeighbours = new List<GameTile>();
+
+		allTileNeighbours.Add(GetTileLeft(tile));
+		allTileNeighbours.Add(GetTileRight(tile));
+		allTileNeighbours.Add(GetTileNorth(tile));
+		allTileNeighbours.Add(GetTileSouth(tile));
+		allTileNeighbours.Add(GetLeftTopCorner(tile));
+		allTileNeighbours.Add(GetRightTopCorner(tile));
+		allTileNeighbours.Add(GetLeftBotCorner(tile));
+		allTileNeighbours.Add(GetRightBotCorner(tile));
+
+		foreach (GameTile q in allTileNeighbours) {
+			if (q != null && q.GetObject() != null) {
+				validTileNeighbours.Add(q);
+			}
+		}
+		return validTileNeighbours;
+	}
+
+	public List<GameTile> GetTileCardinalNeighbours(GameTile tile)
+	{
+		List<GameTile> validTileNeighbours = new List<GameTile>();
+		List<GameTile> allTileNeighbours = new List<GameTile>();
+
+		allTileNeighbours.Add(GetTileLeft(tile));
+		allTileNeighbours.Add(GetTileRight(tile));
+		allTileNeighbours.Add(GetTileNorth(tile));
+		allTileNeighbours.Add(GetTileSouth(tile));
+
+		foreach (GameTile q in allTileNeighbours) {
+			if (q != null && q.GetObject() != null) {
+				validTileNeighbours.Add(q);
+			}
+		}
+		return validTileNeighbours;
+	}
+
+	public bool InBounds(GameTile tile)
+	{
+		if((tile.GetX() < cols) && (tile.GetX() >= 0) && (tile.GetY() < rows) && (tile.GetY() >= 0))
+			return true;
+		return false;
+	}
+
 	public void  SetAllTilesToNotVisible()
 	{
 		//set all tiles on the grid to not visible
