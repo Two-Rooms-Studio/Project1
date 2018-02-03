@@ -85,20 +85,27 @@ public class DungeonBoardWaterGeneration : ScriptableObject {
 		for (int x = 0; x < board.GetCols(); x++) {
 			for (int y = 0; y < board.GetRows(); y++) {
 				if (board.GetGrid()[x][y].IsMarked()) {
-					board.GetGrid()[x][y].SetIsDestroyed(false);
-					board.GetGrid()[x][y].SetIsWall(false);
-					board.GetGrid()[x][y].SetIsMarked(false);
-					board.GetGrid()[x][y].SetIsWalkAble(false);
-					board.GetGrid()[x][y].SetIsOccupied(true);
 					GameObject instance = Instantiate (board.GetTileObject(), new Vector3 (board.GetGrid()[x][y].GetUnityXPosition(), board.GetGrid()[x][y].GetUnityYPosition(), 0.0f), Quaternion.identity, container);
-					instance.name = "(" + x + "," + y + ")";
-					instance.AddComponent<WaterTile>();
-					instance.GetComponent<SpriteRenderer>().sprite = waterSprite;
 					board.GetGrid()[x][y].SetObject(instance);
-					//todo:add color settings
+					instance.name = "(" + x + "," + y + ")";
+					SetUpWaterTileSettings(board.GetGrid()[x][y]);
 				}
 			}
 		}
+	}
+
+	private void SetUpWaterTileSettings(GameTile tile)
+	{
+		//Throws all the flags for water tiles, adds the water tile component and sets the proper sprite
+		//precondition: tile must have a unity gameobject
+		//todo:add color settings
+		tile.SetIsDestroyed(false);
+		tile.SetIsWall(false);
+		tile.SetIsMarked(false);
+		tile.SetIsWalkAble(false);
+		tile.SetIsOccupied(true);
+		tile.GetObject().AddComponent<WaterTile>();
+		tile.SetSprite(waterSprite);
 	}
 
 	private void BreakWallsRandomlyAroundWater(ref List<List<GameTile>> waterTilesSeperatedByAreas, ref List<GameTile> waterEdgeTiles)
@@ -188,14 +195,8 @@ public class DungeonBoardWaterGeneration : ScriptableObject {
 	private void BreakWall(GameTile wall, ref List<GameTile> waterEdgeTiles)
 	{
 		//sets the wall sprite to water and apply data changes
-		wall.SetIsDestroyed(false);
-		wall.SetIsWall(false);
-		wall.SetIsWalkAble(false);
-		wall.SetIsOccupied(true);
-		wall.SetSprite(waterSprite);
-		wall.GetObject().AddComponent<WaterTile>();
+		SetUpWaterTileSettings(wall);
 		waterEdgeTiles.Add(wall);
-		//todo:Add color settings
 	}
 
 	private bool CheckForIsolatedWaterTile(GameTile tile)
@@ -266,12 +267,7 @@ public class DungeonBoardWaterGeneration : ScriptableObject {
 		int count = countWaterNeighbours(floorTile);
 		if (count != 1) 
 			return;
-		floorTile.SetIsDestroyed(false);
-		floorTile.SetIsWall(false);
-		floorTile.SetIsWalkAble(false);
-		floorTile.SetIsOccupied(true);
-		floorTile.GetObject().AddComponent<WaterTile>();
-		floorTile.SetSprite(waterSprite);
+		SetUpWaterTileSettings(floorTile);
 	}
 
 	private int countWaterNeighbours(GameTile tile)
