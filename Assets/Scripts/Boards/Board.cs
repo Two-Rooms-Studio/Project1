@@ -241,66 +241,36 @@ public class Board : ScriptableObject{
 	//private
 	private void AddAllNeighbours(ref List<GameTile> list, GameTile tile){
 		//GetAllTilesInRange helper function, returns a list containing the neighbours surrounding a tile
-		grid[tile.GetX()][tile.GetY()].SetIsMarked(true);
-		if((tile.GetY() + 1) < rows && !grid[tile.GetX()][tile.GetY()+1].IsMarked()){
-			list.Add(grid[tile.GetX()][tile.GetY()+1]);
-			grid[tile.GetX()][tile.GetY()+1].SetIsMarked(true);
-		}
-		if ((tile.GetY() - 1) >= 0 && !grid[tile.GetX()][tile.GetY()-1].IsMarked()) {
-			list.Add(grid[tile.GetX()][tile.GetY()-1]);
-			grid[tile.GetX()][tile.GetY()-1].SetIsMarked(true);
-		}
-		if ((tile.GetX() + 1) < cols && !grid[tile.GetX()+1][tile.GetY()].IsMarked()) {
-			list.Add(grid[tile.GetX()+1][tile.GetY()]);
-			grid[tile.GetX()+1][tile.GetY()].SetIsMarked(true);
-		}
-		if ((tile.GetX() - 1) >= 0 && !grid[tile.GetX()-1][tile.GetY()].IsMarked()) {
-			list.Add(grid[tile.GetX()-1][tile.GetY()]);
-			grid[tile.GetX()-1][tile.GetY()].SetIsMarked(true);
+		List<GameTile> tileNeighbours = GetTileCardinalNeighbours(tile);
+		foreach (GameTile neighbour in tileNeighbours) {
+			if (!neighbour.IsMarked()) {
+				neighbour.SetIsMarked(true);
+				list.Add(neighbour);
+			}
 		}
 	}
 
 	private void AddDestroyedNeighbours(ref List<GameTile> list, GameTile tile){
 		//FloodFillDestroyedTiles helper function, returns a list containing the destroyed neighbour tiles
 		//of a tile that should be included in the flood fill
-		grid[tile.GetX()][tile.GetY()].SetIsMarked(true);
-		if((tile.GetY() + 1) < rows && grid[tile.GetX()][tile.GetY()+1].IsDestroyed() && !grid[tile.GetX()][tile.GetY()+1].IsMarked()){
-			grid[tile.GetX()][tile.GetY()+1].SetIsMarked(true);
-			list.Add(grid[tile.GetX()][tile.GetY()+1]);
-		}
-		if ((tile.GetY() - 1) >= 0 && grid[tile.GetX()][tile.GetY()-1].IsDestroyed() && !grid[tile.GetX()][tile.GetY()-1].IsMarked()) {
-			grid[tile.GetX()][tile.GetY()-1].SetIsMarked(true);
-			list.Add(grid[tile.GetX()][tile.GetY()-1]);
-		}
-		if ((tile.GetX() + 1) < cols && grid[tile.GetX()+1][tile.GetY()].IsDestroyed() && !grid[tile.GetX()+1][tile.GetY()].IsMarked()) {
-			grid[tile.GetX()+1][tile.GetY()].SetIsMarked(true);
-			list.Add(grid[tile.GetX()+1][tile.GetY()]);
-		}
-		if ((tile.GetX() - 1) >= 0 && grid[tile.GetX()-1][tile.GetY()].IsDestroyed() && !grid[tile.GetX()-1][tile.GetY()].IsMarked()) {
-			grid[tile.GetX()-1][tile.GetY()].SetIsMarked(true);
-			list.Add(grid[tile.GetX()-1][tile.GetY()]);
+		List<GameTile> tileNeighbours = GetTileCardinalNeighbours(tile);
+		foreach (GameTile neighbour in tileNeighbours) {
+			if (!neighbour.IsMarked() && neighbour.IsDestroyed()) {
+				neighbour.SetIsMarked(true);
+				list.Add(neighbour);
+			}
 		}
 	}
 
 	private void AddValidNeighbours(ref List<GameTile> list, GameTile tile){
 		//FloodFill helper function, returns a list containing the neighbours
 		//of a tile that should be included in the flood fill
-		grid[tile.GetX()][tile.GetY()].SetIsMarked(true);
-		if((tile.GetY() + 1) < rows && grid[tile.GetX()][tile.GetY()+1].OpenForPlacement() && !grid[tile.GetX()][tile.GetY()+1].IsMarked()){
-			list.Add(grid[tile.GetX()][tile.GetY()+1]);
-			grid[tile.GetX()][tile.GetY()+1].SetIsMarked(true);
-		}
-		if ((tile.GetY() - 1) >= 0 && grid[tile.GetX()][tile.GetY()-1].OpenForPlacement() && !grid[tile.GetX()][tile.GetY()-1].IsMarked()) {
-			list.Add(grid[tile.GetX()][tile.GetY()-1]);
-			grid[tile.GetX()][tile.GetY()-1].SetIsMarked(true);
-		}
-		if ((tile.GetX() + 1) < cols && grid[tile.GetX()+1][tile.GetY()].OpenForPlacement() && !grid[tile.GetX()+1][tile.GetY()].IsMarked()) {
-			list.Add(grid[tile.GetX()+1][tile.GetY()]);
-			grid[tile.GetX()+1][tile.GetY()].SetIsMarked(true);
-		}
-		if ((tile.GetX() - 1) >= 0 && grid[tile.GetX()-1][tile.GetY()].OpenForPlacement() && !grid[tile.GetX()-1][tile.GetY()].IsMarked()) {
-			list.Add(grid[tile.GetX()-1][tile.GetY()]);
-			grid[tile.GetX()-1][tile.GetY()].SetIsMarked(true);
+		List<GameTile> tileNeighbours = GetTileCardinalNeighbours(tile);
+		foreach (GameTile neighbour in tileNeighbours) {
+			if (neighbour.OpenForPlacement() && !neighbour.IsMarked()) {
+				neighbour.SetIsMarked(true);
+				list.Add(neighbour);
+			}
 		}
 	}
 
@@ -349,18 +319,11 @@ public class Board : ScriptableObject{
 	//1 for a open tile that is surrounded by walls on the cardnial directions
 	//in otherwords a cave or room made up by one tile
 		int count = 0;
-		if(grid[x][y].OpenForPlacement()){ 
-			if ((y+1) < rows && grid[x][y+1].IsWall()) {
-				count++;
-			}
-			if ((x+1) < cols && grid[x+1][y].IsWall()) {
-				count++;
-			}
-			if ((x-1) >= 0 && grid[x-1][y].IsWall()) {
-				count++;
-			}
-			if ((y-1) >= 0 && grid[x][y-1].IsWall()) {
-				count++;
+		if(grid[x][y].OpenForPlacement()){
+			List<GameTile> tileNeighbours = GetTileCardinalNeighbours(grid[x][y]);
+			foreach (GameTile neighbour in tileNeighbours) {
+				if (neighbour.IsWall())
+					count++;
 			}
 			if (count == 4) {
 				return true;
@@ -584,8 +547,8 @@ public class Board : ScriptableObject{
 		//used once the board is completely to set all the original sprites so we can change them out during movement and other transitions
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				grid[x][y].SetOriginalSprite(grid[x][y].GetObject().GetComponent<SpriteRenderer>().sprite);
-				grid[x][y].SetOriginalColor(grid[x][y].GetObject().GetComponent<SpriteRenderer>().color);
+				grid[x][y].SetOriginalSprite(grid[x][y].GetSprite());
+				grid[x][y].SetOriginalColor(grid[x][y].GetColor());
 			}
 		}
 	}
@@ -594,7 +557,6 @@ public class Board : ScriptableObject{
 	{
 		//Mark edges (walls that only touch blanks and other walls never floors) for logic use
 		int count = 0;
-			count = 0;
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
 				if(grid[x][y].IsWall()){ 

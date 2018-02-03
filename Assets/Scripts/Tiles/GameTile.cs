@@ -96,6 +96,11 @@ public class GameTile {
 		return y;
 	}
 
+	public Color GetColor()
+	{
+		return GetObject().GetComponent<SpriteRenderer>().color;
+	}
+
 	public GameObject GetObject()
 	{
 		return tileObject;
