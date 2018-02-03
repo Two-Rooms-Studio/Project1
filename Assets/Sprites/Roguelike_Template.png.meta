@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 17a0df5158812d74b9ad4ff84aba3b7e
-timeCreated: 1516860694
+timeCreated: 1517698763
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -966,9 +966,9 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
-    resizeAlgorithm: 0
+    resizeAlgorithm: 1
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -976,9 +976,9 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - buildTarget: Standalone
     maxTextureSize: 2048
-    resizeAlgorithm: 0
+    resizeAlgorithm: 1
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -1352,20 +1352,6 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Roof_1
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 872
-        width: 16
-        height: 24
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
       name: Wall_Snow_0
       rect:
         serializedVersion: 2
@@ -1608,20 +1594,6 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 848
-        width: 16
-        height: 24
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Wall_Crack_5
-      rect:
-        serializedVersion: 2
-        x: 144
         y: 848
         width: 16
         height: 24

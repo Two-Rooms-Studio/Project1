@@ -389,7 +389,10 @@ public class Vision {
 					map.GetGrid()[x][y].SetIsVisited(true);
 				}
 				if (map.GetGrid()[x][y].GetObject() != null && !map.GetGrid()[x][y].IsVisible() && map.GetGrid()[x][y].IsVisted()) {
-					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.grey;
+					//map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = Color.grey;
+					Color32 current = map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color;
+					current.a = 75;
+					map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = map.GetGrid()[x][y].GetObject().GetComponent<SpriteRenderer>().color = current;
 				}
 			}
 		}

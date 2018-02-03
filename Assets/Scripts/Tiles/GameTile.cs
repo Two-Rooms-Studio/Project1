@@ -229,6 +229,11 @@ public class GameTile {
 		originalColor = p_originalColor;
 	}
 
+	public void SetColor(Color col)
+	{
+		GetObject().GetComponent<SpriteRenderer>().color = col;
+	}
+
 	public void SetTileNorth(GameTile tile){
 		tileNorth = tile;
 	}

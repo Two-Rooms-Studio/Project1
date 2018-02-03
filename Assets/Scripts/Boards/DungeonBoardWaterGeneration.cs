@@ -105,7 +105,9 @@ public class DungeonBoardWaterGeneration : ScriptableObject {
 		tile.SetIsWalkAble(false);
 		tile.SetIsOccupied(true);
 		tile.GetObject().AddComponent<WaterTile>();
+		tile.SetColor(new Color32(129, 169, 255, 255));
 		tile.SetSprite(waterSprite);
+
 	}
 
 	private void BreakWallsRandomlyAroundWater(ref List<List<GameTile>> waterTilesSeperatedByAreas, ref List<GameTile> waterEdgeTiles)
