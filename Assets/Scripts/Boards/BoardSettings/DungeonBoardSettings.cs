@@ -38,6 +38,8 @@ public class DungeonBoardSettings : ScriptableObject {
 	public Sprite teleporterSprite;
 	[Tooltip("Sprite to use for water")]
 	public Sprite waterSprite;
+	[Tooltip("Sprites to use for living grass")]
+	public Sprite[] grassSprites = new Sprite[5];
 	[Tooltip("Wheather to smooth map edges (remove walls surrounded by other walls)")]
 	public bool runEdgeSmoothing;
 	[Tooltip("Wheather to allow disconnected caves with teleporter connections")]

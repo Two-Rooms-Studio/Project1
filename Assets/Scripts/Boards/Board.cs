@@ -62,7 +62,7 @@ public class Board : ScriptableObject{
 		return gridContainerName;
 	}
 
-	public List<GameTile> GetAllTilesInRange(ref GameTile tile, int range)
+	public List<GameTile> GetAllTilesInRange(GameTile tile, int range)
 	{
 		//Essentially a modified FloodFill that is only allowed to run a set number of times. This will return all tiles within a certain movement range away for example when handed a 
 		//range of 1 and the player tile, it will return the tiles in the players cardnial directions (tiles that require one move to reach)

@@ -313,7 +313,7 @@ public class Vision {
 		 * Limit vision to max view by walking through all visible tiles outside of the range limit and setting them to not visible if they are currently visible
 		*/
 
-		map.GetAllTilesInRange(ref visionOriginTile, maxView); 
+		map.GetAllTilesInRange(visionOriginTile, maxView); 
 		//grab all tiles within a particular range and mark them, the range corresponds to how many moves it would take the player entity to reach that tile, so a range of 1 would return the tiles in each of the cardnial directions
 		for (int x = 0; x < map.GetCols(); x++) {
 			for (int y = 0; y < map.GetRows(); y++) {

@@ -43,6 +43,11 @@ public class DungeonBoard : Board {
 		waterGeneration.GenerateLiquid(this, ref container, mapSettings.waterSprite); //generate water in natural holes in the map
 		//
 
+		//grass generation
+		DungeonBoardGrassGeneration grassGeneration = ScriptableObject.CreateInstance<DungeonBoardGrassGeneration>();
+		grassGeneration.GenerateGrass(this, ref container, mapSettings.grassSprites);
+		//
+
 		//fix caves
 		if (mapSettings.allowDisconnectedCaves) { //if we allow caves to spawn disconnected then place teleporters to connect them
 			ConnectDisconnectedCaves();
