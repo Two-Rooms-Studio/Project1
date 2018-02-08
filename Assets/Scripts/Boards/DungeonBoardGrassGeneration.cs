@@ -16,18 +16,10 @@ public class DungeonBoardGrassGeneration : ScriptableObject {
 		float chanceDecreasePerStep = 0.2f;
 		//
 		List<GameTile> validLivingGrassTiles = GetTilesWithinRangeOfWater();
-		if (validLivingGrassTiles.Count == 0) { //if there is no valid places to spawn living grass than end generation
-			Debug.Log("No valid living grass tiles possible");
-			return;
-		}
+		if (validLivingGrassTiles.Count == 0)
+			return; //if there is no valid places to spawn living grass than end generation
 		List<GameTile> roots = GetLivingGrassRootTiles(validLivingGrassTiles);
-		int checkForGrassSpawn = 100;
-		for(int i = 0; i < 5; i++)
-		{
-			roots = SpawnGrassAroundRootTiles(roots, checkForGrassSpawn);
-			checkForGrassSpawn -= 20;
-		}
-
+		SpawnGrassAroundRootTiles(roots);
 	}
 
 	private List<GameTile> GetTilesWithinRangeOfWater()
@@ -73,15 +65,34 @@ public class DungeonBoardGrassGeneration : ScriptableObject {
 		int rootCount = 0;
 		int checkForRootSpawn = 1; // 1 percent chance for root to spawn
 		List<GameTile> roots = new List<GameTile>();
-		foreach (GameTile possibleRoot in validLivingGrassTiles) { //we cant use this, its going to favor left WAY WAY to much we need to grab a tile randomly in list
+		foreach (GameTile possibleRoot in validLivingGrassTiles) {
 			int testForRootSpawn = Random.Range(1, 101);
 			if (testForRootSpawn <= checkForRootSpawn && possibleRoot.OpenForPlacement()) {
-				Debug.Log(testForRootSpawn);
+				Debug.Log("Root Spawned: (" + possibleRoot.GetX() + "," + possibleRoot.GetY() + ")"); // test code to see how many roots spawn
 				roots.Add(possibleRoot);
 				possibleRoot.SetColor(Color.red); //test code to show root node
 				rootCount++;
 			}
 		}
+		return roots;
+	}
+
+	private List<GameTile> SpawnGrassAroundRootTiles(List<GameTile> roots)
+	{
+		List<GameTile> originalRoots = new List<GameTile>(roots); //iterate over each of our original roots so that each root has its own seperate expansion outward chances
+		int minimumPercentageTakeAway = 10; //the minimum percentage chance we take away from grass spawning for each step away from the root
+		foreach (GameTile originalRoot in originalRoots) {
+			int checkForGrassSpawn = 100;
+			while (checkForGrassSpawn > 0) {
+				roots = new List<GameTile>(SpawnGrassAroundRootTiles(roots, checkForGrassSpawn)); //update roots to hold the newGrassTiles that way we can expand outward
+				if (checkForGrassSpawn > minimumPercentageTakeAway)
+					checkForGrassSpawn -= Random.Range(minimumPercentageTakeAway, (checkForGrassSpawn + 1)); //randomly take away between 10 and 100 percent of the chance for grass to spawn each step away from the root
+				else
+					checkForGrassSpawn -= minimumPercentageTakeAway;
+				Debug.Log("Chance for grass: " + checkForGrassSpawn);
+			}
+		}
+		board.UnMarkAllTiles();
 		return roots;
 	}
 
@@ -93,8 +104,9 @@ public class DungeonBoardGrassGeneration : ScriptableObject {
 			List<GameTile> rootNeighbours = board.GetTileNeighbours(root);
 			foreach (GameTile possibleGrassTiles in rootNeighbours) {
 				float testForGrassSpawn = Random.Range(1, 101);
-				if (testForGrassSpawn <= checkForGrassSpawn && possibleGrassTiles.OpenForPlacement()) {
+				if (testForGrassSpawn <= checkForGrassSpawn && possibleGrassTiles.OpenForPlacement() && !possibleGrassTiles.IsMarked()) {
 					newGrassTiles.Add(possibleGrassTiles);
+					possibleGrassTiles.SetIsMarked(true);
 				}
 			}
 		}
