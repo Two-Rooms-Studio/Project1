@@ -32,7 +32,10 @@
           </e>
         </e>
         <e p="NewStuff" t="Include">
-          <e p="ITile.cs" t="Include" />
+          <e p="Tiles" t="Include">
+            <e p="ITile.cs" t="Include" />
+            <e p="Tile.cs" t="Include" />
+          </e>
         </e>
         <e p="Tiles" t="Include">
           <e p="GameTile.cs" t="Include" />

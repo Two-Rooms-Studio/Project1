@@ -9,12 +9,6 @@ namespace Tiles
 		Sprite UnitySprite { get; }
 		Color UnityColor { get; }
 
-		//positional functions
-		ITile GetTileNorth();
-		ITile GetTileSouth();
-		ITile GetTileEast();
-		ITile GetTileWest();
-
 		//game properties
 		uint X { get; }
 		uint Y { get; }
