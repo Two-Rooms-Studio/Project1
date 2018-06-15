@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameTile {
 	//corresponds to where the tiles are on the grid script-wise, not in unity
-	private int x=0; 
+	private int x=0;
 	private int y=0;
 	//
 	private Vector2 UnityPosition = new Vector2(); // corresponds to the tiles position within Unity, can be used to regenerate a tile that has its object deleted.
