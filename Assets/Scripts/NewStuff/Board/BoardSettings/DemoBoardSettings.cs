@@ -10,5 +10,6 @@ namespace Assets.Scripts.NewStuff.Board.BoardSettings
     {
         public int Rows { get; private set; }
         public int Cols { get; private set; }
+        public Sprite FloorSprite { get; private set; }
     }
 }

@@ -10,21 +10,23 @@ namespace Assets.Scripts.NewStuff.Board
 {
     public class DemoBoard : Board, IBoard
     {
-        new IBoardSettings Settings { get { return Settings as DemoBoardSettings; } set { Settings = value as DemoBoardSettings; } }
+        private DemoBoardSettings Settings {get; set;}
         public DemoBoard(DemoBoardSettings Settings)
         {
             Grid = new List<List<ITile>>();
             this.Settings = Settings;
         }
-        public void CrateBoard()
+
+        public override void CreateBoard()
         {
-            for (int x = 0; x < Settings.Rows; x++)
+            for (uint x = 0; x < Settings.Rows; x++)
             {
-                for (int y = 0; y < Settings.Cols; y++)
+                for (uint y = 0; y < Settings.Cols; y++)
                 {
-                    Grid[x][y] = new Floor(x, y);
-                    Floor.UnityObject.Trasnform.position = new Vector3(x, y, 0.0f);
-                    Floor.UnityObject.Transform.parent = UnityBoardContainer;
+                    Floor floor = new Floor(x, y, Settings.FloorSprite);
+                    Grid[(int)x][(int)y] = floor;
+                    floor.UnityObject.transform.position = new Vector3(x, y);
+                    floor.UnityObject.transform.parent = UnityBoardContainer.transform;
                 }
             }
         }

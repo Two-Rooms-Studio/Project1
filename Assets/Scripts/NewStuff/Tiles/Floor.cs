@@ -18,5 +18,13 @@ namespace Tiles
 			Y = y;
 			IsMoveable = true;
 		}
+
+        public Floor(uint x, uint y, Sprite sprite)
+        {
+            UnitySprite = sprite;
+            X = x;
+            Y = y;
+            IsMoveable = true;
+        }
 	}
 }
