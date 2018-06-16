@@ -30,5 +30,10 @@ namespace Assets.Scripts.NewStuff.Board
                 }
             }
         }
+
+        public override void SpawnPlayer()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -9,4 +9,5 @@ public interface IBoard
     List<List<ITile>> Grid { get; }
     GameObject UnityBoardContainer { get; }
     void CreateBoard();
+    void SpawnPlayer();
 }
