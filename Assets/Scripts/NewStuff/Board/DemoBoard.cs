@@ -8,8 +8,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 namespace Assets.Scripts.NewStuff.Board
 {
-    public class DemoBoard : Board, IBoard
+    public class DemoBoard : MonoBehaviour, IBoard
     {
+        public List<List<ITile>> Grid { get; private set; }
+        public GameObject UnityBoardContainer { get; private set; }
         private DemoBoardSettings Settings {get; set;}
         public DemoBoard(DemoBoardSettings Settings)
         {
@@ -17,7 +19,7 @@ namespace Assets.Scripts.NewStuff.Board
             this.Settings = Settings;
         }
 
-        public override void CreateBoard()
+        public void CreateBoard()
         {
             for (uint x = 0; x < Settings.Rows; x++)
             {
@@ -31,7 +33,7 @@ namespace Assets.Scripts.NewStuff.Board
             }
         }
 
-        public override void SpawnPlayer()
+        public void SpawnPlayer()
         {
             throw new NotImplementedException();
         }

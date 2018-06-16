@@ -8,11 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.NewStuff.Board
 {
-    public abstract class Board : MonoBehaviour, IBoard
+    public static class Board
     {
-        public List<List<ITile>> Grid { get; set; }
-        public GameObject UnityBoardContainer { get; set; }
-        public abstract void CreateBoard();
-        public abstract void SpawnPlayer();
     }
 }
