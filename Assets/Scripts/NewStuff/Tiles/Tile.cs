@@ -18,8 +18,13 @@ namespace Tiles
 		{
 			throw new NotImplementedException();
 		}
-		
+
 		public static ITile GetTileWest(ITile tile)
+		{
+			throw new NotImplementedException();
+		}
+
+		public static ITile GetTile(ITile tile)
 		{
 			throw new NotImplementedException();
 		}
