@@ -5,7 +5,7 @@ namespace Tiles
 	public interface ITile
 	{
 		//unity specific properties
-		GameObject UnityObject { get; }
+		GameObject UnityObject { get; set; }
 		Sprite UnitySprite { get; }
 		Color UnityColor { get; }
 

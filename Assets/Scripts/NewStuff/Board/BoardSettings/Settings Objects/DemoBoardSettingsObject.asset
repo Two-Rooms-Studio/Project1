@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68923ba49490c2944bfe071b287093eb, type: 3}
+  m_Name: DemoBoardSettingsObject
+  m_EditorClassIdentifier: 
+  Rows: 5
+  Cols: 8
+  FloorSprite: {fileID: 21300816, guid: 17a0df5158812d74b9ad4ff84aba3b7e, type: 3}

@@ -4,7 +4,7 @@ namespace Tiles
 {
 	public class Wall : ITile
 	{
-		public GameObject UnityObject { get; private set; }
+		public GameObject UnityObject { get; set; }
 		public Sprite UnitySprite { get; private set; }
 		public Color UnityColor { get; private set; }
 		
