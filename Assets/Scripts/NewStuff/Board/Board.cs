@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.NewStuff.Board.BoardSettings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Assets.Scripts.NewStuff.Board
     public class Board : MonoBehaviour, IBoard
     {
         public List<List<ITile>> Grid { get; set; }
+        public IBoardSettings Settings { get; set; }
         public GameObject UnityBoardContainer { get; set; }
     }
 }
