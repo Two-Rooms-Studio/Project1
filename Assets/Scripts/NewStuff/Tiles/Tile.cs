@@ -2,7 +2,7 @@
 
 namespace Tiles
 {
-	public class Tile
+	public static class Tile
 	{
 		public static ITile GetTileNorth(ITile tile)
 		{
