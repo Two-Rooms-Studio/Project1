@@ -7,5 +7,7 @@ namespace Assets.Scripts.NewStuff.Board.BoardSettings
 {
     public interface IBoardSettings
     {
+        int Rows { get; }
+        int Cols { get; }
     }
 }

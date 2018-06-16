@@ -17,7 +17,9 @@ namespace Assets.Scripts.NewStuff.Board
             {
                 for (int y = 0; y < Settings.Cols; y++)
                 {
-                    
+                    Grid[x][y] = new Floor(x, y);
+                    Floor.UnityObject.Trasnform.position = new Vector3(x, y, 0.0f);
+                    Floor.UnityObject.Transform.parent = UnityBoardContainer;
                 }
             }
         }

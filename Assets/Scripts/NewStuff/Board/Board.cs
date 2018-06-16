@@ -11,6 +11,5 @@ namespace Assets.Scripts.NewStuff.Board
     {
         public List<List<ITile>> Grid { get; set; }
         public GameObject UnityBoardContainer { get; set; }
-
     }
 }
