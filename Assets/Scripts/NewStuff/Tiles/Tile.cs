@@ -1,4 +1,6 @@
 ﻿using System;
+using Assets.Scripts.NewStuff.Board;
+using UnityEngine;
 
 namespace Tiles
 {
@@ -26,7 +28,7 @@ namespace Tiles
 
 		public static ITile GetTile(ITile tile)
 		{
-			throw new NotImplementedException();
+			//Board.Grid[tile.X][tile.Y];
 		}
 	}
 }
