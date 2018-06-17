@@ -4,7 +4,7 @@ namespace Tiles
 {
 	public class Floor : ITile
 	{
-		public GameObject UnityObject { get; private set; }
+		public GameObject UnityObject { get; set; }
 		public Sprite UnitySprite { get; private set; }
 		public Color UnityColor { get; private set; }
 		
@@ -18,5 +18,13 @@ namespace Tiles
 			Y = y;
 			IsMoveable = true;
 		}
+
+        public Floor(uint x, uint y, Sprite sprite)
+        {
+            UnitySprite = sprite;
+            X = x;
+            Y = y;
+            IsMoveable = true;
+        }
 	}
 }

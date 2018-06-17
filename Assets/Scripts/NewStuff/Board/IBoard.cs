@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.NewStuff.Board.BoardSettings;
+using System.Collections;
 using System.Collections.Generic;
 using Tiles;
 using UnityEngine;
@@ -6,5 +7,6 @@ using UnityEngine;
 public interface IBoard
 {
     List<List<ITile>> Grid { get; }
-    GameObject UnityBoardContainer { get; }
+    void CreateBoard();
+    void SpawnPlayer();
 }
