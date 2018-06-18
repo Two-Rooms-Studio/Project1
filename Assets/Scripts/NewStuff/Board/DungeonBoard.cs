@@ -30,7 +30,22 @@ namespace Assets.Scripts.NewStuff.Board
             RemoveBlockedOpenTiles();
             FixEdges();
             RemoveFloatingWalls();
-
+            //GenerateLiquid
+            //GenerateGrass
+            if (Settings.AllowDisconnectedCaves)
+            {
+                ConnectDisconnectedCaves();
+            }
+            else
+            {
+                RemoveDisconnectedCaves();
+                CheckForMinimumMapSize();
+            }
+            if (Settings.RunEdgeSmoothing)
+            {
+                SmoothEdges();
+            }
+            ChangeInnerWallSprites();
         }
 
         public void SpawnPlayer()
@@ -76,7 +91,7 @@ namespace Assets.Scripts.NewStuff.Board
                 for (uint y = 0; y < Settings.Cols; y++)
                 {
                     int wallsAroundPoint = Tile.CountWalls(oldgrid[(int)x][(int)y]);
-                    if (oldgrid[(int)x][(int)y] is Wall)
+                    if (!oldgrid[(int)x][(int)y].IsMoveable)
                     {
                         if (wallsAroundPoint < Settings.DeathLimit)
                         {
@@ -105,7 +120,7 @@ namespace Assets.Scripts.NewStuff.Board
             {
                 for(uint y = 0; y < Settings.Cols; y++)
                 {
-                    if (Grid[x][y] is Floor)
+                    if (Grid[x][y].IsMoveable)
                     {
                         count++;
                     }
@@ -132,5 +147,62 @@ namespace Assets.Scripts.NewStuff.Board
             }
         }
 
+        /// <summary>
+        /// Remove tiles from the Grid that are blocked in the axis directions
+        /// </summary>
+        private void RemoveBlockedOpenTiles()
+        {
+            for (uint x = 0; x < Settings.Rows; x++)
+            {
+                for (uint y = 0; y < Settings.Cols; y++)
+                {
+                    if (Tile.IsAxisBlocked(Grid[(int)x][(int)y]))
+                    {
+                        Grid[(int)x][(int)y] = null;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Changes all floor tiles that are touching destroyed tiles into walls
+        /// </summary>
+        private void FixEdges()
+        {
+            for (uint x = 0; x < Settings.Rows; x++)
+            {
+                for (uint y = 0; y < Settings.Cols; y++)
+                {
+                    if (Tile.HasDestoryedNeighbour(Grid[x][y]))
+                    {
+                        if(Grid[(int)x][(int)y].IsMoveable)
+                        {
+                            Grid[(int)x][(int)y] = new Wall(x, y, DefaultWallSprite);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes any walls that are completely surrounded by destoryed tiles or other 
+        /// walls
+        /// </summary>
+        private void RemoveFloatingWalls()
+        {
+            for (uint x = 0; x < Settings.Rows; x++)
+            {
+                for (uint y = 0; y < Settings.Cols; y++)
+                {
+                    if (Tile.IsBlocked(Grid[x][y]))
+                    {
+                        if (!Grid[(int)x][(int)y].IsMoveable)
+                        {
+                            Grid[(int)x][(int)y] = null;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
