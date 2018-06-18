@@ -21,6 +21,12 @@ public class GameManager : MonoBehaviour {
     void Start () {
         CurrentBoard = GameBoards[0];
         CurrentBoard.CreateBoard();
+        CreateBoardUnityTiles();
+        CurrentBoard.SpawnPlayer();
+	}
+
+    void CreateBoardUnityTiles()
+    {
         float x = 0.0f, y = 0.0f, xPadding = 0.16f, yPadding = 0.24f;
         foreach (var tileRows in CurrentBoard.Grid)
         {
@@ -32,10 +38,5 @@ public class GameManager : MonoBehaviour {
             x = 0.0f;
             y += yPadding;
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
 }
